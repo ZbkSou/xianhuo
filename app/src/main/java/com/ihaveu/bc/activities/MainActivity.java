@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ihaveu.bc.R;
 import com.ihaveu.bc.interfaces.IMain;
 import com.ihaveu.bc.login.LoginActivity;
+import com.ihaveu.bc.register.RegisterActivity;
 import com.ihaveu.bc.okhttphelp.ImageLoader;
 import com.ihaveu.bc.presenter.MainPresenter;
 import com.ihaveu.bc.utils.InitImageUtil;

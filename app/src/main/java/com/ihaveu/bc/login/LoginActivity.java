@@ -1,17 +1,21 @@
 package com.ihaveu.bc.login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ihaveu.bc.R;
 import com.ihaveu.bc.model.SessionModel;
 import com.ihaveu.bc.network.IModelResponse;
+import com.ihaveu.bc.register.RegisterActivity;
 import com.ihaveu.bc.utils.LogUtil;
 import com.ihaveu.bc.utils.StringUtil;
 import com.ihaveu.bc.utils.ToastUtil;
+import com.ihaveu.bc.widget.DEditText;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,13 +30,13 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends Activity implements LoginView {
   @BindView(R.id.username)
-  EditText username;
+  DEditText username;
   @BindView(R.id.password)
-  EditText password;
+  DEditText password;
   @BindView(R.id.login)
   Button login;
   @BindView(R.id.logup)
-  Button logupBut;
+  TextView logupBut;
 private LoginPresenter mLoginPresenter;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,9 @@ private LoginPresenter mLoginPresenter;
         break;
       case R.id.logup:
         ToastUtil.showToast("注册");
-
+        Intent intent;
+        intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
         break;
     }
 

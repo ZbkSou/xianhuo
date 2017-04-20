@@ -17,5 +17,11 @@
         <item name="android:textColor">@color/drop_down_list_footer_font_color</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
+    <!-- 我的页面浅ebebec分割线样式-->
+    <style name="Style_grayebebec_line">
 
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/bgGray</item>
+    </style>
 </resources>

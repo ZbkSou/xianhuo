@@ -1,28 +1,114 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffffff">
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:paddingLeft="@dimen/screen_5_percent"
+      android:paddingRight="@dimen/screen_5_percent" >
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:id="@+id/captcha_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ImageView
-        android:id="@+id/captcha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="注册"/>
-</LinearLayout>
+        <!-- 邮箱 -->
+        <com.ihaveu.bc.widget.DEditText
+          android:id="@+id/email"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:d_hint="@string/hint_email"
+
+          app:d_inputType="textEmailAddress"></com.ihaveu.bc.widget.DEditText>
+        <!-- 姓名 -->
+        <com.ihaveu.bc.widget.DEditText
+          android:id="@+id/name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:d_hint="@string/hint_name"
+          app:maxLength="20"></com.ihaveu.bc.widget.DEditText>
+        <!-- 密码 -->
+        <com.ihaveu.bc.widget.DEditText
+          android:id="@+id/password"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:d_hint="@string/hint_password"
+          app:maxLength="20"
+          app:d_password="true"></com.ihaveu.bc.widget.DEditText>
+        <!-- 重复密码 -->
+        <com.newihaveu.app.widget.DEditText
+          android:id="@+id/repeat_password"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:d_hint="@string/hint_repeat_password"
+          app:maxLength="20"
+          app:d_password="true"></com.newihaveu.app.widget.DEditText>
+        <!-- 验证码 -->
+
+        <LinearLayout
+          android:id="@+id/captcha_layout"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/register_edittext_height"
+          android:gravity="bottom"
+          android:orientation="horizontal"
+          android:visibility="gone" >
+            <com.ihaveu.bc.widget.DEditText
+              android:id="@+id/captcha"
+              android:layout_width="220dp"
+              android:layout_height="wrap_content"
+              app:d_hint="@string/hint_captcha"
+              app:d_inputType="number"></com.ihaveu.bc.widget.DEditText>
+            <ImageView
+              android:id="@+id/captcha_image"
+              android:layout_width="80dp"
+              android:layout_height="@dimen/register_captcha_image_height"
+              android:layout_marginLeft="@dimen/screen_3_percent"
+              android:scaleType="fitXY"
+              />
+        </LinearLayout>
+        <!-- 注册按钮 -->
+        <Button
+          android:id="@+id/register_button"
+          android:layout_marginTop="20dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/cheng"
+          android:gravity="center"
+          android:text="注册"
+          android:textColor="@color/white"/>
+
+        <!-- 文字提示 -->
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:gravity="center"
+          android:layout_marginTop="34dp">
+            <com.ihaveu.bc.widget.DTextView
+              android:textSize="16dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/register_have_account"
+              android:textColor="#ffafafaf"/>
+            <RelativeLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:layout_marginTop="1dp">
+                <com.ihaveu.bc.widget.DTextView
+                  android:id="@+id/go_login"
+                  android:textSize="16dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/register_have_account_to_login"/>
+                <View
+                  android:layout_below="@+id/go_login"
+                  android:layout_alignLeft="@+id/go_login"
+                  android:layout_alignRight="@+id/go_login"
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="#000000"
+                  android:layout_marginTop="2dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

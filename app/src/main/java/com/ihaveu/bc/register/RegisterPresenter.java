@@ -1,13 +1,7 @@
-package com.ihaveu.bc.activities;
+package com.ihaveu.bc.register;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
-import com.ihaveu.bc.R;
 import com.ihaveu.bc.model.AccountsModel;
 import com.ihaveu.bc.model.SessionModel;
 import com.ihaveu.bc.network.IModelResponse;
@@ -22,85 +16,63 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
- * Created by bc on 16/10/10.
- * Describe
+ * Created with Android Studio.
+ * User: bkzhou
+ * Date: 2017/4/20
+ * Time: 上午10:14
  */
-public class RegisterActivity extends Activity {
-  @BindView(R.id.username)
-  EditText username;
-  @BindView(R.id.password)
-  EditText password;
-  @BindView(R.id.register_button)
-  Button registerButton;
-  @BindView(R.id.captcha_edit)
-  EditText captchaEdit;
-  @BindView(R.id.captcha)
-  ImageView captcha;
+public class RegisterPresenter {
+  private Context mContext;
   private SessionModel sessionModel;
   private AccountsModel accountsModel;
+  private RegisterView mRegisterView;
   /**
    * 验证码图片是否已经展示
    */
   private boolean isHasShowCaptcha = false;
-  private Context mContext;
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_register);
-    ButterKnife.bind(this);
-    sessionModel = new SessionModel(this);
-    accountsModel = new AccountsModel(this);
-    mContext = this;
+  public RegisterPresenter(Context context,RegisterView registerView){
+    mContext = context;
+    sessionModel = new SessionModel(mContext);
+    accountsModel = new AccountsModel(mContext);
+    mRegisterView = registerView;
   }
-
-  @OnClick(R.id.register_button)
-  public void onClick() {
-    final HashMap<String, String> params = new HashMap<>();
-    params.put("account[phone]", username.getText().toString());
-    params.put("account[password]", password.getText().toString());
-    params.put("account[password_confirmation]", password.getText().toString());
-    if (TextUtil.isValidText(captchaEdit.getText().toString())) {
-      params.put("captcha", captchaEdit.getText().toString());
-    }
-    params.put("account[client]", "android");
+  public void goRegister(final HashMap<String, String> params){
+    mRegisterView.showLoading();
     //判断是否需要验证码
     accountsModel.isNeedCaptcha(new IModelResponse<String>() {
                                   @Override
                                   public void onSuccess(String model, ArrayList<String> list) {
                                     try {
 
-                                        if (new JSONObject(model).getString("need_captcha").equals("true") && !isHasShowCaptcha) {
+                                      if (new JSONObject(model).getString("need_captcha").equals("true") && !isHasShowCaptcha) {
 //获取验证码
-                                          accountsModel.getCaptchaUrl(new IModelResponse<String>() {
-                                            @Override
-                                            public void onSuccess(String model, ArrayList<String> list) {
-                                              try {
-                                                isHasShowCaptcha = true;
-                                                ImageLoader.displayCookiesImage(new JSONObject(model).getString("url"), captcha);
-                                              } catch (JSONException e) {
-                                                e.printStackTrace();
-                                              }
+                                        accountsModel.getCaptchaUrl(new IModelResponse<String>() {
+                                          @Override
+                                          public void onSuccess(String model, ArrayList<String> list) {
+                                            try {
+                                              isHasShowCaptcha = true;
+                                              mRegisterView.showCaptcha(new JSONObject(model).getString("url"));
+                                              mRegisterView.hideLoading();
+                                            } catch (JSONException e) {
+                                              e.printStackTrace();
+                                              mRegisterView.hideLoading();
                                             }
+                                          }
 
-                                            @Override
-                                            public void onError(String msg) {
+                                          @Override
+                                          public void onError(String msg) {
+                                            mRegisterView.hideLoading();
+                                          }
+                                        });
+                                      }
 
-                                            }
-                                          });
-                                        }
-
-                                  else {
-                                        if (isHasShowCaptcha && !TextUtil.isValidText(captchaEdit.getText().toString())) {
+                                      else {
+                                        if (isHasShowCaptcha && !TextUtil.isValidText(params.get("captcha"))) {
                                           ToastUtil.showToast( "请输入验证码");
-                                        } else if (TextUtil.isValidText(captchaEdit.getText().toString())) {
+                                        } else if (TextUtil.isValidText(params.get("captcha"))) {
                                           Map<String, String> map = new HashMap<String, String>();
-                                          map.put("captcha", captchaEdit.getText().toString());
+                                          map.put("captcha", params.get("captcha"));
                                           accountsModel.validateCaptcha(map, new IModelResponse<String>() {
 
                                             @Override
@@ -110,15 +82,17 @@ public class RegisterActivity extends Activity {
                                                   register(params);
                                                 } else {
                                                   ToastUtil.showToast( "请重新输入验证码（验证码输入错误）");
+                                                  mRegisterView.hideLoading();
                                                 }
                                               } catch (JSONException e) {
+                                                mRegisterView.hideLoading();
                                                 e.printStackTrace();
                                               }
                                             }
 
                                             @Override
                                             public void onError(String msg) {
-
+                                              mRegisterView.hideLoading();
                                             }
                                           });
                                         } else {
@@ -128,20 +102,17 @@ public class RegisterActivity extends Activity {
                                       }
                                     } catch (JSONException e) {
                                       e.printStackTrace();
+                                      mRegisterView.hideLoading();
                                     }
                                   }
 
                                   @Override
                                   public void onError(String msg) {
-
+                                    mRegisterView.hideLoading();
                                   }
                                 }
-
     );
-
-
   }
-
   private void register(Map<String, String> map) {
     accountsModel.register(map, new IModelResponse<String>() {
 
@@ -149,16 +120,18 @@ public class RegisterActivity extends Activity {
       public void onSuccess(String model, ArrayList<String> list) {
         try {
           ToastUtil.showToast(new JSONObject(model).getJSONObject("account").getInt("id")+"");
+          mRegisterView.hideLoading();
         } catch (JSONException e) {
           e.printStackTrace();
+          mRegisterView.hideLoading();
         }
       }
 
       @Override
       public void onError(String msg) {
         ToastUtil.showToast(msg);
+        mRegisterView.hideLoading();
       }
     });
   }
-
 }

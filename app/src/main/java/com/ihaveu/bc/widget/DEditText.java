@@ -197,11 +197,7 @@ public class DEditText extends RelativeLayout{
 
       @Override
       public void afterTextChanged(Editable s) {
-        if (isEmail) {
-          if ((getText().indexOf("@") == getText().length() - 1) && (getText().indexOf("@") != -1)) {
-            mPopupWindow.showAsDropDown(mEditText, 0, -MeasureUtil.dip2px(3));
-          }
-        }
+
       }
     });
     //获得焦点时候的逻辑
