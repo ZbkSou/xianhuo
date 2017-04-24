@@ -14,6 +14,7 @@ import com.ihaveu.bc.network.IModelResponse;
 import com.ihaveu.bc.okhttphelp.ImageLoader;
 import com.ihaveu.bc.utils.TextUtil;
 import com.ihaveu.bc.utils.ToastUtil;
+import com.ihaveu.bc.widget.DEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,14 +34,18 @@ import butterknife.OnClick;
  * Time: 下午6:45
  */
 public class RegisterActivity extends Activity implements RegisterView  {
-  @BindView(R.id.username)
-  EditText username;
+  @BindView(R.id.email)
+  DEditText email;
+  @BindView(R.id.name)
+  DEditText name;
   @BindView(R.id.password)
-  EditText password;
+  DEditText password;
+  @BindView(R.id.repeat_password)
+  DEditText repeat_password;
   @BindView(R.id.register_button)
   Button registerButton;
   @BindView(R.id.captcha)
-  EditText captchaEdit;
+  DEditText captchaEdit;
   @BindView(R.id.captcha_image)
   ImageView captcha;
   /**
@@ -63,9 +68,9 @@ public class RegisterActivity extends Activity implements RegisterView  {
   @OnClick(R.id.register_button)
   public void onClick() {
     final HashMap<String, String> params = new HashMap<>();
-    params.put("account[phone]", username.getText().toString());
+    params.put("account[phone]", email.getText().toString());
     params.put("account[password]", password.getText().toString());
-    params.put("account[password_confirmation]", password.getText().toString());
+    params.put("account[password_confirmation]", repeat_password.getText().toString());
     if (TextUtil.isValidText(captchaEdit.getText().toString())) {
       params.put("captcha", captchaEdit.getText().toString());
     }

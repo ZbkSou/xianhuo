@@ -1,11 +1,28 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  android:id="@+id/login_register"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    <ImageView
+      android:id="@+id/toolbar_back"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:paddingBottom="12dp"
+      android:paddingLeft="7dp"
+      android:paddingRight="12dp"
+      android:paddingTop="12dp"
+      android:src="@drawable/btn_white_back"/>
+<ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffffff">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            >
     <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       android:orientation="vertical"
       android:paddingLeft="@dimen/screen_5_percent"
       android:paddingRight="@dimen/screen_5_percent" >
@@ -14,33 +31,53 @@
         <com.ihaveu.bc.widget.DEditText
           android:id="@+id/email"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:d_hint="@string/hint_email"
-
-          app:d_inputType="textEmailAddress"></com.ihaveu.bc.widget.DEditText>
+          android:layout_height="37dp"
+          app:d_hint="@string/hint_phone"
+          app:d_background="@color/white"
+          app:d_inputType="number"
+          app:d_phone='true'>
+        </com.ihaveu.bc.widget.DEditText>
+        <View
+          style="@style/Style_grayebebec_line"
+          android:layout_marginLeft="13dp"
+          android:layout_marginRight="13dp"/>
         <!-- 姓名 -->
         <com.ihaveu.bc.widget.DEditText
           android:id="@+id/name"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="37dp"
+          app:d_background="@color/white"
           app:d_hint="@string/hint_name"
-          app:maxLength="20"></com.ihaveu.bc.widget.DEditText>
+          app:maxLength="20">
+        </com.ihaveu.bc.widget.DEditText>
+        <View
+          style="@style/Style_grayebebec_line"
+          android:layout_marginLeft="13dp"
+          android:layout_marginRight="13dp"/>
         <!-- 密码 -->
         <com.ihaveu.bc.widget.DEditText
           android:id="@+id/password"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="37dp"
+          app:d_background="@color/white"
           app:d_hint="@string/hint_password"
           app:maxLength="20"
-          app:d_password="true"></com.ihaveu.bc.widget.DEditText>
+          app:d_password="true">
+        </com.ihaveu.bc.widget.DEditText>
+        <View
+          style="@style/Style_grayebebec_line"
+          android:layout_marginLeft="13dp"
+          android:layout_marginRight="13dp"/>
         <!-- 重复密码 -->
-        <com.newihaveu.app.widget.DEditText
+        <com.ihaveu.bc.widget.DEditText
           android:id="@+id/repeat_password"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="37dp"
+          app:d_background="@color/white"
           app:d_hint="@string/hint_repeat_password"
           app:maxLength="20"
-          app:d_password="true"></com.newihaveu.app.widget.DEditText>
+          app:d_password="true">
+        </com.ihaveu.bc.widget.DEditText>
         <!-- 验证码 -->
 
         <LinearLayout
@@ -55,6 +92,7 @@
               android:layout_width="220dp"
               android:layout_height="wrap_content"
               app:d_hint="@string/hint_captcha"
+              app:d_background="@color/white"
               app:d_inputType="number"></com.ihaveu.bc.widget.DEditText>
             <ImageView
               android:id="@+id/captcha_image"
@@ -112,3 +150,4 @@
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
+</RelativeLayout>
