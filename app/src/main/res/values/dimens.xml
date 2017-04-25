@@ -20,4 +20,9 @@
     <dimen name="register_button_height">44dp</dimen>
     <dimen name="fu_register_button_height">-50dp</dimen>
     <dimen name="register_text_small_size">18dp</dimen>
+
+    <!-- 分时线指标tab的高度 -->
+    <dimen name="line_index_tab_height">28dp</dimen>
+    <!-- 显示分时线上面的点数据 -->
+    <dimen name="line_msg_text_size">10dp</dimen>
 </resources>
