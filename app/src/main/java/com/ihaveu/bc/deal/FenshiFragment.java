@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ihaveu.bc.R;
+import com.ihaveu.bc.bean.DataResponse;
 import com.ihaveu.bc.view.CrossView;
 import com.ihaveu.bc.view.FenshiView;
 
@@ -27,7 +28,7 @@ public class FenshiFragment extends LineBaseFragment {
     //滑动十字线时，显示对应点详情的地方
     private TextView msgText;
     //分时数据
-    private FenshiDataResponse data;
+    private DataResponse data;
 
     //是否全屏
     private boolean isPause;
@@ -49,7 +50,7 @@ public class FenshiFragment extends LineBaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        data = new Gson().fromJson(sb.toString(), FenshiDataResponse.class);
+        data = new Gson().fromJson(sb.toString(), DataResponse.class);
         return inflater.inflate(R.layout.chart_fenshi_frag, null);
     }
 

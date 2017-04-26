@@ -8,16 +8,16 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
+import com.ihaveu.bc.bean.CrossBean;
+import com.ihaveu.bc.bean.StickData;
+import com.ihaveu.bc.utils.ColorUtil;
+import com.ihaveu.bc.utils.DrawUtils;
+import com.ihaveu.bc.utils.GridUtils;
+import com.ihaveu.bc.utils.IndexParseUtil;
+import com.ihaveu.bc.utils.LineUtil;
+
 import java.util.ArrayList;
 
-import eat.arvin.com.mychart.bean.CrossBean;
-import eat.arvin.com.mychart.bean.StickData;
-import eat.arvin.com.mychart.utils.ColorUtil;
-import eat.arvin.com.mychart.utils.DrawUtils;
-import eat.arvin.com.mychart.utils.GridUtils;
-import eat.arvin.com.mychart.utils.IndexParseUtil;
-import eat.arvin.com.mychart.utils.LineUtil;
-import eat.arvin.com.mychart.utils.NumberUtil;
 
 /**
  * Created by Arvin on 2016/10/25.
@@ -163,22 +163,22 @@ public class KLineView extends ChartView implements ChartConstant {
      */
     @Override
     protected void drawLines(Canvas canvas) {
-        if(data == null || data.size() == 0) return;
-        float[] sma5 = new float[showList.size()];
-        float[] sma10 = new float[showList.size()];
-        float[] sma20 = new float[showList.size()];
-        int size = showList.size();
-        for (int i = 0; i < showList.size(); i++) {
-            if(size > IndexParseUtil.START_SMA5)
-                sma5[i] = (float) showList.get(i).getSma5();
-            if(size > IndexParseUtil.START_SMA10)
-                sma10[i] = (float) showList.get(i).getSma10();
-            if(size > IndexParseUtil.START_SMA20)
-                sma20[i] = (float) showList.get(i).getSma20();
-        }
-        DrawUtils.drawLineWithXOffset(canvas, sma5, DEFUALT_WIDTH, mainH, ColorUtil.COLOR_SMA5, (float) yMax, (float) yMin, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLineWithXOffset(canvas, sma10, DEFUALT_WIDTH, mainH, ColorUtil.COLOR_SMA10, (float) yMax, (float) yMin, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLineWithXOffset(canvas, sma20, DEFUALT_WIDTH, mainH, ColorUtil.COLOR_SMA20, (float) yMax, (float) yMin, DEFUALT_WIDTH / 2);
+//        if(data == null || data.size() == 0) return;
+//        float[] sma5 = new float[showList.size()];
+//        float[] sma10 = new float[showList.size()];
+//        float[] sma20 = new float[showList.size()];
+//        int size = showList.size();
+//        for (int i = 0; i < showList.size(); i++) {
+//            if(size > IndexParseUtil.START_SMA5)
+//                sma5[i] = (float) showList.get(i).getSma5();
+//            if(size > IndexParseUtil.START_SMA10)
+//                sma10[i] = (float) showList.get(i).getSma10();
+//            if(size > IndexParseUtil.START_SMA20)
+//                sma20[i] = (float) showList.get(i).getSma20();
+//        }
+//        DrawUtils.drawLineWithXOffset(canvas, sma5, DEFUALT_WIDTH, mainH, ColorUtil.COLOR_SMA5, (float) yMax, (float) yMin, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLineWithXOffset(canvas, sma10, DEFUALT_WIDTH, mainH, ColorUtil.COLOR_SMA10, (float) yMax, (float) yMin, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLineWithXOffset(canvas, sma20, DEFUALT_WIDTH, mainH, ColorUtil.COLOR_SMA20, (float) yMax, (float) yMin, DEFUALT_WIDTH / 2);
     }
 
     @Override
@@ -211,67 +211,67 @@ public class KLineView extends ChartView implements ChartConstant {
 
     @Override
     protected void drawZJ(Canvas canvas) {
-        if(data == null || data.size() == 0) return;
-        float[] sup = new float[showList.size()];
-        float[] big = new float[showList.size()];
-        float[] mid = new float[showList.size()];
-        float[] sma = new float[showList.size()];
-        int size = showList.size();
-        for (int i = 0; i < showList.size(); i++) {
-            sup[i] = (float) showList.get(i).getSp();
-            big[i] = (float) showList.get(i).getBg();
-            mid[i] = (float) showList.get(i).getMd();
-            sma[i] = (float) showList.get(i).getSm();
-        }
-        float maxAndMin[] = LineUtil.getMaxAndMin(sup, big, mid, sma);
-        DrawUtils.drawLines(canvas, sup, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_ZJ_SUPER, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLines(canvas, big, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_ZJ_BIG, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLines(canvas, mid, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_ZJ_MIDDLE, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLines(canvas, sma, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_ZJ_SMALL, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawIndexMiddleText(canvas, (maxAndMin[0] - maxAndMin[1]) / 2 + "", indexStartY + indexH / 2);
+//        if(data == null || data.size() == 0) return;
+//        float[] sup = new float[showList.size()];
+//        float[] big = new float[showList.size()];
+//        float[] mid = new float[showList.size()];
+//        float[] sma = new float[showList.size()];
+//        int size = showList.size();
+//        for (int i = 0; i < showList.size(); i++) {
+//            sup[i] = (float) showList.get(i).getSp();
+//            big[i] = (float) showList.get(i).getBg();
+//            mid[i] = (float) showList.get(i).getMd();
+//            sma[i] = (float) showList.get(i).getSm();
+//        }
+//        float maxAndMin[] = LineUtil.getMaxAndMin(sup, big, mid, sma);
+//        DrawUtils.drawLines(canvas, sup, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_ZJ_SUPER, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLines(canvas, big, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_ZJ_BIG, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLines(canvas, mid, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_ZJ_MIDDLE, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLines(canvas, sma, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_ZJ_SMALL, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawIndexMiddleText(canvas, (maxAndMin[0] - maxAndMin[1]) / 2 + "", indexStartY + indexH / 2);
     }
 
     @Override
     protected void drawMACD(Canvas canvas) {
-        if(data == null || data.size() == 0) return;
-        float[] dif = new float[showList.size()];
-        float[] dea = new float[showList.size()];
-        float[] macd = new float[showList.size()];
-        for (int i = 0; i < showList.size(); i++) {
-            if(data.indexOf(showList.get(i)) > IndexParseUtil.START_DIF)
-                dif[i] = (float) showList.get(i).getDif();
-            if(data.indexOf(showList.get(i)) > IndexParseUtil.START_DEA) {
-                dea[i] = (float) showList.get(i).getDea();
-                macd[i] = (float) showList.get(i).getMacd();
-            }
-        }
-        float maxAndMin[] = LineUtil.getMaxAndMin(dif, dea, macd);
-        DrawUtils.drawMACDRects(canvas, macd, maxAndMin[0], maxAndMin[1], indexH - 2, indexStartY + 2, DEFUALT_WIDTH);
-        DrawUtils.drawLines(canvas, dif, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_DIF, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLines(canvas, dea, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_DEA, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawIndexMiddleText(canvas, "0", indexStartY + indexH / 2);
+//        if(data == null || data.size() == 0) return;
+//        float[] dif = new float[showList.size()];
+//        float[] dea = new float[showList.size()];
+//        float[] macd = new float[showList.size()];
+//        for (int i = 0; i < showList.size(); i++) {
+//            if(data.indexOf(showList.get(i)) > IndexParseUtil.START_DIF)
+//                dif[i] = (float) showList.get(i).getDif();
+//            if(data.indexOf(showList.get(i)) > IndexParseUtil.START_DEA) {
+//                dea[i] = (float) showList.get(i).getDea();
+//                macd[i] = (float) showList.get(i).getMacd();
+//            }
+//        }
+//        float maxAndMin[] = LineUtil.getMaxAndMin(dif, dea, macd);
+//        DrawUtils.drawMACDRects(canvas, macd, maxAndMin[0], maxAndMin[1], indexH - 2, indexStartY + 2, DEFUALT_WIDTH);
+//        DrawUtils.drawLines(canvas, dif, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_DIF, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLines(canvas, dea, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_DEA, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawIndexMiddleText(canvas, "0", indexStartY + indexH / 2);
     }
 
     @Override
     protected void drawKDJ(Canvas canvas) {
-        if(data == null || data.size() == 0) return;
-        float[] kl = new float[showList.size()];
-        float[] dl = new float[showList.size()];
-        float[] jl = new float[showList.size()];
-        int size = showList.size();
-        for (int i = 0; i < showList.size(); i++) {
-            if(size > IndexParseUtil.START_K)
-                kl[i] = (float) showList.get(i).getK();
-            if(size > IndexParseUtil.START_DJ) {
-                dl[i] = (float) showList.get(i).getD();
-                jl[i] = (float) showList.get(i).getJ();
-            }
-        }
-        float maxAndMin[] = LineUtil.getMaxAndMin(kl, dl, jl);
-        DrawUtils.drawLines(canvas, kl, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_KDJ_K, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLines(canvas, dl, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_KDJ_D, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLines(canvas, jl, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_KDJ_J, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawIndexMiddleText(canvas, (maxAndMin[0] - maxAndMin[1]) / 2 + "", indexStartY + indexH / 2);
+//        if(data == null || data.size() == 0) return;
+//        float[] kl = new float[showList.size()];
+//        float[] dl = new float[showList.size()];
+//        float[] jl = new float[showList.size()];
+//        int size = showList.size();
+//        for (int i = 0; i < showList.size(); i++) {
+//            if(size > IndexParseUtil.START_K)
+//                kl[i] = (float) showList.get(i).getK();
+//            if(size > IndexParseUtil.START_DJ) {
+//                dl[i] = (float) showList.get(i).getD();
+//                jl[i] = (float) showList.get(i).getJ();
+//            }
+//        }
+//        float maxAndMin[] = LineUtil.getMaxAndMin(kl, dl, jl);
+//        DrawUtils.drawLines(canvas, kl, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_KDJ_K, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLines(canvas, dl, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_KDJ_D, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLines(canvas, jl, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_KDJ_J, maxAndMin[0], maxAndMin[1], false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawIndexMiddleText(canvas, (maxAndMin[0] - maxAndMin[1]) / 2 + "", indexStartY + indexH / 2);
     }
 
     /**
@@ -289,18 +289,18 @@ public class KLineView extends ChartView implements ChartConstant {
      * @param max
      */
     private void drawCountSma(Canvas canvas, float max) {
-        if(data == null || data.size() == 0) return;
-        float[] sma5 = new float[showList.size()];
-        float[] sma10 = new float[showList.size()];
-        int size = showList.size();
-        for (int i = 0; i < showList.size(); i++) {
-            if(size > IndexParseUtil.START_SMA5)
-                sma5[i] = (float) showList.get(i).getCountSma5();
-            if(size > IndexParseUtil.START_SMA10)
-                sma10[i] = (float) showList.get(i).getCountSma10();
-        }
-        DrawUtils.drawLines(canvas, sma5, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_SMA5, max, 0f, false, indexStartY + 2, DEFUALT_WIDTH / 2);
-        DrawUtils.drawLines(canvas, sma10, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_SMA10, max, 0f, false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        if(data == null || data.size() == 0) return;
+//        float[] sma5 = new float[showList.size()];
+//        float[] sma10 = new float[showList.size()];
+//        int size = showList.size();
+//        for (int i = 0; i < showList.size(); i++) {
+//            if(size > IndexParseUtil.START_SMA5)
+//                sma5[i] = (float) showList.get(i).getCountSma5();
+//            if(size > IndexParseUtil.START_SMA10)
+//                sma10[i] = (float) showList.get(i).getCountSma10();
+//        }
+//        DrawUtils.drawLines(canvas, sma5, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_SMA5, max, 0f, false, indexStartY + 2, DEFUALT_WIDTH / 2);
+//        DrawUtils.drawLines(canvas, sma10, DEFUALT_WIDTH, indexH - 2, ColorUtil.COLOR_SMA10, max, 0f, false, indexStartY + 2, DEFUALT_WIDTH / 2);
     }
 
     public void setDataAndInvalidate(ArrayList<StickData> data) {
@@ -333,30 +333,30 @@ public class KLineView extends ChartView implements ChartConstant {
     private void parseData() {
         offset = 0;
         //根据当前显示的指标类型，优先计算指标
-        IndexParseUtil.initSma(this.data);
-        switch (indexType) {
-            case INDEX_MACD:
-                IndexParseUtil.initMACD(data);
-                break;
-            case INDEX_KDJ:
-                IndexParseUtil.initKDJ(data);
-                break;
-        }
+//        IndexParseUtil.initSma(this.data);
+//        switch (indexType) {
+//            case INDEX_MACD:
+//                IndexParseUtil.initMACD(data);
+//                break;
+//            case INDEX_KDJ:
+//                IndexParseUtil.initKDJ(data);
+//                break;
+//        }
         //把暂时不显示的计算，放在线程中去完成，避免阻塞主线程
         new Thread(new Runnable() {
             @Override
             public void run() {
                 switch (indexType) {
-                    case INDEX_VOL:
-                        IndexParseUtil.initMACD(data);
-                        IndexParseUtil.initKDJ(data);
-                        break;
-                    case INDEX_MACD:
-                        IndexParseUtil.initKDJ(data);
-                        break;
-                    case INDEX_KDJ:
-                        IndexParseUtil.initMACD(data);
-                        break;
+//                    case INDEX_VOL:
+//                        IndexParseUtil.initMACD(data);
+//                        IndexParseUtil.initKDJ(data);
+//                        break;
+//                    case INDEX_MACD:
+//                        IndexParseUtil.initKDJ(data);
+//                        break;
+//                    case INDEX_KDJ:
+//                        IndexParseUtil.initMACD(data);
+//                        break;
                 }
             }
         }).start();
@@ -406,8 +406,8 @@ public class KLineView extends ChartView implements ChartConstant {
             case INDEX_VOL:
                 bean.indexText = new String[3];
                 bean.indexText[0] = "VOL:" + data.getCount();
-                bean.indexText[1] = "SMA5:" + data.getCountSma5();
-                bean.indexText[2] = "SMA10:" + data.getCountSma10();
+//                bean.indexText[1] = "SMA5:" + data.getCountSma5();
+//                bean.indexText[2] = "SMA10:" + data.getCountSma10();
                 bean.indexColor = new int[] {
                         data.isRise() ? ColorUtil.COLOR_RED : ColorUtil.COLOR_GREEN,
                         ColorUtil.COLOR_SMA5,
@@ -415,43 +415,43 @@ public class KLineView extends ChartView implements ChartConstant {
                 };
                 break;
             case INDEX_ZJ:
-                bean.indexText = new String[4];
-                bean.indexText[0] = "超大:" + data.getSp();
-                bean.indexText[1] = "大:" + data.getBg();
-                bean.indexText[2] = "中:" + data.getMd();
-                bean.indexText[3] = "小:" + data.getSm();
-                bean.indexColor = new int[]{
-                        ColorUtil.COLOR_ZJ_SUPER,
-                        ColorUtil.COLOR_ZJ_BIG,
-                        ColorUtil.COLOR_ZJ_MIDDLE,
-                        ColorUtil.COLOR_ZJ_SMALL
-                };
+//                bean.indexText = new String[4];
+//                bean.indexText[0] = "超大:" + data.getSp();
+//                bean.indexText[1] = "大:" + data.getBg();
+//                bean.indexText[2] = "中:" + data.getMd();
+//                bean.indexText[3] = "小:" + data.getSm();
+//                bean.indexColor = new int[]{
+//                        ColorUtil.COLOR_ZJ_SUPER,
+//                        ColorUtil.COLOR_ZJ_BIG,
+//                        ColorUtil.COLOR_ZJ_MIDDLE,
+//                        ColorUtil.COLOR_ZJ_SMALL
+//                };
                 break;
             case INDEX_MACD:
-                bean.indexText = new String[4];
-                bean.indexText[0] = "MACD(12,26,9)";
-                bean.indexText[1] = "DIF：" + NumberUtil.beautifulDouble(data.getDif());
-                bean.indexText[2] = "DEA：" + NumberUtil.beautifulDouble(data.getDea());
-                bean.indexText[3] = "MACD：" + NumberUtil.beautifulDouble(data.getMacd());
-                bean.indexColor = new int[] {
-                        Color.BLACK,
-                        ColorUtil.COLOR_DIF,
-                        ColorUtil.COLOR_DEA,
-                        ColorUtil.COLOR_MACD
-                };
+//                bean.indexText = new String[4];
+//                bean.indexText[0] = "MACD(12,26,9)";
+//                bean.indexText[1] = "DIF：" + NumberUtil.beautifulDouble(data.getDif());
+//                bean.indexText[2] = "DEA：" + NumberUtil.beautifulDouble(data.getDea());
+//                bean.indexText[3] = "MACD：" + NumberUtil.beautifulDouble(data.getMacd());
+//                bean.indexColor = new int[] {
+//                        Color.BLACK,
+//                        ColorUtil.COLOR_DIF,
+//                        ColorUtil.COLOR_DEA,
+//                        ColorUtil.COLOR_MACD
+//                };
                 break;
             case INDEX_KDJ:
-                bean.indexText = new String[4];
-                bean.indexText[0] = "KDJ(9,3,3)";
-                bean.indexText[1] = "K：" + NumberUtil.beautifulDouble(data.getK());
-                bean.indexText[2] = "D：" + NumberUtil.beautifulDouble(data.getD());
-                bean.indexText[3] = "J：" + NumberUtil.beautifulDouble(data.getJ());
-                bean.indexColor = new int[] {
-                        Color.BLACK,
-                        ColorUtil.COLOR_KDJ_K,
-                        ColorUtil.COLOR_KDJ_D,
-                        ColorUtil.COLOR_KDJ_J
-                };
+//                bean.indexText = new String[4];
+//                bean.indexText[0] = "KDJ(9,3,3)";
+//                bean.indexText[1] = "K：" + NumberUtil.beautifulDouble(data.getK());
+//                bean.indexText[2] = "D：" + NumberUtil.beautifulDouble(data.getD());
+//                bean.indexText[3] = "J：" + NumberUtil.beautifulDouble(data.getJ());
+//                bean.indexColor = new int[] {
+//                        Color.BLACK,
+//                        ColorUtil.COLOR_KDJ_K,
+//                        ColorUtil.COLOR_KDJ_D,
+//                        ColorUtil.COLOR_KDJ_J
+//                };
                 break;
         }
 

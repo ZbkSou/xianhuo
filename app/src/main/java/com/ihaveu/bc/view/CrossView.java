@@ -9,9 +9,9 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import eat.arvin.com.mychart.bean.CrossBean;
-import eat.arvin.com.mychart.utils.ColorUtil;
-import eat.arvin.com.mychart.utils.LineUtil;
+import com.ihaveu.bc.bean.CrossBean;
+import com.ihaveu.bc.utils.ColorUtil;
+import com.ihaveu.bc.utils.LineUtil;
 
 
 /**

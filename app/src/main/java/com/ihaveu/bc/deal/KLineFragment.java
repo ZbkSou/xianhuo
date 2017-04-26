@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ihaveu.bc.R;
+import com.ihaveu.bc.bean.MyList;
+import com.ihaveu.bc.bean.StickData;
 import com.ihaveu.bc.view.CrossView;
 import com.ihaveu.bc.view.KLineView;
 

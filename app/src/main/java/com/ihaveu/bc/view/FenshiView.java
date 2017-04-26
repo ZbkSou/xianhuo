@@ -6,22 +6,21 @@ import android.text.Html;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
+import com.ihaveu.bc.bean.CMinute;
+import com.ihaveu.bc.bean.CrossBean;
+import com.ihaveu.bc.bean.DataResponse;
+import com.ihaveu.bc.utils.ColorUtil;
+import com.ihaveu.bc.utils.DrawUtils;
+import com.ihaveu.bc.utils.LineUtil;
 
-import eat.arvin.com.mychart.bean.CMinute;
-import eat.arvin.com.mychart.bean.CrossBean;
-import eat.arvin.com.mychart.bean.FenshiDataResponse;
-import eat.arvin.com.mychart.utils.ColorUtil;
-import eat.arvin.com.mychart.utils.DrawUtils;
-import eat.arvin.com.mychart.utils.GridUtils;
-import eat.arvin.com.mychart.utils.LineUtil;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/10/25.
  */
 public class FenshiView extends ChartView {
     //分时数据
-    private FenshiDataResponse data;
+    private DataResponse data;
     //补全后的所有点
     private ArrayList<CMinute> minutes;
     //所有价格
@@ -101,7 +100,7 @@ public class FenshiView extends ChartView {
      * 重新画分时图
      * @param data
      */
-    public void setDataAndInvalidate(FenshiDataResponse data) {
+    public void setDataAndInvalidate(DataResponse data) {
         this.data = data;
         minutes = LineUtil.getAllFenshiData(data);
         postInvalidate();
