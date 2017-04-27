@@ -24,4 +24,9 @@
         <item name="android:layout_height">1px</item>
         <item name="android:background">@color/bgGray</item>
     </style>
+    <!--走势图-->
+    <style name="chart_bottom_tab_text_size" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">11dp</item>
+        <item name="android:textColor">#373737</item>
+    </style>
 </resources>

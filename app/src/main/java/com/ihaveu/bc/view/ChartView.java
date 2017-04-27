@@ -107,15 +107,15 @@ public abstract class ChartView extends View implements ChartConstant, CrossView
             case INDEX_VOL:
                 drawVOL(canvas);
                 break;
-            case INDEX_ZJ:
-                drawZJ(canvas);
-                break;
-            case INDEX_MACD:
-                drawMACD(canvas);
-                break;
-            case INDEX_KDJ:
-                drawKDJ(canvas);
-                break;
+//            case INDEX_ZJ:
+//                drawZJ(canvas);
+//                break;
+//            case INDEX_MACD:
+//                drawMACD(canvas);
+//                break;
+//            case INDEX_KDJ:
+//                drawKDJ(canvas);
+//                break;
         }
     }
 

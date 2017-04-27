@@ -404,7 +404,7 @@ public class KLineView extends ChartView implements ChartConstant {
     private void setIndexTexts(StickData data, CrossBean bean) {
         switch (indexType) {
             case INDEX_VOL:
-                bean.indexText = new String[3];
+                bean.indexText = new String[1];
                 bean.indexText[0] = "VOL:" + data.getCount();
 //                bean.indexText[1] = "SMA5:" + data.getCountSma5();
 //                bean.indexText[2] = "SMA10:" + data.getCountSma10();

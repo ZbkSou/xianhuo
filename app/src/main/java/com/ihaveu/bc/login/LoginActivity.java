@@ -16,6 +16,7 @@ import com.ihaveu.bc.utils.LogUtil;
 import com.ihaveu.bc.utils.StringUtil;
 import com.ihaveu.bc.utils.ToastUtil;
 import com.ihaveu.bc.widget.DEditText;
+import com.ihaveu.bc.widget.DTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class LoginActivity extends Activity implements LoginView {
   @BindView(R.id.login)
   Button login;
   @BindView(R.id.logup)
-  TextView logupBut;
+  DTextView logupBut;
 private LoginPresenter mLoginPresenter;
   @Override
   protected void onCreate(Bundle savedInstanceState) {

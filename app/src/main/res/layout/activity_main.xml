@@ -30,7 +30,7 @@
             android:id="@+id/image_pick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="image_pick"/>
+            android:text="首页"/>
         <Button
             android:id="@+id/image_download"
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
             android:id="@+id/new_widget_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="模仿优众分类页"/>
+            android:text="交易图"/>
 
     </LinearLayout>
 

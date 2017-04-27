@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihaveu.bc.R;
+import com.ihaveu.bc.deal.DealActivity;
 import com.ihaveu.bc.interfaces.IMain;
 import com.ihaveu.bc.login.LoginActivity;
 import com.ihaveu.bc.register.RegisterActivity;
@@ -97,7 +98,10 @@ public class MainActivity extends Activity implements IMain {
         mainPresenter.setImageView(requestImage);
         break;
       case R.id.image_pick:
+        intent = new Intent(this, com.ihaveu.bc.main.MainActivity.class);
+        startActivity(intent);
         break;
+
       case R.id.getuer_button:
         mainPresenter.isLogin();
         break;
@@ -130,7 +134,7 @@ public class MainActivity extends Activity implements IMain {
         requestImage.setImageBitmap(InitImageUtil.getInitImage(this));
         break;
       case R.id.new_widget_button:
-        intent = new Intent(this, NewWidgetActivity.class);
+        intent = new Intent(this, DealActivity.class);
         startActivity(intent);
         break;
     }

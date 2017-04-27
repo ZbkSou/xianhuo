@@ -45,10 +45,10 @@ public class KLineFragment extends LineBaseFragment {
         kLineView.setUsedViews(crossView, msgText);
         kLineView.setType(1);
         kLineView.setOnDoubleTapListener(this);
-        indexTab.setOnTabSelectedListener(this);
-        for(String s : INDEX_KLINE_TAB) {
-            indexTab.addTab(indexTab.newTab().setText(s));
-        }
+//        indexTab.setOnTabSelectedListener(this);
+//        for(String s : INDEX_KLINE_TAB) {
+//            indexTab.addTab(indexTab.newTab().setText(s));
+//        }
         kLineView.setDataAndInvalidate(list);
     }
 

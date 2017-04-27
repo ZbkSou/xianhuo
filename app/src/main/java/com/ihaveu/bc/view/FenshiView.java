@@ -9,8 +9,10 @@ import android.view.MotionEvent;
 import com.ihaveu.bc.bean.CMinute;
 import com.ihaveu.bc.bean.CrossBean;
 import com.ihaveu.bc.bean.DataResponse;
+import com.ihaveu.bc.bean.FenshiDataResponse;
 import com.ihaveu.bc.utils.ColorUtil;
 import com.ihaveu.bc.utils.DrawUtils;
+import com.ihaveu.bc.utils.GridUtils;
 import com.ihaveu.bc.utils.LineUtil;
 
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
  */
 public class FenshiView extends ChartView {
     //分时数据
-    private DataResponse data;
+    private FenshiDataResponse data;
     //补全后的所有点
     private ArrayList<CMinute> minutes;
     //所有价格
@@ -100,7 +102,7 @@ public class FenshiView extends ChartView {
      * 重新画分时图
      * @param data
      */
-    public void setDataAndInvalidate(DataResponse data) {
+    public void setDataAndInvalidate(FenshiDataResponse data) {
         this.data = data;
         minutes = LineUtil.getAllFenshiData(data);
         postInvalidate();

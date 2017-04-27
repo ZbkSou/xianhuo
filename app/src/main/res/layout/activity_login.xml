@@ -32,9 +32,9 @@
           android:id="@+id/username"
           android:layout_width="match_parent"
           android:layout_height="37dp"
-          android:inputType="number"
           app:d_background="@color/white"
           app:d_phone='true'
+          app:d_inputType="number"
           app:d_hint="@string/login_hint_email_or_phone"
           app:d_textSize="14dp"/>
 

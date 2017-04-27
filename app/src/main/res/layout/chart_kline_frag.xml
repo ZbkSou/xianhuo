@@ -16,17 +16,17 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <eat.arvin.com.mychart.view.KLineView
+        <com.ihaveu.bc.view.KLineView
             android:id="@+id/ckf_klineview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <eat.arvin.com.mychart.view.CrossView
+        <com.ihaveu.bc.view.CrossView
             android:id="@+id/cff_cross"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
     </RelativeLayout>
 
-    <include layout="@layout/chart_frag_bottom"/>
+    <!--<include layout="@layout/chart_frag_bottom"/>-->
 </LinearLayout>

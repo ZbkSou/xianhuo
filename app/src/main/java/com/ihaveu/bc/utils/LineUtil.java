@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.text.TextUtils;
 
 import com.ihaveu.bc.bean.CMinute;
+import com.ihaveu.bc.bean.FenshiDataResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
