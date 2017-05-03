@@ -11,4 +11,9 @@ import com.ihaveu.bc.base.BaseView;
 interface RegisterView extends BaseView {
   public void showCaptcha(String url);
 
+
+
+
+
+
 }

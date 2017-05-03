@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/login_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <com.ihaveu.bc.widget.DTextView
+            android:id="@+id/login_but"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登录"/>
+
+        <com.ihaveu.bc.widget.DTextView
+            android:id="@+id/register_but"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册"/>
+    </LinearLayout>
+    <com.ihaveu.bc.widget.DTextView
+        android:id="@+id/user_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册"/>
+    <LinearLayout
+        android:id="@+id/money_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <com.ihaveu.bc.widget.DTextView
+            android:id="@+id/_but"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登录"/>
+    </LinearLayout>
+</LinearLayout>
