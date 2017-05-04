@@ -15,7 +15,7 @@ public class MineActivity extends Activity{
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_mains);
+    setContentView(R.layout.activity_mine);
     ButterKnife.bind(this);
     init();
   }

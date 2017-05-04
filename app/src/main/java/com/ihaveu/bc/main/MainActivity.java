@@ -54,10 +54,10 @@ public class MainActivity extends FragmentActivity {
     tabLayout.addTab(tabLayout.newTab().setText(tabList.get(2)));
 
     List<Fragment> fragmentList = new ArrayList<>();
-
-    fragmentList.add(new TabFragment1());
-    fragmentList.add(new TabFragment2());
-    fragmentList.add(new TabFragment3());
+//
+//    fragmentList.add(new TabFragment1());
+//    fragmentList.add(new TabFragment2());
+//    fragmentList.add(new TabFragment3());
 
     ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
     TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
