@@ -20,4 +20,14 @@
   <string name="repeat">重新发送</string>
   <string name="hint_tuiguang">推广码(选填)</string>
   <string name="register_to_login">注册并登录</string>
+  <!-- 购买popup-->
+  <string name="point_fist">3</string>
+  <string name="point_second">4</string>
+  <string name="point_third">6</string>
+
+  <string name="money_fist">10</string>
+  <string name="money_second">50</string>
+  <string name="money_third">100</string>
+  <string name="money_fourth">500</string>
+  <string name="money_fifth">1000</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.ihaveu.bc.main;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,8 +10,17 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.ihaveu.bc.R;
+import com.ihaveu.bc.bean.GoodsBean;
+import com.ihaveu.bc.fragment.GoodFragment;
 import com.ihaveu.bc.register.RegisterPresenter;
 
 import java.util.ArrayList;
@@ -17,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created with Android Studio.
@@ -29,6 +41,11 @@ public class MainActivity extends FragmentActivity {
   TabLayout tabLayout;
   @BindView(R.id.viewpager)
   ViewPager viewPager;
+  @BindView(R.id.up)
+  Button upButton;
+  @BindView(R.id.down)
+  Button downButton;
+  private GoodsBean goodsBean;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -36,9 +53,35 @@ public class MainActivity extends FragmentActivity {
     ButterKnife.bind(this);
     init();
   }
-  private void init(){
+
+  private void init() {
+    goodsBean = new GoodsBean();
+    goodsBean.setBuy("3.16");
+    goodsBean.setCode("XFAG1");
+    goodsBean.setName("长江银100克");
+    goodsBean.setSell("3.18");
+    goodsBean.setNewprice("3.15");
+    goodsBean.setHigh("3.17");
+    goodsBean.setLow("3.18");
+    goodsBean.setOpen("3.18");
+    goodsBean.setLastclose("3.18");
+    goodsBean.setBuy("3.19");
+    initTab();
+  }
+  @OnClick({ R.id.up, R.id.down})
+   void onClick(Button button){
+    switch (button.getId()){
+      case R.id.up :
+        showPopwindow(goodsBean,true);
+        break;
+      case R.id.down:
+        showPopwindow(goodsBean,false);
+        break;
+    }
+
 
   }
+
   /**
    * 初始化TAB标签
    */
@@ -54,10 +97,14 @@ public class MainActivity extends FragmentActivity {
     tabLayout.addTab(tabLayout.newTab().setText(tabList.get(2)));
 
     List<Fragment> fragmentList = new ArrayList<>();
-//
-//    fragmentList.add(new TabFragment1());
-//    fragmentList.add(new TabFragment2());
-//    fragmentList.add(new TabFragment3());
+
+    GoodFragment goodFragment1 = new GoodFragment();
+    GoodFragment goodFragment2 = new GoodFragment();
+    GoodFragment goodFragment3 = new GoodFragment();
+
+    fragmentList.add(goodFragment1);
+    fragmentList.add(goodFragment2);
+    fragmentList.add(goodFragment3);
 
     ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
     TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
@@ -66,5 +113,68 @@ public class MainActivity extends FragmentActivity {
     tabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
 
   }
+  /**
+   * 显示popupWindow
+   */
+  private void showPopwindow(GoodsBean goodsBean,boolean status) {
+    // 利用layoutInflater获得View
+    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    View view = inflater.inflate(R.layout.popwindow_buy, null);
 
+    // 下面是两种方法得到宽度和高度 getWindow().getDecorView().getWidth()
+
+    PopupWindow window = new PopupWindow(view,
+      WindowManager.LayoutParams.MATCH_PARENT,
+      WindowManager.LayoutParams.WRAP_CONTENT);
+
+    // 设置popWindow弹出窗体可点击，这句话必须添加，并且是true
+    window.setFocusable(true);
+
+
+
+    // 实例化一个ColorDrawable颜色为半透明
+    ColorDrawable dw = new ColorDrawable(0xb0000000);
+    window.setBackgroundDrawable(dw);
+
+
+    // 设置popWindow的显示和消失动画
+    window.setAnimationStyle(R.style.mypopwindow_anim_style);
+    // 在底部显示
+    window.showAtLocation(MainActivity.this.findViewById(R.id.up),
+      Gravity.BOTTOM, 0, 0);
+    // 这里检验popWindow里的button是否可以点击
+    TextView statusText = (TextView) view.findViewById(R.id.status);
+    TextView goodsNameText = (TextView) view.findViewById(R.id.goods_name);
+    goodsNameText.setText(goodsBean.getName());
+    TextView newPiceText = (TextView) view.findViewById(R.id.new_pice);
+    newPiceText.setText(goodsBean.getNewprice());
+    if(status){
+      statusText.setText("看涨");
+    }else {
+      statusText.setText("看跌");
+    }
+
+
+    goodsNameText.setText(goodsBean.getName());
+    newPiceText.setText(goodsBean.getNewprice());
+    Button buyButton = (Button) view.findViewById(R.id.buy_but);
+    buyButton.setOnClickListener(new View.OnClickListener() {
+
+      @Override
+      public void onClick(View v) {
+
+        System.out.println("第一个按钮被点击了");
+      }
+    });
+
+    //popWindow消失监听方法
+    window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+      @Override
+      public void onDismiss() {
+        System.out.println("popWindow消失");
+      }
+    });
+
+  }
 }
