@@ -2,6 +2,7 @@ package com.ihaveu.bc.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -15,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihaveu.bc.R;
@@ -46,6 +49,8 @@ public class MainActivity extends FragmentActivity {
   @BindView(R.id.down)
   Button downButton;
   private GoodsBean goodsBean;
+  @BindView(R.id.layout_main_mine)
+  RelativeLayout mineLayout;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -68,14 +73,20 @@ public class MainActivity extends FragmentActivity {
     goodsBean.setBuy("3.19");
     initTab();
   }
-  @OnClick({ R.id.up, R.id.down})
-   void onClick(Button button){
+
+  @OnClick({ R.id.up, R.id.down,R.id.layout_main_mine})
+   void onViewClick(Button button){
     switch (button.getId()){
       case R.id.up :
         showPopwindow(goodsBean,true);
         break;
       case R.id.down:
         showPopwindow(goodsBean,false);
+        break;
+      case R.id.layout_main_mine:
+        Intent intent;
+        intent = new Intent(this, com.ihaveu.bc.mine.MineActivity.class);
+        startActivity(intent);
         break;
     }
 

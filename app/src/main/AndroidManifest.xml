@@ -33,6 +33,8 @@
     </activity>
     <activity android:name=".main.MainActivity">
     </activity>
+    <activity android:name=".mine.MineActivity">
+    </activity>
   </application>
 
 </manifest>
