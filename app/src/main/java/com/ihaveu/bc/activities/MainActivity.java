@@ -68,12 +68,10 @@ public class MainActivity extends Activity implements IMain {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     mainPresenter = new MainPresenter(this, this);
-
   }
 
   @Override
   public void setTextView(final String text) {
-
     requestText.setText(text);
   }
 
@@ -108,7 +106,6 @@ public class MainActivity extends Activity implements IMain {
       case R.id.logout_button:
         new PersistentCookieStore().removeAllCookie();
         ToastUtil.showToast("注销成功");
-
         break;
       case R.id.clear_image_cache:
         ImageLoader.clearImageDiskCache();

@@ -44,13 +44,12 @@ public class MainActivity extends FragmentActivity {
   TabLayout tabLayout;
   @BindView(R.id.viewpager)
   ViewPager viewPager;
-  @BindView(R.id.up)
+  @BindView(R.id.up_but)
   Button upButton;
-  @BindView(R.id.down)
+  @BindView(R.id.down_but)
   Button downButton;
   private GoodsBean goodsBean;
-  @BindView(R.id.layout_main_mine)
-  RelativeLayout mineLayout;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -74,13 +73,13 @@ public class MainActivity extends FragmentActivity {
     initTab();
   }
 
-  @OnClick({ R.id.up, R.id.down,R.id.layout_main_mine})
+  @OnClick({ R.id.up_but, R.id.down_but,R.id.money_text})
    void onViewClick(Button button){
     switch (button.getId()){
-      case R.id.up :
+      case R.id.up_but :
         showPopwindow(goodsBean,true);
         break;
-      case R.id.down:
+      case R.id.down_but:
         showPopwindow(goodsBean,false);
         break;
       case R.id.layout_main_mine:
@@ -151,7 +150,7 @@ public class MainActivity extends FragmentActivity {
     // 设置popWindow的显示和消失动画
     window.setAnimationStyle(R.style.mypopwindow_anim_style);
     // 在底部显示
-    window.showAtLocation(MainActivity.this.findViewById(R.id.up),
+    window.showAtLocation(MainActivity.this.findViewById(R.id.up_but),
       Gravity.BOTTOM, 0, 0);
     // 这里检验popWindow里的button是否可以点击
     TextView statusText = (TextView) view.findViewById(R.id.status);
