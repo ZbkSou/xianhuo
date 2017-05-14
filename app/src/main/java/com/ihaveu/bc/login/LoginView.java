@@ -9,5 +9,6 @@ import com.ihaveu.bc.base.BaseView;
  * Time: 下午3:47
  */
 public interface LoginView extends BaseView{
+  public void logIn();
 
 }

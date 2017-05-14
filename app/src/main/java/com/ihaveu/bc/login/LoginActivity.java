@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ihaveu.bc.R;
+import com.ihaveu.bc.base.BaseActivity;
+import com.ihaveu.bc.main.MainActivity;
 import com.ihaveu.bc.model.SessionModel;
 import com.ihaveu.bc.network.IModelResponse;
 import com.ihaveu.bc.register.RegisterActivity;
@@ -29,7 +31,7 @@ import butterknife.OnClick;
  * Created by bc on 16/10/8.
  * Describe
  */
-public class LoginActivity extends Activity implements LoginView {
+public class LoginActivity extends BaseActivity implements LoginView {
   @BindView(R.id.username)
   DEditText username;
   @BindView(R.id.password)
@@ -54,8 +56,8 @@ private LoginPresenter mLoginPresenter;
         HashMap<String,String> params = new HashMap<>();
         if(StringUtil.isValidText(username.getText().toString())&&
           StringUtil.isValidText(password.getText().toString())){
-          params.put("account[login]",username.getText().toString());
-          params.put("account[password]",password.getText().toString());
+          params.put("username",username.getText().toString());
+          params.put("password",password.getText().toString());
           mLoginPresenter.logIn(params);
         }else {
           ToastUtil.showToast("请输入完整的登录信息");
@@ -74,12 +76,10 @@ private LoginPresenter mLoginPresenter;
   }
 
   @Override
-  public void showLoading() {
-    ToastUtil.showToast("showLoading");
-  }
-
-  @Override
-  public void hideLoading() {
-    ToastUtil.showToast("hideLoading");
+  public void logIn() {
+    Intent intent;
+    intent = new Intent(this, MainActivity.class);
+    startActivity(intent);
+    finish();
   }
 }

@@ -1,14 +1,12 @@
-package com.ihaveu.bc.login;
+package com.ihaveu.bc.main;
 
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.stream.JsonReader;
 import com.ihaveu.bc.Manager.UserManage;
 import com.ihaveu.bc.bean.SeriverResponse;
 import com.ihaveu.bc.bean.UserBean;
-import com.ihaveu.bc.model.SessionModel;
+import com.ihaveu.bc.model.UserModel;
 import com.ihaveu.bc.network.IModelResponse;
 import com.ihaveu.bc.utils.JsonUtil;
 import com.ihaveu.bc.utils.LogUtil;
@@ -18,41 +16,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created with Android Studio.
- * User: bkzhou
- * Date: 2017/4/19
- * Time: 下午4:01
+ * Created by ZBK on 2017/5/14.
  */
-public class LoginPresenter {
+
+public class MainPresenter {
   private Context mContext;
-  private SessionModel model;
-  private LoginView mLoginView;
-  public LoginPresenter(Context context,LoginView loginView){
+  private MainView mMainView;
+  private UserModel userModel;
+
+  public MainPresenter(Context context,MainView mainView){
     mContext = context;
-    model = new SessionModel(mContext);
-    mLoginView = loginView;
+    mMainView = mainView;
+    userModel = new UserModel(mContext);
   }
-  public void logIn(HashMap<String,String> params){
-    mLoginView.showHandleLoading();
-    model.login(params, new IModelResponse<SeriverResponse>() {
+  public void getUserInfo(){
+    userModel.getUserInfo(new IModelResponse<SeriverResponse>() {
       @Override
       public void onSuccess(SeriverResponse model, ArrayList<SeriverResponse> list) {
         if(!model.getState().equals("200")){
-          ToastUtil.showToast("登录失败:"+model.getResult().toString());
-          mLoginView.hideHandleLoading();
+          ToastUtil.showToast(model.getResult().toString());
         }else {
           LogUtil.d(model.getResult().toString());
           UserManage.getInstance().setUserBean(new Gson().fromJson(JsonUtil.beanToJSONString(model.getResult()), UserBean.class));
-          ToastUtil.showToast("登录成功"+model.getResult());
           LogUtil.d(UserManage.getInstance().getUserBean().getUsername());
-          mLoginView.hideHandleLoading();
-          mLoginView.logIn();
+          mMainView.showUser();
         }
       }
       @Override
       public void onError(String msg) {
-        ToastUtil.showToast("登录失败:"+msg);
-        mLoginView.hideHandleLoading();
+
       }
     });
   }

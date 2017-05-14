@@ -1,27 +1,20 @@
 package com.ihaveu.bc.register;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.ihaveu.bc.R;
-import com.ihaveu.bc.model.AccountsModel;
-import com.ihaveu.bc.model.SessionModel;
-import com.ihaveu.bc.network.IModelResponse;
-import com.ihaveu.bc.okhttphelp.ImageLoader;
-import com.ihaveu.bc.utils.TextUtil;
+import com.ihaveu.bc.base.BaseActivity;
+import com.ihaveu.bc.main.MainActivity;
+import com.ihaveu.bc.utils.StringUtil;
 import com.ihaveu.bc.utils.ToastUtil;
 import com.ihaveu.bc.widget.DEditText;
+import com.ihaveu.bc.widget.DTextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +26,7 @@ import butterknife.OnClick;
  * Date: 2017/4/19
  * Time: 下午6:45
  */
-public class RegisterActivity extends Activity implements RegisterView  {
+public class RegisterActivity extends BaseActivity implements RegisterView {
   @BindView(R.id.email)
   DEditText email;
   @BindView(R.id.name)
@@ -44,56 +37,58 @@ public class RegisterActivity extends Activity implements RegisterView  {
   DEditText repeat_password;
   @BindView(R.id.register_button)
   Button registerButton;
-  @BindView(R.id.captcha)
-  DEditText captchaEdit;
-  @BindView(R.id.captcha_image)
-  ImageView captcha;
-  /**
-   * 验证码图片是否已经展示
-   */
-  private boolean isHasShowCaptcha = false;
+  @BindView(R.id.go_login)
+  DTextView goLogin;
+
+
   private Context mContext;
 
   private RegisterPresenter registerPresenter;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_register);
     ButterKnife.bind(this);
-
     mContext = this;
-    registerPresenter = new RegisterPresenter(this,this);
+    registerPresenter = new RegisterPresenter(this, this);
   }
 
-  @OnClick(R.id.register_button)
-  public void onClick() {
-    final HashMap<String, String> params = new HashMap<>();
-    params.put("account[phone]", email.getText().toString());
-    params.put("account[password]", password.getText().toString());
-    params.put("account[password_confirmation]", repeat_password.getText().toString());
-    if (TextUtil.isValidText(captchaEdit.getText().toString())) {
-      params.put("captcha", captchaEdit.getText().toString());
+  @OnClick({R.id.register_button,R.id.go_login})
+  public void onClick(View view) {
+    switch (view.getId()){
+      case R.id.register_button:
+
+        //登录
+        final HashMap<String, String> params = new HashMap<>();
+        if (StringUtil.isValidText(email.getText().toString()) &&
+          StringUtil.isValidText(password.getText().toString()) &&
+          StringUtil.isValidText(repeat_password.getText().toString()) &&
+          StringUtil.isValidText(name.getText().toString())) {
+          if (repeat_password.getText().toString().equals(password.getText().toString())) {
+            params.put("username", email.getText().toString());
+            params.put("password", password.getText().toString());
+            registerPresenter.goRegister(params);
+          } else {
+            ToastUtil.showToast("请确认密码");
+          }
+        } else {
+          ToastUtil.showToast("请输入完整的登录信息");
+        }
+        break;
+      case R.id.go_login:
+       finish();
+        break;
     }
-    params.put("account[client]", "android");
-    registerPresenter.goRegister(params);
+
+
   }
 
 
-
-
-
   @Override
-  public void showLoading() {
-
-  }
-
-  @Override
-  public void hideLoading() {
-
-  }
-
-  @Override
-  public void showCaptcha(String url) {
-    ImageLoader.displayCookiesImage(url, captcha);
+  public void register() {
+    Intent intent;
+    intent = new Intent(this, MainActivity.class);
+    startActivity(intent);
   }
 }

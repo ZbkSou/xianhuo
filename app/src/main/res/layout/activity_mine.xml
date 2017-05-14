@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/title_cole"
-
         >
 
         <LinearLayout
@@ -17,8 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
             >
-
             <com.ihaveu.bc.widget.DTextView
                 android:id="@+id/login_but"
                 android:layout_width="wrap_content"
@@ -34,7 +33,7 @@
                 android:id="@+id/register_but"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:textSize="20dp"
+                android:textSize="20dp"
                 android:textColor="@color/white"
                 android:padding="8dp"
                 android:layout_margin="10dp"
@@ -45,42 +44,63 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:id="@+id/mine_user_layout"
+            android:orientation="vertical">
             <com.ihaveu.bc.widget.DTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/mine_user_name"
+                android:textSize="20dp"
+                android:textColor="@color/white"
                 android:text="13102272166"/>
+            <com.ihaveu.bc.widget.DTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="可用资金:1000000"
 
+                android:layout_toRightOf="@+id/mine_money_title"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/mine_money_text"/>
         </LinearLayout>
 
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/default_head"
+            android:layout_marginTop="25dp"
+            android:layout_centerHorizontal="true"/>
 
-        <com.ihaveu.bc.widget.DTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-           android:text="可用资金"
-            />
-        <com.ihaveu.bc.widget.DTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/mine_money_text"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        >
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="充值"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/mine_cheng_shape"
             android:id="@+id/mine_add_money"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="提现"
+           android:layout_toRightOf="@+id/mine_add_money"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/mine_bule_shape"
             android:id="@+id/mine_get_money"/>
-    </LinearLayout>
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -94,17 +114,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/user"/>
+            android:layout_marginLeft="10dp"
+            android:id="@+id/mine_money_image"
+            android:src="@drawable/mine_money"/>
 
         <com.ihaveu.bc.widget.DTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/user_img"
+            android:layout_toRightOf="@id/mine_money_image"
             android:text="出入金记录"
             android:textColor="@color/black"
-            android:textSize="16dp"/>
+            android:textSize="20dp"/>
 
         <ImageView
 
@@ -131,17 +153,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/user"/>
+            android:id="@+id/mine_user_info_image"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/mine_user_info"/>
 
         <com.ihaveu.bc.widget.DTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/user_img"
+            android:layout_toRightOf="@id/mine_user_info_image"
             android:text="完善个人信息"
             android:textColor="@color/black"
-            android:textSize="16dp"/>
+            android:textSize="20dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -167,17 +191,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/user"/>
+            android:layout_marginLeft="10dp"
+            android:id="@+id/mine_bill_image"
+            android:src="@drawable/mine_bill"/>
 
         <com.ihaveu.bc.widget.DTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/user_img"
+            android:layout_toRightOf="@id/mine_bill_image"
             android:text="交易记录"
             android:textColor="@color/black"
-            android:textSize="16dp"/>
+            android:textSize="20dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -190,4 +216,51 @@
             android:paddingTop="12dp"
             android:src="@drawable/ic_single_product_choose"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:id="@+id/mine_set_password_layout"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/mine_set_password_image"
+            android:src="@drawable/mine_set_password"/>
+
+        <com.ihaveu.bc.widget.DTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/mine_set_password_image"
+            android:text="修改密码"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="12dp"
+            android:paddingLeft="7dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:src="@drawable/ic_single_product_choose"/>
+    </RelativeLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="退出登录"
+        android:textColor="@color/white"
+        android:layout_margin="10dp"
+
+        android:background="@drawable/mine_cheng_shape"
+        android:id="@+id/mine_close"/>
 </LinearLayout>

@@ -56,7 +56,7 @@
           android:layout_height="37dp"
           app:d_background="@color/white"
           app:d_hint="@string/hint_name"
-          app:maxLength="20">
+          app:maxLength="10">
         </com.ihaveu.bc.widget.DEditText>
         <View
           style="@style/Style_grayebebec_line"
@@ -86,30 +86,7 @@
           app:maxLength="20"
           app:d_password="true">
         </com.ihaveu.bc.widget.DEditText>
-        <!-- 验证码 -->
 
-        <LinearLayout
-          android:id="@+id/captcha_layout"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/register_edittext_height"
-          android:gravity="bottom"
-          android:orientation="horizontal"
-          android:visibility="gone" >
-            <com.ihaveu.bc.widget.DEditText
-              android:id="@+id/captcha"
-              android:layout_width="220dp"
-              android:layout_height="wrap_content"
-              app:d_hint="@string/hint_captcha"
-              app:d_background="@color/white"
-              app:d_inputType="number"></com.ihaveu.bc.widget.DEditText>
-            <ImageView
-              android:id="@+id/captcha_image"
-              android:layout_width="80dp"
-              android:layout_height="@dimen/register_captcha_image_height"
-              android:layout_marginLeft="@dimen/screen_3_percent"
-              android:scaleType="fitXY"
-              />
-        </LinearLayout>
         </LinearLayout>
         <!-- 注册按钮 -->
         <Button

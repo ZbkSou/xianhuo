@@ -7,6 +7,6 @@ package com.ihaveu.bc.base;
  * Time: 下午6:46
  */
 public interface BaseView {
-  public void showLoading();
-  public void hideLoading();
+  public void showHandleLoading();
+  public void hideHandleLoading();
 }

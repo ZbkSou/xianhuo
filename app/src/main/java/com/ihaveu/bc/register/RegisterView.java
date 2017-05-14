@@ -9,11 +9,7 @@ import com.ihaveu.bc.base.BaseView;
  * Time: 下午6:46
  */
 interface RegisterView extends BaseView {
-  public void showCaptcha(String url);
 
-
-
-
-
+  public void register();
 
 }
