@@ -22,7 +22,7 @@ public class GoodsBean {
   private String code;
   private String name;
   private String time;
-  private String newprice;
+  private String price;
   private String lastclose;
   private String open;
   private String high;
@@ -55,11 +55,11 @@ public class GoodsBean {
   }
 
   public String getNewprice() {
-    return newprice;
+    return price;
   }
 
   public void setNewprice(String newprice) {
-    this.newprice = newprice;
+    this.price = newprice;
   }
 
   public String getLastclose() {

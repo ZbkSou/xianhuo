@@ -2,21 +2,13 @@ package com.ihaveu.bc.register;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.ihaveu.bc.Manager.UserManage;
+import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.bean.SeriverResponse;
-import com.ihaveu.bc.bean.UserBean;
 import com.ihaveu.bc.model.AccountsModel;
 import com.ihaveu.bc.model.SessionModel;
 import com.ihaveu.bc.network.IModelResponse;
-import com.ihaveu.bc.okhttphelp.ImageLoader;
-import com.ihaveu.bc.utils.JsonUtil;
 import com.ihaveu.bc.utils.LogUtil;
-import com.ihaveu.bc.utils.TextUtil;
 import com.ihaveu.bc.utils.ToastUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

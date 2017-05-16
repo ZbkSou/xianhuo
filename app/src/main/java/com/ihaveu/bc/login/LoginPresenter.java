@@ -3,9 +3,7 @@ package com.ihaveu.bc.login;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.stream.JsonReader;
-import com.ihaveu.bc.Manager.UserManage;
+import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.bean.SeriverResponse;
 import com.ihaveu.bc.bean.UserBean;
 import com.ihaveu.bc.model.SessionModel;

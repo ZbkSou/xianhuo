@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <!-- 微信 -->
+    <com.ihaveu.bc.widget.DEditText
+        android:id="@+id/weichat_edit"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        app:d_background="@color/white"
+        app:d_hint="微信账号"
+        app:maxLength="20"
+       >
+    </com.ihaveu.bc.widget.DEditText>
+    <!-- 支付宝 -->
+    <com.ihaveu.bc.widget.DEditText
+        android:id="@+id/alipay_edit"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        app:d_background="@color/white"
+        app:d_hint="支付宝账号"
+        app:maxLength="20"
+    >
+    </com.ihaveu.bc.widget.DEditText>
+    <!-- 银行卡 -->
+    <com.ihaveu.bc.widget.DEditText
+        android:id="@+id/brank_edit"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        app:d_background="@color/white"
+        app:d_hint="银行卡号"
+        app:maxLength="20"
+        >
+    </com.ihaveu.bc.widget.DEditText>
+    <Button
+        android:id="@+id/queren_button"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cheng"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/white"/>
+</LinearLayout>

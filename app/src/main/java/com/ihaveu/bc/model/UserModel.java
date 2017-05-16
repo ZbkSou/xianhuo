@@ -9,6 +9,8 @@ import com.ihaveu.bc.callback.JsonCallBack;
 import com.ihaveu.bc.network.IModelResponse;
 import com.ihaveu.bc.utils.LogUtil;
 
+import java.util.Map;
+
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -19,7 +21,8 @@ import okhttp3.Response;
 public class UserModel extends Model{
   private Context mContext;
   private String useUrl = AppConfig.getApiHost()+"user/getUserInfo";
-
+  private String getMoneyUrl = AppConfig.getApiHost()+"/presentTask/withdrawCash";
+  private String completeInfoUrl = AppConfig.getApiHost()+"user/perfectUserInfo";
   public UserModel(Context context){
     mContext = context;
   }
@@ -29,6 +32,30 @@ public class UserModel extends Model{
    */
   public void getUserInfo( final IModelResponse<SeriverResponse> modelResponse) {
     get(useUrl, mContext, new JsonCallBack(SeriverResponse.class) {
+      @Override
+      public void onSuccess(Object o, Call call, Response response) {
+        modelResponse.onSuccess((SeriverResponse) o,null);
+      }
+      @Override
+      public void onError(Call call, Response response, Exception e) {
+        LogUtil.d(e.getMessage());
+      }
+    });
+  }
+  public void getMoney(Map<String,String> params, final IModelResponse<SeriverResponse> modelResponse) {
+    post(getMoneyUrl, mContext,params, new JsonCallBack(SeriverResponse.class) {
+      @Override
+      public void onSuccess(Object o, Call call, Response response) {
+        modelResponse.onSuccess((SeriverResponse) o,null);
+      }
+      @Override
+      public void onError(Call call, Response response, Exception e) {
+        LogUtil.d(e.getMessage());
+      }
+    });
+  }
+  public void completeInfo(Map<String,String> params, final IModelResponse<SeriverResponse> modelResponse) {
+    post(completeInfoUrl, mContext,params, new JsonCallBack(SeriverResponse.class) {
       @Override
       public void onSuccess(Object o, Call call, Response response) {
         modelResponse.onSuccess((SeriverResponse) o,null);

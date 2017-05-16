@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,19 +13,22 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihaveu.bc.Manager.UserManage;
+import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.R;
 import com.ihaveu.bc.base.BaseActivity;
 import com.ihaveu.bc.bean.GoodsBean;
 import com.ihaveu.bc.fragment.GoodFragment;
 import com.ihaveu.bc.mine.MineActivity;
-import com.ihaveu.bc.utils.TextUtil;
+import com.ihaveu.bc.utils.StringUtil;
 import com.ihaveu.bc.widget.DTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,6 +58,13 @@ public class MainActivity extends BaseActivity implements MainView{
   RelativeLayout layoutMainMine;
   private GoodsBean goodsBean;
 private MainPresenter mainPresenter;
+  private GoodFragment goodFragment1;
+  private GoodFragment goodFragment2;
+  private GoodFragment goodFragment3;
+  private List<GoodsBean> mGoodsBeanList;
+  private String Point ="3";
+  private String Money = "10";
+  PopupWindow window ;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -71,17 +80,7 @@ private MainPresenter mainPresenter;
   }
 
   private void init() {
-    goodsBean = new GoodsBean();
-    goodsBean.setBuy("3.16");
-    goodsBean.setCode("XFAG1");
-    goodsBean.setName("长江银100克");
-    goodsBean.setSell("3.18");
-    goodsBean.setNewprice("3.15");
-    goodsBean.setHigh("3.17");
-    goodsBean.setLow("3.18");
-    goodsBean.setOpen("3.18");
-    goodsBean.setLastclose("3.18");
-    goodsBean.setBuy("3.19");
+
    initTab();
     mainPresenter = new MainPresenter(this,this);
 
@@ -91,9 +90,11 @@ private MainPresenter mainPresenter;
   void onViewClick(View button) {
     switch (button.getId()) {
       case R.id.up_but:
+        goodsBean = mGoodsBeanList.get(viewPager.getCurrentItem());
         showPopwindow(goodsBean, true);
         break;
       case R.id.down_but:
+        goodsBean = mGoodsBeanList.get(viewPager.getCurrentItem());
         showPopwindow(goodsBean, false);
         break;
       case R.id.layout_main_mine:
@@ -122,9 +123,9 @@ private MainPresenter mainPresenter;
 
     List<Fragment> fragmentList = new ArrayList<>();
 
-    GoodFragment goodFragment1 = new GoodFragment();
-    GoodFragment goodFragment2 = new GoodFragment();
-    GoodFragment goodFragment3 = new GoodFragment();
+    goodFragment1 = new GoodFragment();
+    goodFragment2 = new GoodFragment();
+    goodFragment3 = new GoodFragment();
 
     fragmentList.add(goodFragment1);
     fragmentList.add(goodFragment2);
@@ -141,14 +142,14 @@ private MainPresenter mainPresenter;
   /**
    * 显示popupWindow
    */
-  private void showPopwindow(GoodsBean goodsBean, boolean status) {
+  private void showPopwindow(final GoodsBean goodsBean, final boolean status) {
     // 利用layoutInflater获得View
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    View view = inflater.inflate(R.layout.popwindow_buy, null);
+    final View view = inflater.inflate(R.layout.popwindow_buy, null);
 
     // 下面是两种方法得到宽度和高度 getWindow().getDecorView().getWidth()
 
-    PopupWindow window = new PopupWindow(view,
+     window = new PopupWindow(view,
       WindowManager.LayoutParams.MATCH_PARENT,
       WindowManager.LayoutParams.WRAP_CONTENT);
 
@@ -172,6 +173,7 @@ private MainPresenter mainPresenter;
     goodsNameText.setText(goodsBean.getName());
     TextView newPiceText = (TextView) view.findViewById(R.id.new_pice);
     newPiceText.setText(goodsBean.getNewprice());
+
     if (status) {
       statusText.setText("看涨");
     } else {
@@ -182,12 +184,37 @@ private MainPresenter mainPresenter;
     goodsNameText.setText(goodsBean.getName());
     newPiceText.setText(goodsBean.getNewprice());
     Button buyButton = (Button) view.findViewById(R.id.buy_but);
+    RadioGroup radioGroupPoint = (RadioGroup)view.findViewById(R.id.buy_point);
+
+    radioGroupPoint.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+      @Override
+      public void onCheckedChanged(RadioGroup group, int checkedId) {
+        RadioButton radioButtonPoint = (RadioButton)view.findViewById(checkedId);
+        Point =radioButtonPoint.getText().toString();
+      }
+    });
+
+    RadioGroup radioGroupMoney = (RadioGroup)view.findViewById(R.id.bug_money);
+    radioGroupMoney.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+      @Override
+      public void onCheckedChanged(RadioGroup group, int checkedId) {
+        RadioButton radioButtonPoint = (RadioButton)view.findViewById(checkedId);
+        Money =radioButtonPoint.getText().toString();
+      }
+    });
+
     buyButton.setOnClickListener(new View.OnClickListener() {
 
       @Override
       public void onClick(View v) {
-
-        System.out.println("第一个按钮被点击了");
+        HashMap<String,String> params = new HashMap<>();
+        params.put("tranType",status?"1":"-1");
+        params.put("tranIntegral",Money);
+        params.put("goodsCode",goodsBean.getCode());
+        params.put("goodsPrice",goodsBean.getNewprice());
+        params.put("percent",Point);
+        System.out.println("第一个按钮被点击了"+Point+Money);
+        mainPresenter.buyGoods(params);
       }
     });
 
@@ -204,6 +231,7 @@ private MainPresenter mainPresenter;
 
   private void getUserInfo(){
     mainPresenter.getUserInfo();
+    mainPresenter.getGoodData();
   }
 
   @Override
@@ -218,7 +246,11 @@ private MainPresenter mainPresenter;
   }
 
   @Override
-  public void showData() {
-
+  public void showData( List<GoodsBean> goodsBeanList) {
+    mGoodsBeanList = goodsBeanList;
+  }
+  @Override
+  public void dismissPopu() {
+    window.dismiss();
   }
 }

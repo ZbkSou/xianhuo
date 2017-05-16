@@ -1,4 +1,4 @@
-package com.ihaveu.bc.Manager;
+package com.ihaveu.bc.manager;
 
 import com.ihaveu.bc.bean.UserBean;
 
