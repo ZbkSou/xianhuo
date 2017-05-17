@@ -48,7 +48,7 @@ public class GoodFragment extends Fragment {
   public void setData(int i) {
 
     mGoodsBean = GoodManage.getInstance().getGoodsBeanList().get(i);
-    newPiceText.setText(mGoodsBean.getPrice()+"");
+    newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
     buyText.setText(mGoodsBean.getBuy() + "");
     shellText.setText(mGoodsBean.getSell() + "");
     openText.setText(mGoodsBean.getOpenPrice() + "");

@@ -73,6 +73,25 @@ public class MainPresenter {
       }
     });
   }
+  public void getRefreshGoodData(){
+    goodsModel.getGoods(new IModelResponse<SeriverResponse>() {
+      @Override
+      public void onSuccess(SeriverResponse model, ArrayList<SeriverResponse> list) {
+        if(!model.getState().equals("200")){
+          ToastUtil.showToast(model.getResult().toString());
+        }else {
+          LogUtil.d(model.getResult().toString());
+          List<GoodsBean> goodsBeenList = new Gson().fromJson(JsonUtil.beanToJSONString(model.getResult()),new TypeToken<List<GoodsBean>>(){}.getType());
+          GoodManage.getInstance().setGoodsBean(goodsBeenList);
+          mMainView.showRefresh();
+        }
+      }
+      @Override
+      public void onError(String msg) {
+
+      }
+    });
+  }
   public void buyGoods(Map<String,String> params){
     goodsModel.buyGoods(params,new IModelResponse<SeriverResponse>() {
       @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -71,8 +72,18 @@ public class MainActivity extends BaseActivity implements MainView {
   String[] point_XFOIL1;
   String[] point_XFCU1;
   public static int XFAG = 0;
-  public static int XFOIL = 1;
-  public static int XFCU= 2;
+  public static int XFOIL = 2;
+  public static int XFCU= 1;
+//定时
+  Handler handler=new Handler();
+  private final int  RefreshTimer = 30000;
+  Runnable runnable=new Runnable() {
+    @Override
+    public void run() {
+      mainPresenter.getRefreshGoodData();
+      handler.postDelayed(this, RefreshTimer);
+    }
+  };
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +98,8 @@ public class MainActivity extends BaseActivity implements MainView {
   protected void onResume() {
     super.onResume();
     getUserInfo();
+//    开始现成
+    handler.postDelayed(runnable, RefreshTimer);//每两秒执行一次runnable.
   }
 
   private void init() {
@@ -126,6 +139,8 @@ public class MainActivity extends BaseActivity implements MainView {
         Intent intent;
         intent = new Intent(this, MineActivity.class);
         startActivity(intent);
+//        关闭定时器
+        handler.removeCallbacks(runnable);
         break;
     }
 
@@ -293,10 +308,23 @@ public class MainActivity extends BaseActivity implements MainView {
   public void showData(List<GoodsBean> goodsBeanList) {
     mGoodsBeanList = goodsBeanList;
     initTab();
+//    2. 启动计时器
+//    handler.postDelayed(runnable, RefreshTimer);//每两秒执行一次runnable.
+//    3. 停止计时器
+//    handler.removeCallbacks(runnable);
   }
 
   @Override
   public void dismissPopu() {
     window.dismiss();
+  }
+
+  @Override
+  public void showRefresh() {
+    goodFragment1.setData(XFAG);
+
+    goodFragment2.setData(XFCU);
+
+    goodFragment3.setData(XFOIL);
   }
 }

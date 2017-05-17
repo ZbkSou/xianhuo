@@ -14,4 +14,6 @@ public interface MainView extends BaseView {
   public void showUser();
   public void showData(List<GoodsBean> goodsBeanList);
   public void dismissPopu();
+
+  public void showRefresh();
 }
