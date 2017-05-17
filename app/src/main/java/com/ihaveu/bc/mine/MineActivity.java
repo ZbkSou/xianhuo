@@ -107,59 +107,81 @@ public class MineActivity extends BaseActivity implements MineView {
         break;
 //      提现
       case R.id.mine_get_money:
-        LayoutInflater factory = LayoutInflater.from(MineActivity.this);//提示框
-        final View dialogView = factory.inflate(R.layout.dialog_get_money, null);//这里必须是final的
-        final EditText edit=(EditText)dialogView.findViewById(R.id.input_money);//获得输入框对象
-        edit.setHint("输入提现金额");//输入框默认值
-        edit.setSingleLine(true);
-        edit.setInputType(TYPE_CLASS_NUMBER);
-        new AlertDialog.Builder(MineActivity.this)
-          .setTitle("提现")//提示框标题
-          .setView(dialogView)
-          .setPositiveButton("确定",//提示框的两个按钮
-            new android.content.DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                if(UserManage.getInstance().getUserBean()!=null){
-                  if(TextUtil.isValidText(edit.getText().toString())&&
-                    TextUtil.isValidText(UserManage.getInstance().getUserBean().getWechat())){
-                    HashMap<String,String> params = new HashMap<>();
-                    params.put("presentIntegral",edit.getText().toString());
-                    params.put("cardNum",UserManage.getInstance().getUserBean().getCardNum());
-                    presenter.getMoney(params);
+          LayoutInflater factory = LayoutInflater.from(MineActivity.this);//提示框
+          final View dialogView = factory.inflate(R.layout.dialog_get_money, null);//这里必须是final的
+          final EditText edit=(EditText)dialogView.findViewById(R.id.input_money);//获得输入框对象
+          edit.setHint("输入提现金额");//输入框默认值
+          edit.setSingleLine(true);
+          edit.setInputType(TYPE_CLASS_NUMBER);
+          new AlertDialog.Builder(MineActivity.this)
+            .setTitle("提现")//提示框标题
+            .setView(dialogView)
+            .setPositiveButton("确定",//提示框的两个按钮
+              new android.content.DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                  if(UserManage.getInstance().getUserBean()!=null){
+                    if(TextUtil.isValidText(edit.getText().toString())&&
+                      TextUtil.isValidText(UserManage.getInstance().getUserBean().getWechat())){
+                      HashMap<String,String> params = new HashMap<>();
+                      params.put("presentIntegral",edit.getText().toString());
+                      params.put("cardNum",UserManage.getInstance().getUserBean().getCardNum());
+                      presenter.getMoney(params);
+                    }else {
+                      ToastUtil.showToast("请完善个人信息");
+                    }
                   }else {
-                    ToastUtil.showToast("请完善个人信息");
+                    ToastUtil.showToast("请先登录");
                   }
-                }else {
-                  ToastUtil.showToast("请先登录");
+
+
                 }
+              }).setNegativeButton("取消", null).create().show();
 
 
-              }
-            }).setNegativeButton("取消", null).create().show();
 
         break;
       case R.id.mine_user_info_layout:
-        intent = new Intent(this, UserInfoActivity.class);
-        startActivity(intent);
+        if( UserManage.getInstance().getUserBean()!=null){
+          intent = new Intent(this, UserInfoActivity.class);
+          startActivity(intent);
+        }else {
+          ToastUtil.showToast("请先登录");
+        }
+
         break;
       case R.id.mine_money_layout:
-        intent = new Intent(this, RecordActivity.class);
-        Bundle moneyBundle = new Bundle();
-        moneyBundle.putInt("key", INTEGRALCHANGE);
-        intent.putExtra(KEY_BUNDLE,moneyBundle);
-        startActivity(intent);
+
+        if( UserManage.getInstance().getUserBean()!=null){
+          intent = new Intent(this, RecordActivity.class);
+          Bundle moneyBundle = new Bundle();
+          moneyBundle.putInt("key", INTEGRALCHANGE);
+          intent.putExtra(KEY_BUNDLE,moneyBundle);
+          startActivity(intent);
+        }else {
+          ToastUtil.showToast("请先登录");
+        }
+
         break;
       case R.id.mine_trade_layout:
-        intent = new Intent(this, RecordActivity.class);
-        Bundle tradeBundle = new Bundle();
-        tradeBundle.putInt("key", INTEGRALTRAN);
-        intent.putExtra(KEY_BUNDLE,tradeBundle);
-        startActivity(intent);
+
+        if( UserManage.getInstance().getUserBean()!=null){
+          intent = new Intent(this, RecordActivity.class);
+          Bundle tradeBundle = new Bundle();
+          tradeBundle.putInt("key", INTEGRALTRAN);
+          intent.putExtra(KEY_BUNDLE,tradeBundle);
+          startActivity(intent);
+        }else {
+          ToastUtil.showToast("请先登录");
+        }
         break;
       case R.id.mine_set_password_layout:
-        intent = new Intent(this, SetPasswordActivity.class);
-        startActivity(intent);
+        if( UserManage.getInstance().getUserBean()!=null){
+          intent = new Intent(this, SetPasswordActivity.class);
+          startActivity(intent);
+        }else {
+          ToastUtil.showToast("请先登录");
+        }
         break;
       case R.id.mine_close:
         presenter.exit();

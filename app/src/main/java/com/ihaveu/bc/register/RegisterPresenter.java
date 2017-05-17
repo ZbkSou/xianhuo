@@ -49,7 +49,7 @@ public class RegisterPresenter {
           LogUtil.d(model.getResult().toString());
 //          UserManage.getInstance().setUserBean(new Gson().fromJson(JsonUtil.beanToJSONString(model.getResult()), UserBean.class));
 //          ToastUtil.showToast("注册成功"+model.getResult());
-          LogUtil.d(UserManage.getInstance().getUserBean().getUsername());
+//          LogUtil.d(UserManage.getInstance().getUserBean().getUsername());
           mRegisterView.hideHandleLoading();
           mRegisterView.register();
         }
