@@ -64,7 +64,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
         if (StringUtil.isValidText(email.getText().toString()) &&
           StringUtil.isValidText(password.getText().toString()) &&
           StringUtil.isValidText(repeat_password.getText().toString()) &&
-          StringUtil.isValidText(name.getText().toString())) {
+          StringUtil.isValidText(name.getText().toString())&&password.getText().toString().length()>5) {
           if (repeat_password.getText().toString().equals(password.getText().toString())) {
             params.put("username", email.getText().toString());
             params.put("password", password.getText().toString());
@@ -73,7 +73,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             ToastUtil.showToast("请确认密码");
           }
         } else {
-          ToastUtil.showToast("请输入完整的登录信息");
+          ToastUtil.showToast("请输入完整的注册信息");
         }
         break;
       case R.id.go_login:
@@ -87,8 +87,9 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
 
   @Override
   public void register() {
-    Intent intent;
-    intent = new Intent(this, MainActivity.class);
-    startActivity(intent);
+//    Intent intent;
+//    intent = new Intent(this, MainActivity.class);
+//    startActivity(intent);
+    finish();
   }
 }

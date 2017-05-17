@@ -48,6 +48,7 @@ public class ChangeAdapter extends RecyclerView.Adapter<ChangeAdapter.NormalText
     holder.changeItemIntegral.setText(changeBeenList.get(position).getChangeIntegral()+"");
     holder.changeItemRemark.setText(changeBeenList.get(position).getRemarks());
     holder.changeItemTime.setText(changeBeenList.get(position).getCreateDate());
+    holder.changeItemMoney.setText("剩余"+changeBeenList.get(position).getChangeAfterIntegral()+"");
   }
 
   @Override
@@ -64,6 +65,9 @@ public class ChangeAdapter extends RecyclerView.Adapter<ChangeAdapter.NormalText
     DTextView changeItemRemark;
     @BindView(R.id.change_item_time)
     DTextView changeItemTime;
+
+    @BindView(R.id.change_item_money)
+    DTextView changeItemMoney;
     NormalTextViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);

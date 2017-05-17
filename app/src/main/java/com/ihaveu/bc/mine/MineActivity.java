@@ -81,13 +81,16 @@ public class MineActivity extends BaseActivity implements MineView {
   private void init() {
 //    mineAddMoney.setVisibility(View.GONE);
     presenter = new MinePresenter(this,this);
+    isLogin();
 
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-    isLogin();}
+    presenter.getUserInfo();
+//    isLogin();
+ }
 
   @OnClick({R.id.login_but, R.id.register_but, R.id.mine_get_money,
     R.id.mine_money_layout,R.id.mine_user_info_layout,R.id.mine_trade_layout,
@@ -98,10 +101,12 @@ public class MineActivity extends BaseActivity implements MineView {
       case R.id.login_but:
         intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+
         break;
       case R.id.register_but:
         intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+
         break;
       case R.id.mine_add_money:
         break;
@@ -110,7 +115,7 @@ public class MineActivity extends BaseActivity implements MineView {
           LayoutInflater factory = LayoutInflater.from(MineActivity.this);//提示框
           final View dialogView = factory.inflate(R.layout.dialog_get_money, null);//这里必须是final的
           final EditText edit=(EditText)dialogView.findViewById(R.id.input_money);//获得输入框对象
-          edit.setHint("输入提现金额");//输入框默认值
+          edit.setHint("输入兑换积分");//输入框默认值
           edit.setSingleLine(true);
           edit.setInputType(TYPE_CLASS_NUMBER);
           new AlertDialog.Builder(MineActivity.this)
@@ -192,14 +197,15 @@ public class MineActivity extends BaseActivity implements MineView {
   @Override
   public void exit() {
     isLogin();
+
   }
   private boolean isLogin(){
-    presenter.getUserInfo();
+
     if (UserManage.getInstance().getUserBean() != null) {
       loginRegister.setVisibility(View.GONE);
       mineUserLayout.setVisibility(View.VISIBLE);
       mineUserName.setText(UserManage.getInstance().getUserBean().getUsername());
-      mineMoneyText.setText("可用资金:"+UserManage.getInstance().getUserBean().getIntegral());
+      mineMoneyText.setText("可用积分:"+UserManage.getInstance().getUserBean().getIntegral());
       return true;
     } else {
       loginRegister.setVisibility(View.VISIBLE);

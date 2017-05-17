@@ -27,6 +27,9 @@ import com.ihaveu.bc.fragment.GoodFragment;
 import com.ihaveu.bc.manager.GoodManage;
 import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.mine.MineActivity;
+import com.ihaveu.bc.utils.CommonUtil;
+import com.ihaveu.bc.utils.LogUtil;
+import com.ihaveu.bc.utils.ToastUtil;
 import com.ihaveu.bc.widget.DTextView;
 
 import java.util.ArrayList;
@@ -36,6 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.internal.Util;
 
 /**
  * Created with Android Studio.
@@ -116,23 +120,33 @@ public class MainActivity extends BaseActivity implements MainView {
   void onViewClick(View button) {
     switch (button.getId()) {
       case R.id.up_but:
-        goodsBean = GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
-        if(viewPager.getCurrentItem()==0){
-          showPopwindow(goodsBean, true,point_XFAG1);
-        }else if(viewPager.getCurrentItem()==1){
-          showPopwindow(goodsBean, true,point_XFCU1 );
+        if( UserManage.getInstance().getUserBean()!=null) {
+
+          goodsBean = GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
+          if (viewPager.getCurrentItem() == 0) {
+            showPopwindow(goodsBean, true, point_XFAG1);
+          } else if (viewPager.getCurrentItem() == 1) {
+            showPopwindow(goodsBean, true, point_XFCU1);
+          } else {
+            showPopwindow(goodsBean, true, point_XFOIL1);
+          }
         }else {
-          showPopwindow(goodsBean, true,point_XFOIL1);
+          ToastUtil.showToast("请先登录");
         }
         break;
       case R.id.down_but:
-        goodsBean =  GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
-        if(viewPager.getCurrentItem()==0){
-          showPopwindow(goodsBean, false,point_XFAG1);
-        }else if(viewPager.getCurrentItem()==1){
-          showPopwindow(goodsBean, false,point_XFCU1 );
+        if( UserManage.getInstance().getUserBean()!=null) {
+
+          goodsBean = GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
+          if (viewPager.getCurrentItem() == 0) {
+            showPopwindow(goodsBean, false, point_XFAG1);
+          } else if (viewPager.getCurrentItem() == 1) {
+            showPopwindow(goodsBean, false, point_XFCU1);
+          } else {
+            showPopwindow(goodsBean, false, point_XFOIL1);
+          }
         }else {
-          showPopwindow(goodsBean, false,point_XFOIL1);
+          ToastUtil.showToast("请先登录");
         }
         break;
       case R.id.layout_main_mine:
@@ -272,7 +286,7 @@ public class MainActivity extends BaseActivity implements MainView {
         params.put("goodsCode", goodsBean.getCode());
         params.put("goodsPrice", goodsBean.getPrice()+"");
         params.put("percent", Point);
-        System.out.println("第一个按钮被点击了" + Point + Money);
+        LogUtil.d("第一个按钮被点击了" + Point + Money);
         mainPresenter.buyGoods(params);
       }
     });
@@ -298,12 +312,23 @@ public class MainActivity extends BaseActivity implements MainView {
 //    if(TextUtil.isValidText(UserManage.getInstance().getUserBean().getName())){
 //      userText.setText(UserManage.getInstance().getUserBean().getName());
 //    }else {
-    userText.setText(UserManage.getInstance().getUserBean().getUsername());
+    if(UserManage.getInstance().getUserBean()!=null){
+      userText.setText(UserManage.getInstance().getUserBean().getUsername());
 //    }
-    moneyText.setText("可用资金" + UserManage.getInstance().getUserBean().getIntegral());
+      moneyText.setText("可用积分" + UserManage.getInstance().getUserBean().getIntegral());
+    }else {
+      userText.setText("");
+      moneyText.setText("可用积分");
+    }
+
 
   }
-
+  @Override
+  protected void onPause() {
+    super.onPause();
+    handler.removeCallbacks(runnable);
+    //有可能在执行完onPause或onStop后,系统资源紧张将Activity杀死,所以有必要在此保存持久数据
+  }
   @Override
   public void showData(List<GoodsBean> goodsBeanList) {
     mGoodsBeanList = goodsBeanList;
@@ -321,10 +346,28 @@ public class MainActivity extends BaseActivity implements MainView {
 
   @Override
   public void showRefresh() {
-    goodFragment1.setData(XFAG);
+    if(goodFragment1!=null){
+      goodFragment1.setData(XFAG);
+    }else {
+      LogUtil.d("goodFragment1xxxxx");
+    }
+    if (goodFragment2!= null){
+      goodFragment2.setData(XFCU);
+    }else {
+      LogUtil.d("goodFragment1xxxxx");
+    }
+    if(goodFragment3!=null){
+      goodFragment3.setData(XFOIL);
+    }else {
+      LogUtil.d("goodFragment1xxxxx");
+    }
 
-    goodFragment2.setData(XFCU);
+  }
 
-    goodFragment3.setData(XFOIL);
+  @Override
+  public void onBackPressed() {
+
+    CommonUtil.finishActivity(this);
+
   }
 }

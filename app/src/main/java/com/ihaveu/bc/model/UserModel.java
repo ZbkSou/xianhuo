@@ -39,6 +39,7 @@ public class UserModel extends Model{
       @Override
       public void onError(Call call, Response response, Exception e) {
         LogUtil.d(e.getMessage());
+        modelResponse.onError(e.getMessage());
       }
     });
   }

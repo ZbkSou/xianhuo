@@ -257,7 +257,7 @@
     <Button
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="提现"
+      android:text="兑换"
       android:layout_toRightOf="@+id/mine_add_money"
       android:textColor="@color/white"
       android:layout_margin="10dp"

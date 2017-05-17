@@ -15,7 +15,9 @@ import com.ihaveu.bc.model.SessionModel;
 import com.ihaveu.bc.network.IModelResponse;
 import com.ihaveu.bc.register.RegisterActivity;
 import com.ihaveu.bc.utils.LogUtil;
+import com.ihaveu.bc.utils.SharedpreferenceUtil;
 import com.ihaveu.bc.utils.StringUtil;
+import com.ihaveu.bc.utils.TextUtil;
 import com.ihaveu.bc.utils.ToastUtil;
 import com.ihaveu.bc.widget.DEditText;
 import com.ihaveu.bc.widget.DTextView;
@@ -33,9 +35,9 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends BaseActivity implements LoginView {
   @BindView(R.id.username)
-  DEditText username;
+  DEditText usernameEdit;
   @BindView(R.id.password)
-  DEditText password;
+  DEditText passwordEdit;
   @BindView(R.id.login)
   Button login;
   @BindView(R.id.logup)
@@ -47,17 +49,27 @@ private LoginPresenter mLoginPresenter;
     setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
     mLoginPresenter = new LoginPresenter(this,this);
-  }
 
+  }
+  @Override
+  protected void onResume() {
+    super.onResume();
+    String username = SharedpreferenceUtil.getData("username","")+"";
+    String password = SharedpreferenceUtil.getData("password","")+"";
+    if(TextUtil.isValidText(username)&&TextUtil.isValidText(password)) {
+      passwordEdit.setText(password);
+      usernameEdit.setText(username);
+    }
+  }
   @OnClick({R.id.login,R.id.logup})
   public void onClick(View v) {
     switch (v.getId()){
       case R.id.login:
         HashMap<String,String> params = new HashMap<>();
-        if(StringUtil.isValidText(username.getText().toString())&&
-          StringUtil.isValidText(password.getText().toString())){
-          params.put("username",username.getText().toString());
-          params.put("password",password.getText().toString());
+        if(StringUtil.isValidText(usernameEdit.getText().toString())&&
+          StringUtil.isValidText(passwordEdit.getText().toString())){
+          params.put("username",usernameEdit.getText().toString());
+          params.put("password",passwordEdit.getText().toString());
           mLoginPresenter.logIn(params);
         }else {
           ToastUtil.showToast("请输入完整的登录信息");
@@ -69,6 +81,7 @@ private LoginPresenter mLoginPresenter;
         Intent intent;
         intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        finish();
         break;
     }
 
@@ -77,9 +90,11 @@ private LoginPresenter mLoginPresenter;
 
   @Override
   public void logIn() {
-    Intent intent;
-    intent = new Intent(this, MainActivity.class);
-    startActivity(intent);
+    SharedpreferenceUtil.saveData("username",usernameEdit.getText().toString());
+    SharedpreferenceUtil.saveData("password",passwordEdit.getText().toString());
+//    Intent intent;
+//    intent = new Intent(this, MainActivity.class);
+//    startActivity(intent);
     finish();
   }
 }

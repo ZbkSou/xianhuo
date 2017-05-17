@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.ihaveu.bc.R;
 import com.ihaveu.bc.bean.GoodsBean;
 import com.ihaveu.bc.manager.GoodManage;
+import com.ihaveu.bc.utils.LogUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,14 +48,18 @@ public class GoodFragment extends Fragment {
 
   public void setData(int i) {
 
-    mGoodsBean = GoodManage.getInstance().getGoodsBeanList().get(i);
-    newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
-    buyText.setText(mGoodsBean.getBuy() + "");
-    shellText.setText(mGoodsBean.getSell() + "");
-    openText.setText(mGoodsBean.getOpenPrice() + "");
-    closeText.setText(mGoodsBean.getYesterdayClosePrice() + "");
-    highText.setText(mGoodsBean.getHightPrice() + "");
-    lowText.setText(mGoodsBean.getLowPrice() + "");
+    try {
+      mGoodsBean = GoodManage.getInstance().getGoodsBeanList().get(i);
+      newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
+      buyText.setText(mGoodsBean.getBuy() + "");
+      shellText.setText(mGoodsBean.getSell() + "");
+      openText.setText(mGoodsBean.getOpenPrice() + "");
+      closeText.setText(mGoodsBean.getYesterdayClosePrice() + "");
+      highText.setText(mGoodsBean.getHightPrice() + "");
+      lowText.setText(mGoodsBean.getLowPrice() + "");
+    }catch (Exception e){
+      LogUtil.d(e.getMessage());
+    }
   }
 
 

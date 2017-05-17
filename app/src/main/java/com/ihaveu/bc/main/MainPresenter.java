@@ -50,7 +50,8 @@ public class MainPresenter {
       }
       @Override
       public void onError(String msg) {
-
+        UserManage.getInstance().setUserBean(null);
+        mMainView.showUser();
       }
     });
   }
