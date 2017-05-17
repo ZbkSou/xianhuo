@@ -44,6 +44,9 @@
     <activity android:name=".userInfo.UserInfoActivity">
 
     </activity>
+    <activity android:name=".record.RecordActivity"
+            >
+    </activity>
   </application>
 
 </manifest>

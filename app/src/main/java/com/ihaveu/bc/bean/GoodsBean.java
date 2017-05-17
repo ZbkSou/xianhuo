@@ -6,29 +6,114 @@ package com.ihaveu.bc.bean;
 
 public class GoodsBean {
 
+
   /**
-   * code : XFAG1,XFAG2,XFAG3,XFAG4,XFCU1,XFCU2,XFCU3,XFOIL1,XFOIL2,XFOIL3,XFZN1T
-   * name : 长江银100克,长江银15千克,长江银60千克,长江银120千克,长江铜1吨,长江铜5吨,长江铜10吨,长江油100桶,长江油500桶,长江油1000桶,长江锌1吨
-   * time : 1494014438,1494016197,1494016175,1494016197,1494007199,1494007200,1494007200,1494016197,1494016202,1494016202,1494007187
-   * newprice : 3.6100,3609.0000,3609.0000,3609.0000,38369.0000,38369.0000,38369.0000,319.3700,319.3700,319.3700,17814.0000
-   * lastclose : 3.6200,3626.0000,3626.0000,3626.0000,38057.0000,38057.0000,38057.0000,312.7000,312.7000,312.7000,17680.0000
-   * open : 3.6100,3608.0000,3608.0000,3608.0000,38098.0000,38098.0000,38098.0000,313.0400,313.0400,313.0400,17680.0000
-   * high : 3.6500,3650.0000,3650.0000,3650.0000,38410.0000,38410.0000,38410.0000,321.1600,321.1600,321.1600,17831.0000
-   * low : 3.5800,3584.0000,3584.0000,3584.0000,37950.0000,37950.0000,37950.0000,301.0700,301.0700,301.0700,17491.0000
-   * buy : 3.6200,3615.0000,3615.0000,3614.0000,38429.0000,38429.0000,38429.0000,319.9700,319.9700,319.9700,17829.0000
-   * sell : 3.6100,3609.0000,3609.0000,3609.0000,38369.0000,38369.0000,38369.0000,319.3700,319.3700,319.3700,17814.0000
+   * remarks :
+   * createBy :
+   * createDate : 2017-05-17 17:55:00
+   * updateBy :
+   * updateDate : 2017-05-17 17:55:00
+   * delFlag : 0
+   * flag : 1
+   * businessId : 0997ce85e7bc43e78d5d9ac40a081632
+   * code : XFAG1
+   * name : 长江银100克
+   * time :
+   * price : 3.73
+   * openPrice : 3.72
+   * avgPrice : 0
+   * lowPrice : 3.72
+   * hightPrice : 3.74
+   * yesterdayClosePrice : 3.72
+   * buy : 3.74
+   * sell : 3.73
+   * goodsId : 1
    */
 
+  private String remarks;
+  private String createBy;
+  private String createDate;
+  private String updateBy;
+  private String updateDate;
+  private String delFlag;
+  private String flag;
+  private String businessId;
   private String code;
   private String name;
   private String time;
-  private String price;
-  private String lastclose;
-  private String open;
-  private String high;
-  private String low;
-  private String buy;
-  private String sell;
+  private double price;
+  private double openPrice;
+  private int avgPrice;
+  private double lowPrice;
+  private double hightPrice;
+  private double yesterdayClosePrice;
+  private double buy;
+  private double sell;
+  private String goodsId;
+
+  public String getRemarks() {
+    return remarks;
+  }
+
+  public void setRemarks(String remarks) {
+    this.remarks = remarks;
+  }
+
+  public String getCreateBy() {
+    return createBy;
+  }
+
+  public void setCreateBy(String createBy) {
+    this.createBy = createBy;
+  }
+
+  public String getCreateDate() {
+    return createDate;
+  }
+
+  public void setCreateDate(String createDate) {
+    this.createDate = createDate;
+  }
+
+  public String getUpdateBy() {
+    return updateBy;
+  }
+
+  public void setUpdateBy(String updateBy) {
+    this.updateBy = updateBy;
+  }
+
+  public String getUpdateDate() {
+    return updateDate;
+  }
+
+  public void setUpdateDate(String updateDate) {
+    this.updateDate = updateDate;
+  }
+
+  public String getDelFlag() {
+    return delFlag;
+  }
+
+  public void setDelFlag(String delFlag) {
+    this.delFlag = delFlag;
+  }
+
+  public String getFlag() {
+    return flag;
+  }
+
+  public void setFlag(String flag) {
+    this.flag = flag;
+  }
+
+  public String getBusinessId() {
+    return businessId;
+  }
+
+  public void setBusinessId(String businessId) {
+    this.businessId = businessId;
+  }
 
   public String getCode() {
     return code;
@@ -54,59 +139,75 @@ public class GoodsBean {
     this.time = time;
   }
 
-  public String getNewprice() {
+  public double getPrice() {
     return price;
   }
 
-  public void setNewprice(String newprice) {
-    this.price = newprice;
+  public void setPrice(double price) {
+    this.price = price;
   }
 
-  public String getLastclose() {
-    return lastclose;
+  public double getOpenPrice() {
+    return openPrice;
   }
 
-  public void setLastclose(String lastclose) {
-    this.lastclose = lastclose;
+  public void setOpenPrice(double openPrice) {
+    this.openPrice = openPrice;
   }
 
-  public String getOpen() {
-    return open;
+  public int getAvgPrice() {
+    return avgPrice;
   }
 
-  public void setOpen(String open) {
-    this.open = open;
+  public void setAvgPrice(int avgPrice) {
+    this.avgPrice = avgPrice;
   }
 
-  public String getHigh() {
-    return high;
+  public double getLowPrice() {
+    return lowPrice;
   }
 
-  public void setHigh(String high) {
-    this.high = high;
+  public void setLowPrice(double lowPrice) {
+    this.lowPrice = lowPrice;
   }
 
-  public String getLow() {
-    return low;
+  public double getHightPrice() {
+    return hightPrice;
   }
 
-  public void setLow(String low) {
-    this.low = low;
+  public void setHightPrice(double hightPrice) {
+    this.hightPrice = hightPrice;
   }
 
-  public String getBuy() {
+  public double getYesterdayClosePrice() {
+    return yesterdayClosePrice;
+  }
+
+  public void setYesterdayClosePrice(double yesterdayClosePrice) {
+    this.yesterdayClosePrice = yesterdayClosePrice;
+  }
+
+  public double getBuy() {
     return buy;
   }
 
-  public void setBuy(String buy) {
+  public void setBuy(double buy) {
     this.buy = buy;
   }
 
-  public String getSell() {
+  public double getSell() {
     return sell;
   }
 
-  public void setSell(String sell) {
+  public void setSell(double sell) {
     this.sell = sell;
+  }
+
+  public String getGoodsId() {
+    return goodsId;
+  }
+
+  public void setGoodsId(String goodsId) {
+    this.goodsId = goodsId;
   }
 }

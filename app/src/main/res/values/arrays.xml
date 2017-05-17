@@ -6,5 +6,19 @@
     <item>原油</item>
     <item>沥青</item>
   </string-array>
-
+  <string-array name="point_XFAG1">
+    <item>3</item>
+    <item>5</item>
+    <item>7</item>
+  </string-array>
+  <string-array name="point_XFOIL1">
+    <item>15</item>
+    <item>30</item>
+    <item>45</item>
+  </string-array>
+  <string-array name="point_XFCU1">
+    <item>1500</item>
+    <item>3000</item>
+    <item>4500</item>
+  </string-array>
 </resources>

@@ -7,10 +7,6 @@ import com.ihaveu.bc.base.AppConfig;
 import com.ihaveu.bc.bean.SeriverResponse;
 import com.ihaveu.bc.callback.JsonCallBack;
 import com.ihaveu.bc.network.IModelResponse;
-import com.ihaveu.bc.utils.ToastUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -18,23 +14,24 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * Created by bc on 16/10/11.
- * Describe
+ * Created with Android Studio.
+ * User: bkzhou
+ * Date: 2017/5/17
+ * Time: 上午11:24
  */
-public class AccountsModel extends Model{
+public class RecordModel extends Model {
   private Context mContext;
-  private String registerUrl = AppConfig.getApiHost()+"user/register";
-  private String setPasswordUrl = AppConfig.getApiHost()+"user/admin/resetPassword";
-  public AccountsModel (Context context){
-    mContext = context;
+  private String integralChangeUrl = AppConfig.getApiHost()+"integralChange/admin/getIntegralChangeList";
+  private String integralTranUrl = AppConfig.getApiHost()+"integralTran/admin/getIntegralTranList";
+  public RecordModel (Context context){
+    mContext =  context;
   }
   /**
-   * 注册
-   * @param params
+   * 资金数据
    * @param modelResponse
    */
-  public void register(Map<String,String> params, final IModelResponse<SeriverResponse> modelResponse) {
-    post(registerUrl, mContext, params, new JsonCallBack(SeriverResponse.class) {
+  public void getIntegralChange( final IModelResponse<SeriverResponse> modelResponse) {
+    get(integralChangeUrl, mContext, new JsonCallBack(SeriverResponse.class) {
       @Override
       public void onSuccess(Object o, Call call, Response response) {
         modelResponse.onSuccess((SeriverResponse) o,null);
@@ -42,18 +39,16 @@ public class AccountsModel extends Model{
 
       @Override
       public void onError(Call call, Response response, Exception e) {
-        Log.d("Login",e.getMessage());
+        Log.d("RecordModel",e.getMessage());
       }
     });
   }
-
   /**
-   * 修改密码
-   * @param params
+   * 订单数据
    * @param modelResponse
    */
-  public void setPassword(Map<String,String> params, final IModelResponse<SeriverResponse> modelResponse) {
-    post(setPasswordUrl, mContext, params, new JsonCallBack(SeriverResponse.class) {
+  public void getIntegralTran(final IModelResponse<SeriverResponse> modelResponse) {
+    get(integralTranUrl, mContext, new JsonCallBack(SeriverResponse.class) {
       @Override
       public void onSuccess(Object o, Call call, Response response) {
         modelResponse.onSuccess((SeriverResponse) o,null);
@@ -61,7 +56,7 @@ public class AccountsModel extends Model{
 
       @Override
       public void onError(Call call, Response response, Exception e) {
-        Log.d("Login",e.getMessage());
+        Log.d("RecordModel",e.getMessage());
       }
     });
   }

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="37dp"
         app:d_background="@color/white"
-        app:d_hint="微信账号"
+        app:d_hint="@string/user_info_wx"
         app:maxLength="20"
        >
     </com.ihaveu.bc.widget.DEditText>
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="37dp"
         app:d_background="@color/white"
-        app:d_hint="支付宝账号"
+        app:d_hint="@string/user_info_aili"
         app:maxLength="20"
     >
     </com.ihaveu.bc.widget.DEditText>
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="37dp"
         app:d_background="@color/white"
-        app:d_hint="银行卡号"
+        app:d_hint="@string/user_info_card"
         app:maxLength="20"
         >
     </com.ihaveu.bc.widget.DEditText>

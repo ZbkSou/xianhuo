@@ -30,4 +30,8 @@
   <string name="money_third">100</string>
   <string name="money_fourth">500</string>
   <string name="money_fifth">1000</string>
+  <!--晚上信息-->
+  <string name="user_info_wx">微信号</string>
+  <string name="user_info_aili">支付宝</string>
+  <string name="user_info_card">银行卡</string>
 </resources>

@@ -60,7 +60,7 @@
             <com.ihaveu.bc.widget.DTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="可用资金:1000000"
+                android:text="可用积分:1000000"
 
                 android:layout_toRightOf="@+id/mine_money_title"
                 android:textColor="@color/white"
@@ -77,30 +77,30 @@
             android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="15dp"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="充值"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/white"
-            android:background="@drawable/mine_cheng_shape"
-            android:id="@+id/mine_add_money"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="提现"
-           android:layout_toRightOf="@+id/mine_add_money"
-            android:textColor="@color/white"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/mine_bule_shape"
-            android:id="@+id/mine_get_money"/>
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:layout_marginBottom="15dp"-->
+        <!--&gt;-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="充值"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@drawable/mine_cheng_shape"-->
+            <!--android:id="@+id/mine_add_money"/>-->
+        <!--&lt;!&ndash;<Button&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="提现"&ndash;&gt;-->
+           <!--&lt;!&ndash;android:layout_toRightOf="@+id/mine_add_money"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginLeft="10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@drawable/mine_bule_shape"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/mine_get_money"/>&ndash;&gt;-->
+    <!--</RelativeLayout>-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -254,6 +254,15 @@
             android:paddingTop="12dp"
             android:src="@drawable/ic_single_product_choose"/>
     </RelativeLayout>
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="提现"
+      android:layout_toRightOf="@+id/mine_add_money"
+      android:textColor="@color/white"
+      android:layout_margin="10dp"
+      android:background="@drawable/mine_bule_shape"
+      android:id="@+id/mine_get_money"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -20,8 +20,8 @@ import okhttp3.Response;
 
 public class GoodsModel extends Model{
   private Context mContext;
-  private String goodsUrl = AppConfig.getApiHost()+"cashGoods/getCashGoodsItem";
-  private String buyGoodsUrl = AppConfig.getApiHost()+"integralTran/purchaseOrder";
+  private String goodsUrl = AppConfig.getApiHost()+"cashGoodsPrice/getCashGoodsPriceList";
+  private String buyGoodsUrl = AppConfig.getApiHost()+"integralTran/admin/purchaseOrder";
   public GoodsModel (Context context){
     mContext =  context;
   }

@@ -41,7 +41,7 @@ public class LoginPresenter {
         }else {
           LogUtil.d(model.getResult().toString());
           UserManage.getInstance().setUserBean(new Gson().fromJson(JsonUtil.beanToJSONString(model.getResult()), UserBean.class));
-          ToastUtil.showToast("登录成功"+model.getResult());
+//          ToastUtil.showToast("登录成功"+model.getResult());
           LogUtil.d(UserManage.getInstance().getUserBean().getUsername());
           mLoginView.hideHandleLoading();
           mLoginView.logIn();

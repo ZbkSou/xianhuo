@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ihaveu.bc.bean.GoodsBean;
+import com.ihaveu.bc.manager.GoodManage;
 import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.bean.SeriverResponse;
 import com.ihaveu.bc.bean.UserBean;
@@ -62,7 +63,7 @@ public class MainPresenter {
         }else {
           LogUtil.d(model.getResult().toString());
           List<GoodsBean> goodsBeenList = new Gson().fromJson(JsonUtil.beanToJSONString(model.getResult()),new TypeToken<List<GoodsBean>>(){}.getType());
-
+          GoodManage.getInstance().setGoodsBean(goodsBeenList);
           mMainView.showData(goodsBeenList);
         }
       }

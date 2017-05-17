@@ -2,6 +2,7 @@ package com.ihaveu.bc.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -18,13 +19,13 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.R;
 import com.ihaveu.bc.base.BaseActivity;
 import com.ihaveu.bc.bean.GoodsBean;
 import com.ihaveu.bc.fragment.GoodFragment;
+import com.ihaveu.bc.manager.GoodManage;
+import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.mine.MineActivity;
-import com.ihaveu.bc.utils.StringUtil;
 import com.ihaveu.bc.widget.DTextView;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ import butterknife.OnClick;
  * Date: 2017/4/27
  * Time: 下午2:52
  */
-public class MainActivity extends BaseActivity implements MainView{
+public class MainActivity extends BaseActivity implements MainView {
   @BindView(R.id.tabs)
   TabLayout tabLayout;
   @BindView(R.id.viewpager)
@@ -56,21 +57,30 @@ public class MainActivity extends BaseActivity implements MainView{
   DTextView moneyText;
   @BindView(R.id.layout_main_mine)
   RelativeLayout layoutMainMine;
+
   private GoodsBean goodsBean;
-private MainPresenter mainPresenter;
+  private MainPresenter mainPresenter;
   private GoodFragment goodFragment1;
   private GoodFragment goodFragment2;
   private GoodFragment goodFragment3;
   private List<GoodsBean> mGoodsBeanList;
-  private String Point ="3";
+  private String Point = "3";
   private String Money = "10";
-  PopupWindow window ;
+  PopupWindow window;
+  String[] point_XFAG1;
+  String[] point_XFOIL1;
+  String[] point_XFCU1;
+  public static int XFAG = 0;
+  public static int XFOIL = 1;
+  public static int XFCU= 2;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_mains);
     ButterKnife.bind(this);
     init();
+
   }
 
   @Override
@@ -80,22 +90,37 @@ private MainPresenter mainPresenter;
   }
 
   private void init() {
+    Resources res = getResources();
+    point_XFAG1 = res.getStringArray(R.array.point_XFAG1);
+    point_XFOIL1 = res.getStringArray(R.array.point_XFOIL1);
+    point_XFCU1 = res.getStringArray(R.array.point_XFCU1);
 
-   initTab();
-    mainPresenter = new MainPresenter(this,this);
-
+    mainPresenter = new MainPresenter(this, this);
+    mainPresenter.getGoodData();
   }
 
-  @OnClick({R.id.up_but, R.id.down_but, R.id.money_text,R.id.layout_main_mine})
+  @OnClick({R.id.up_but, R.id.down_but, R.id.money_text, R.id.layout_main_mine})
   void onViewClick(View button) {
     switch (button.getId()) {
       case R.id.up_but:
-        goodsBean = mGoodsBeanList.get(viewPager.getCurrentItem());
-        showPopwindow(goodsBean, true);
+        goodsBean = GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
+        if(viewPager.getCurrentItem()==0){
+          showPopwindow(goodsBean, true,point_XFAG1);
+        }else if(viewPager.getCurrentItem()==1){
+          showPopwindow(goodsBean, true,point_XFCU1 );
+        }else {
+          showPopwindow(goodsBean, true,point_XFOIL1);
+        }
         break;
       case R.id.down_but:
-        goodsBean = mGoodsBeanList.get(viewPager.getCurrentItem());
-        showPopwindow(goodsBean, false);
+        goodsBean =  GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
+        if(viewPager.getCurrentItem()==0){
+          showPopwindow(goodsBean, false,point_XFAG1);
+        }else if(viewPager.getCurrentItem()==1){
+          showPopwindow(goodsBean, false,point_XFCU1 );
+        }else {
+          showPopwindow(goodsBean, false,point_XFOIL1);
+        }
         break;
       case R.id.layout_main_mine:
         Intent intent;
@@ -127,6 +152,16 @@ private MainPresenter mainPresenter;
     goodFragment2 = new GoodFragment();
     goodFragment3 = new GoodFragment();
 
+    Bundle data1 = new Bundle();
+    data1.putInt("code", XFAG);
+    goodFragment1.setArguments(data1);
+    Bundle data2 = new Bundle();
+    data2.putInt("code", XFCU);
+    goodFragment2.setArguments(data2);
+    Bundle data3 = new Bundle();
+    data3.putInt("code", XFOIL);
+    goodFragment3.setArguments(data3);
+
     fragmentList.add(goodFragment1);
     fragmentList.add(goodFragment2);
     fragmentList.add(goodFragment3);
@@ -142,14 +177,14 @@ private MainPresenter mainPresenter;
   /**
    * 显示popupWindow
    */
-  private void showPopwindow(final GoodsBean goodsBean, final boolean status) {
+  private void showPopwindow(final GoodsBean goodsBean, final boolean status,String[] point) {
     // 利用layoutInflater获得View
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     final View view = inflater.inflate(R.layout.popwindow_buy, null);
 
     // 下面是两种方法得到宽度和高度 getWindow().getDecorView().getWidth()
 
-     window = new PopupWindow(view,
+    window = new PopupWindow(view,
       WindowManager.LayoutParams.MATCH_PARENT,
       WindowManager.LayoutParams.WRAP_CONTENT);
 
@@ -167,12 +202,21 @@ private MainPresenter mainPresenter;
     // 在底部显示
     window.showAtLocation(MainActivity.this.findViewById(R.id.up_but),
       Gravity.BOTTOM, 0, 0);
+
+
+    RadioButton buyPoint3 = (RadioButton) view.findViewById(R.id.buy_point_3);
+    buyPoint3.setText(point[0]);
+    RadioButton buyPoint4 = (RadioButton) view.findViewById(R.id.buy_point_4);
+    buyPoint4.setText(point[1]);
+    RadioButton buyPoint6= (RadioButton) view.findViewById(R.id.buy_point_6);
+    buyPoint6.setText(point[2]);
+
     // 这里检验popWindow里的button是否可以点击
     TextView statusText = (TextView) view.findViewById(R.id.status);
     TextView goodsNameText = (TextView) view.findViewById(R.id.goods_name);
     goodsNameText.setText(goodsBean.getName());
     TextView newPiceText = (TextView) view.findViewById(R.id.new_pice);
-    newPiceText.setText(goodsBean.getNewprice());
+    newPiceText.setText(goodsBean.getPrice()+"");
 
     if (status) {
       statusText.setText("看涨");
@@ -182,24 +226,24 @@ private MainPresenter mainPresenter;
 
 
     goodsNameText.setText(goodsBean.getName());
-    newPiceText.setText(goodsBean.getNewprice());
+    newPiceText.setText(goodsBean.getPrice()+"");
     Button buyButton = (Button) view.findViewById(R.id.buy_but);
-    RadioGroup radioGroupPoint = (RadioGroup)view.findViewById(R.id.buy_point);
+    RadioGroup radioGroupPoint = (RadioGroup) view.findViewById(R.id.buy_point);
 
     radioGroupPoint.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(RadioGroup group, int checkedId) {
-        RadioButton radioButtonPoint = (RadioButton)view.findViewById(checkedId);
-        Point =radioButtonPoint.getText().toString();
+        RadioButton radioButtonPoint = (RadioButton) view.findViewById(checkedId);
+        Point = radioButtonPoint.getText().toString();
       }
     });
 
-    RadioGroup radioGroupMoney = (RadioGroup)view.findViewById(R.id.bug_money);
+    RadioGroup radioGroupMoney = (RadioGroup) view.findViewById(R.id.bug_money);
     radioGroupMoney.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(RadioGroup group, int checkedId) {
-        RadioButton radioButtonPoint = (RadioButton)view.findViewById(checkedId);
-        Money =radioButtonPoint.getText().toString();
+        RadioButton radioButtonPoint = (RadioButton) view.findViewById(checkedId);
+        Money = radioButtonPoint.getText().toString();
       }
     });
 
@@ -207,13 +251,13 @@ private MainPresenter mainPresenter;
 
       @Override
       public void onClick(View v) {
-        HashMap<String,String> params = new HashMap<>();
-        params.put("tranType",status?"1":"-1");
-        params.put("tranIntegral",Money);
-        params.put("goodsCode",goodsBean.getCode());
-        params.put("goodsPrice",goodsBean.getNewprice());
-        params.put("percent",Point);
-        System.out.println("第一个按钮被点击了"+Point+Money);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("tranType", status ? "1" : "-1");
+        params.put("tranIntegral", Money);
+        params.put("goodsCode", goodsBean.getCode());
+        params.put("goodsPrice", goodsBean.getPrice()+"");
+        params.put("percent", Point);
+        System.out.println("第一个按钮被点击了" + Point + Money);
         mainPresenter.buyGoods(params);
       }
     });
@@ -229,9 +273,9 @@ private MainPresenter mainPresenter;
 
   }
 
-  private void getUserInfo(){
+  private void getUserInfo() {
     mainPresenter.getUserInfo();
-    mainPresenter.getGoodData();
+
   }
 
   @Override
@@ -239,16 +283,18 @@ private MainPresenter mainPresenter;
 //    if(TextUtil.isValidText(UserManage.getInstance().getUserBean().getName())){
 //      userText.setText(UserManage.getInstance().getUserBean().getName());
 //    }else {
-      userText.setText(UserManage.getInstance().getUserBean().getUsername());
+    userText.setText(UserManage.getInstance().getUserBean().getUsername());
 //    }
-    moneyText.setText("可用资金"+UserManage.getInstance().getUserBean().getIntegral());
+    moneyText.setText("可用资金" + UserManage.getInstance().getUserBean().getIntegral());
 
   }
 
   @Override
-  public void showData( List<GoodsBean> goodsBeanList) {
+  public void showData(List<GoodsBean> goodsBeanList) {
     mGoodsBeanList = goodsBeanList;
+    initTab();
   }
+
   @Override
   public void dismissPopu() {
     window.dismiss();

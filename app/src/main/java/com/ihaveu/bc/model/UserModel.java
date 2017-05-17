@@ -20,9 +20,9 @@ import okhttp3.Response;
 
 public class UserModel extends Model{
   private Context mContext;
-  private String useUrl = AppConfig.getApiHost()+"user/getUserInfo";
-  private String getMoneyUrl = AppConfig.getApiHost()+"/presentTask/withdrawCash";
-  private String completeInfoUrl = AppConfig.getApiHost()+"user/perfectUserInfo";
+  private String useUrl = AppConfig.getApiHost()+"user/admin/getUserInfo";
+  private String getMoneyUrl = AppConfig.getApiHost()+"/presentTask/admin/withdrawCash";
+  private String completeInfoUrl = AppConfig.getApiHost()+"user/admin/perfectUserInfo";
   public UserModel(Context context){
     mContext = context;
   }
