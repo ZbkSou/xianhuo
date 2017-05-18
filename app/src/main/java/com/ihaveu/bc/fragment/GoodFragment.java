@@ -15,6 +15,8 @@ import com.ihaveu.bc.utils.LogUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.ihaveu.bc.main.MainActivity.XFCU;
+
 /**
  * Created by ZBK on 2017/5/6.
  */
@@ -23,14 +25,14 @@ public class GoodFragment extends Fragment {
   @BindView(R.id.new_pice_text)
   TextView newPiceText;
   private GoodsBean mGoodsBean;
-  @BindView(R.id.buy_text)
-  TextView buyText;
-  @BindView(R.id.shell_text)
-  TextView shellText;
-  @BindView(R.id.open_text)
-  TextView openText;
-  @BindView(R.id.close_text)
-  TextView closeText;
+//  @BindView(R.id.buy_text)
+//  TextView buyText;
+//  @BindView(R.id.shell_text)
+//  TextView shellText;
+//  @BindView(R.id.open_text)
+//  TextView openText;
+//  @BindView(R.id.close_text)
+//  TextView closeText;
   @BindView(R.id.high_text)
   TextView highText;
   @BindView(R.id.low_text)
@@ -50,13 +52,20 @@ public class GoodFragment extends Fragment {
 
     try {
       mGoodsBean = GoodManage.getInstance().getGoodsBeanList().get(i);
-      newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
-      buyText.setText(mGoodsBean.getBuy() + "");
-      shellText.setText(mGoodsBean.getSell() + "");
-      openText.setText(mGoodsBean.getOpenPrice() + "");
-      closeText.setText(mGoodsBean.getYesterdayClosePrice() + "");
-      highText.setText(mGoodsBean.getHightPrice() + "");
-      lowText.setText(mGoodsBean.getLowPrice() + "");
+      if(i ==XFCU){
+        newPiceText.setText(String.format("%.0f", mGoodsBean.getPrice()));
+        highText.setText(String.format("%.0f", mGoodsBean.getHightPrice()) );
+        lowText.setText(String.format("%.0f", mGoodsBean.getLowPrice()) );
+      }else {
+        newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
+        highText.setText(mGoodsBean.getHightPrice() + "");
+        lowText.setText(mGoodsBean.getLowPrice() + "");
+      }
+//      buyText.setText(mGoodsBean.getBuy() + "");
+//      shellText.setText(mGoodsBean.getSell() + "");
+//      openText.setText(mGoodsBean.getOpenPrice() + "");
+//      closeText.setText(mGoodsBean.getYesterdayClosePrice() + "");
+
     }catch (Exception e){
       LogUtil.d(e.getMessage());
     }

@@ -8,7 +8,7 @@ import com.ihaveu.bc.BuildConfig;
 
 public class AppConfig {
   public static String getApiHost() {
-    return getValue("http://www.ihaveu.com/", "http://119.23.251.26:8080/Game/");
+    return getValue("http://119.23.251.26:8080/Game/", "http://119.23.251.26:8080/Game/");
   }
   private static String getValue(String proEnv, String devEnv) {
     return !BuildConfig.DEBUG ? proEnv : devEnv;//正常情况

@@ -56,6 +56,7 @@ public class TranAdapter extends RecyclerView.Adapter<TranAdapter.TranAdapterVie
     }
     holder.tranItemPercent.setText(integralTarnBeanList.get(position).getPercent()+"");
     holder.changeItemTime.setText(integralTarnBeanList.get(position).getCreateDate());
+    holder.tranItemPice.setText(integralTarnBeanList.get(position).getGoodsPrice()+"");
   }
 
   @Override
@@ -77,6 +78,8 @@ public class TranAdapter extends RecyclerView.Adapter<TranAdapter.TranAdapterVie
     DTextView tranItemPercent;
     @BindView(R.id.change_item_time)
     DTextView changeItemTime;
+    @BindView(R.id.tran_item_pice)
+    DTextView tranItemPice;
     TranAdapterViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);

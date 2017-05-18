@@ -103,11 +103,12 @@ public class MainPresenter {
           getUserInfo();
         }else {
           LogUtil.d(model.getResult().toString());
+          ToastUtil.showToast(model.getResult().toString());
         }
       }
       @Override
       public void onError(String msg) {
-
+        ToastUtil.showToast(msg);
       }
     });
   }

@@ -33,13 +33,14 @@
       android:textSize="20dp"
       android:layout_marginRight="5dp"
       android:layout_height="wrap_content"/>
-    <com.ihaveu.bc.widget.DTextView
-        android:id="@+id/change_item_money"
-        android:layout_width="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:layout_height="wrap_content"/>
+
   </LinearLayout>
+  <com.ihaveu.bc.widget.DTextView
+    android:id="@+id/change_item_money"
+    android:layout_width="wrap_content"
+    android:textColor="@color/black"
+    android:textSize="20dp"
+    android:layout_height="wrap_content"/>
   <com.ihaveu.bc.widget.DTextView
     android:layout_marginTop="5dp"
     android:id="@+id/change_item_time"

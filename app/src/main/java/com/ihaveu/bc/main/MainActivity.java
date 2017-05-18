@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements MainView {
   private GoodFragment goodFragment2;
   private GoodFragment goodFragment3;
   private List<GoodsBean> mGoodsBeanList;
-  private String Point = "3";
+  private String Point;
   private String Money = "10";
   PopupWindow window;
   String[] point_XFAG1;
@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity implements MainView {
   public static int XFCU= 1;
 //定时
   Handler handler=new Handler();
-  private final int  RefreshTimer = 30000;
+  private final int  RefreshTimer = 150000;
   Runnable runnable=new Runnable() {
     @Override
     public void run() {
@@ -124,11 +124,11 @@ public class MainActivity extends BaseActivity implements MainView {
 
           goodsBean = GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
           if (viewPager.getCurrentItem() == 0) {
-            showPopwindow(goodsBean, true, point_XFAG1);
+            showPopwindow(goodsBean, true, point_XFAG1,XFAG);
           } else if (viewPager.getCurrentItem() == 1) {
-            showPopwindow(goodsBean, true, point_XFCU1);
+            showPopwindow(goodsBean, true, point_XFCU1,XFCU);
           } else {
-            showPopwindow(goodsBean, true, point_XFOIL1);
+            showPopwindow(goodsBean, true, point_XFOIL1,XFOIL);
           }
         }else {
           ToastUtil.showToast("请先登录");
@@ -139,11 +139,11 @@ public class MainActivity extends BaseActivity implements MainView {
 
           goodsBean = GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
           if (viewPager.getCurrentItem() == 0) {
-            showPopwindow(goodsBean, false, point_XFAG1);
+            showPopwindow(goodsBean, false, point_XFAG1,XFAG);
           } else if (viewPager.getCurrentItem() == 1) {
-            showPopwindow(goodsBean, false, point_XFCU1);
+            showPopwindow(goodsBean, false, point_XFCU1,XFCU);
           } else {
-            showPopwindow(goodsBean, false, point_XFOIL1);
+            showPopwindow(goodsBean, false, point_XFOIL1,XFOIL);
           }
         }else {
           ToastUtil.showToast("请先登录");
@@ -171,9 +171,9 @@ public class MainActivity extends BaseActivity implements MainView {
     tabList.add("长江铜");
     tabList.add("长江油");
     tabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
-    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(0)));//添加tab选项卡
-    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(1)));
-    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(2)));
+    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFAG)));//添加tab选项卡
+    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFCU)));
+    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFOIL)));
 
     List<Fragment> fragmentList = new ArrayList<>();
 
@@ -206,7 +206,7 @@ public class MainActivity extends BaseActivity implements MainView {
   /**
    * 显示popupWindow
    */
-  private void showPopwindow(final GoodsBean goodsBean, final boolean status,String[] point) {
+  private void showPopwindow(final GoodsBean goodsBean, final boolean status,String[] point,int code) {
     // 利用layoutInflater获得View
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     final View view = inflater.inflate(R.layout.popwindow_buy, null);
@@ -239,14 +239,23 @@ public class MainActivity extends BaseActivity implements MainView {
     buyPoint4.setText(point[1]);
     RadioButton buyPoint6= (RadioButton) view.findViewById(R.id.buy_point_6);
     buyPoint6.setText(point[2]);
-
+    if(code ==XFCU){
+      buyPoint3.setText(String.format("%.0f", Integer.parseInt(point[0])*0.01));
+      buyPoint4.setText(String.format("%.0f", Integer.parseInt(point[1])*0.01));
+      buyPoint6.setText(String.format("%.0f", Integer.parseInt(point[2])*0.01));
+    }
+    Point = point[0];
     // 这里检验popWindow里的button是否可以点击
     TextView statusText = (TextView) view.findViewById(R.id.status);
     TextView goodsNameText = (TextView) view.findViewById(R.id.goods_name);
     goodsNameText.setText(goodsBean.getName());
     TextView newPiceText = (TextView) view.findViewById(R.id.new_pice);
-    newPiceText.setText(goodsBean.getPrice()+"");
 
+    if(code ==XFCU){
+      newPiceText.setText(String.format("%.0f", goodsBean.getPrice()));
+    }else {
+      newPiceText.setText(goodsBean.getPrice()+"");
+    }
     if (status) {
       statusText.setText("看涨");
     } else {
