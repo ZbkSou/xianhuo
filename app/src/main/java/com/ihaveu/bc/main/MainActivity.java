@@ -93,10 +93,11 @@ public class MainActivity extends BaseActivity implements MainView {
   private int tabAt = 0;
   //定时
   Handler handler = new Handler();
-  private final int RefreshTimer = 150000;
+  private final int RefreshTimer = 300000;
   Runnable runnable = new Runnable() {
     @Override
     public void run() {
+      LogUtil.d("run");
       mainPresenter.getRefreshGoodData();
       handler.postDelayed(this, RefreshTimer);
     }
