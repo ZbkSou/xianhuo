@@ -72,22 +72,129 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
-        <android.support.design.widget.TabLayout
+        <LinearLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/cheng"
-            app:tabSelectedTextColor="@color/cheng"
-            app:tabTextColor="@android:color/black"
-            />
+            android:orientation="horizontal">
+            <com.ihaveu.bc.widget.DTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="15dp"
+                android:textSize="20dp"
+                android:text="长江银"
+                android:id="@+id/goods_xfag"/>
+            <com.ihaveu.bc.widget.DTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="15dp"
+                android:textSize="20dp"
+                android:text="长江铜"
+                android:id="@+id/goods_xfcu"/>
+            <com.ihaveu.bc.widget.DTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="15dp"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:text="长江油"
+                android:id="@+id/goods_xfoil"/>
+        </LinearLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_below ="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/tabs"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabIndicatorColor="@color/cheng"-->
+            <!--app:tabSelectedTextColor="@color/cheng"-->
+            <!--app:tabTextColor="@android:color/black"-->
+            <!--/>-->
+
+        <!--<android.support.v4.view.ViewPager-->
+            <!--android:id="@+id/viewpager"-->
+            <!--android:layout_below ="@+id/tabs"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--/>-->
+        <LinearLayout
+                        android:layout_below ="@+id/tabs"
+                      android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:background="@color/white"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:text="最新价:"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="40dp"
+                    android:id="@+id/new_pice_text"
+                    android:textColor="@color/red"
+                    android:text="33.6"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bgGray"
+                ></View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.61"
+                        android:textSize="@dimen/pice_num_size"
+                        android:id="@+id/high_text"/>
+                    <TextView
+                        style="@style/good_text_style"
+                        android:text="最高"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.61"
+                        android:textSize="@dimen/pice_num_size"
+                        android:id="@+id/low_text"/>
+                    <TextView
+                        style="@style/good_text_style"
+                        android:text="最低"/>
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/main_fenshi"/>
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

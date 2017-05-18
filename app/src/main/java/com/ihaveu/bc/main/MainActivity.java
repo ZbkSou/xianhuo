@@ -6,14 +6,12 @@ import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,25 +19,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihaveu.bc.R;
+import com.ihaveu.bc.base.AppConfig;
 import com.ihaveu.bc.base.BaseActivity;
 import com.ihaveu.bc.bean.GoodsBean;
 import com.ihaveu.bc.fragment.GoodFragment;
 import com.ihaveu.bc.manager.GoodManage;
 import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.mine.MineActivity;
+import com.ihaveu.bc.okhttphelp.ImageLoader;
 import com.ihaveu.bc.utils.CommonUtil;
 import com.ihaveu.bc.utils.LogUtil;
 import com.ihaveu.bc.utils.ToastUtil;
 import com.ihaveu.bc.widget.DTextView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.internal.Util;
 
 /**
  * Created with Android Studio.
@@ -48,10 +46,10 @@ import okhttp3.internal.Util;
  * Time: 下午2:52
  */
 public class MainActivity extends BaseActivity implements MainView {
-  @BindView(R.id.tabs)
-  TabLayout tabLayout;
-  @BindView(R.id.viewpager)
-  ViewPager viewPager;
+  //  @BindView(R.id.tabs)
+//  TabLayout tabLayout;
+  //  @BindView(R.id.viewpager)
+//  ViewPager viewPager;
   @BindView(R.id.up_but)
   Button upButton;
   @BindView(R.id.down_but)
@@ -62,12 +60,26 @@ public class MainActivity extends BaseActivity implements MainView {
   DTextView moneyText;
   @BindView(R.id.layout_main_mine)
   RelativeLayout layoutMainMine;
+  @BindView(R.id.new_pice_text)
+  TextView newPiceText;
+  @BindView(R.id.high_text)
+  TextView highText;
+  @BindView(R.id.low_text)
+  TextView lowText;
+  @BindView(R.id.goods_xfag)
+  DTextView goodsXfag;
+  @BindView(R.id.goods_xfcu)
+  DTextView goodsXfcu;
+  @BindView(R.id.goods_xfoil)
+  DTextView goodsXfoil;
+  @BindView(R.id.main_fenshi)
+  ImageView mainFenshi;
 
   private GoodsBean goodsBean;
   private MainPresenter mainPresenter;
-  private GoodFragment goodFragment1;
-  private GoodFragment goodFragment2;
-  private GoodFragment goodFragment3;
+//  private GoodFragment goodFragment1;
+//  private GoodFragment goodFragment2;
+//  private GoodFragment goodFragment3;
   private List<GoodsBean> mGoodsBeanList;
   private String Point;
   private String Money = "10";
@@ -77,11 +89,12 @@ public class MainActivity extends BaseActivity implements MainView {
   String[] point_XFCU1;
   public static int XFAG = 0;
   public static int XFOIL = 2;
-  public static int XFCU= 1;
-//定时
-  Handler handler=new Handler();
-  private final int  RefreshTimer = 150000;
-  Runnable runnable=new Runnable() {
+  public static int XFCU = 1;
+  private int tabAt = 0;
+  //定时
+  Handler handler = new Handler();
+  private final int RefreshTimer = 150000;
+  Runnable runnable = new Runnable() {
     @Override
     public void run() {
       mainPresenter.getRefreshGoodData();
@@ -111,7 +124,6 @@ public class MainActivity extends BaseActivity implements MainView {
     point_XFAG1 = res.getStringArray(R.array.point_XFAG1);
     point_XFOIL1 = res.getStringArray(R.array.point_XFOIL1);
     point_XFCU1 = res.getStringArray(R.array.point_XFCU1);
-
     mainPresenter = new MainPresenter(this, this);
     mainPresenter.getGoodData();
   }
@@ -120,32 +132,32 @@ public class MainActivity extends BaseActivity implements MainView {
   void onViewClick(View button) {
     switch (button.getId()) {
       case R.id.up_but:
-        if( UserManage.getInstance().getUserBean()!=null) {
+        if (UserManage.getInstance().getUserBean() != null) {
 
-          goodsBean = GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
-          if (viewPager.getCurrentItem() == 0) {
-            showPopwindow(goodsBean, true, point_XFAG1,XFAG);
-          } else if (viewPager.getCurrentItem() == 1) {
-            showPopwindow(goodsBean, true, point_XFCU1,XFCU);
+          goodsBean = GoodManage.getInstance().getGoodsBeanList().get(tabAt);
+          if (tabAt == 0) {
+            showPopwindow(goodsBean, true, point_XFAG1, XFAG);
+          } else if (tabAt == 1) {
+            showPopwindow(goodsBean, true, point_XFCU1, XFCU);
           } else {
-            showPopwindow(goodsBean, true, point_XFOIL1,XFOIL);
+            showPopwindow(goodsBean, true, point_XFOIL1, XFOIL);
           }
-        }else {
+        } else {
           ToastUtil.showToast("请先登录");
         }
         break;
       case R.id.down_but:
-        if( UserManage.getInstance().getUserBean()!=null) {
+        if (UserManage.getInstance().getUserBean() != null) {
 
-          goodsBean = GoodManage.getInstance().getGoodsBeanList().get(viewPager.getCurrentItem());
-          if (viewPager.getCurrentItem() == 0) {
-            showPopwindow(goodsBean, false, point_XFAG1,XFAG);
-          } else if (viewPager.getCurrentItem() == 1) {
-            showPopwindow(goodsBean, false, point_XFCU1,XFCU);
+          goodsBean = GoodManage.getInstance().getGoodsBeanList().get(tabAt);
+          if (tabAt == 0) {
+            showPopwindow(goodsBean, false, point_XFAG1, XFAG);
+          } else if (tabAt == 1) {
+            showPopwindow(goodsBean, false, point_XFCU1, XFCU);
           } else {
-            showPopwindow(goodsBean, false, point_XFOIL1,XFOIL);
+            showPopwindow(goodsBean, false, point_XFOIL1, XFOIL);
           }
-        }else {
+        } else {
           ToastUtil.showToast("请先登录");
         }
         break;
@@ -164,49 +176,49 @@ public class MainActivity extends BaseActivity implements MainView {
   /**
    * 初始化TAB标签
    */
-  private void initTab() {
-    TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-    List<String> tabList = new ArrayList<>();
-    tabList.add("长江银");
-    tabList.add("长江铜");
-    tabList.add("长江油");
-    tabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
-    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFAG)));//添加tab选项卡
-    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFCU)));
-    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFOIL)));
-
-    List<Fragment> fragmentList = new ArrayList<>();
-
-    goodFragment1 = new GoodFragment();
-    goodFragment2 = new GoodFragment();
-    goodFragment3 = new GoodFragment();
-
-    Bundle data1 = new Bundle();
-    data1.putInt("code", XFAG);
-    goodFragment1.setArguments(data1);
-    Bundle data2 = new Bundle();
-    data2.putInt("code", XFCU);
-    goodFragment2.setArguments(data2);
-    Bundle data3 = new Bundle();
-    data3.putInt("code", XFOIL);
-    goodFragment3.setArguments(data3);
-
-    fragmentList.add(goodFragment1);
-    fragmentList.add(goodFragment2);
-    fragmentList.add(goodFragment3);
-
-    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-    TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
-    viewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
-    tabLayout.setupWithViewPager(viewPager);//将TabLayout和ViewPager关联起来。
-    tabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
-
-  }
+//  private void initTab() {
+//    TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+//    List<String> tabList = new ArrayList<>();
+//    tabList.add("长江银");
+//    tabList.add("长江铜");
+//    tabList.add("长江油");
+//    tabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
+//    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFAG)));//添加tab选项卡
+//    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFCU)));
+//    tabLayout.addTab(tabLayout.newTab().setText(tabList.get(XFOIL)));
+//
+//    List<Fragment> fragmentList = new ArrayList<>();
+//
+//    goodFragment1 = new GoodFragment();
+//    goodFragment2 = new GoodFragment();
+//    goodFragment3 = new GoodFragment();
+//
+//    Bundle data1 = new Bundle();
+//    data1.putInt("code", XFAG);
+//    goodFragment1.setArguments(data1);
+//    Bundle data2 = new Bundle();
+//    data2.putInt("code", XFCU);
+//    goodFragment2.setArguments(data2);
+//    Bundle data3 = new Bundle();
+//    data3.putInt("code", XFOIL);
+//    goodFragment3.setArguments(data3);
+//
+//    fragmentList.add(goodFragment1);
+//    fragmentList.add(goodFragment2);
+//    fragmentList.add(goodFragment3);
+//
+//    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+//    TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
+//    viewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
+//    tabLayout.setupWithViewPager(viewPager);//将TabLayout和ViewPager关联起来。
+//    tabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
+//
+//  }
 
   /**
    * 显示popupWindow
    */
-  private void showPopwindow(final GoodsBean goodsBean, final boolean status,String[] point,int code) {
+  private void showPopwindow(final GoodsBean goodsBean, final boolean status, String[] point, int code) {
     // 利用layoutInflater获得View
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     final View view = inflater.inflate(R.layout.popwindow_buy, null);
@@ -237,12 +249,12 @@ public class MainActivity extends BaseActivity implements MainView {
     buyPoint3.setText(point[0]);
     RadioButton buyPoint4 = (RadioButton) view.findViewById(R.id.buy_point_4);
     buyPoint4.setText(point[1]);
-    RadioButton buyPoint6= (RadioButton) view.findViewById(R.id.buy_point_6);
+    RadioButton buyPoint6 = (RadioButton) view.findViewById(R.id.buy_point_6);
     buyPoint6.setText(point[2]);
-    if(code ==XFCU){
-      buyPoint3.setText(String.format("%.0f", Integer.parseInt(point[0])*0.01));
-      buyPoint4.setText(String.format("%.0f", Integer.parseInt(point[1])*0.01));
-      buyPoint6.setText(String.format("%.0f", Integer.parseInt(point[2])*0.01));
+    if (code == XFCU) {
+      buyPoint3.setText(String.format("%.0f", Integer.parseInt(point[0]) * 0.01));
+      buyPoint4.setText(String.format("%.0f", Integer.parseInt(point[1]) * 0.01));
+      buyPoint6.setText(String.format("%.0f", Integer.parseInt(point[2]) * 0.01));
     }
     Point = point[0];
     // 这里检验popWindow里的button是否可以点击
@@ -251,10 +263,10 @@ public class MainActivity extends BaseActivity implements MainView {
     goodsNameText.setText(goodsBean.getName());
     TextView newPiceText = (TextView) view.findViewById(R.id.new_pice);
 
-    if(code ==XFCU){
+    if (code == XFCU) {
       newPiceText.setText(String.format("%.0f", goodsBean.getPrice()));
-    }else {
-      newPiceText.setText(goodsBean.getPrice()+"");
+    } else {
+      newPiceText.setText(goodsBean.getPrice() + "");
     }
     if (status) {
       statusText.setText("看涨");
@@ -264,7 +276,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
 
     goodsNameText.setText(goodsBean.getName());
-    newPiceText.setText(goodsBean.getPrice()+"");
+    newPiceText.setText(goodsBean.getPrice() + "");
     Button buyButton = (Button) view.findViewById(R.id.buy_but);
     RadioGroup radioGroupPoint = (RadioGroup) view.findViewById(R.id.buy_point);
 
@@ -293,7 +305,7 @@ public class MainActivity extends BaseActivity implements MainView {
         params.put("tranType", status ? "1" : "-1");
         params.put("tranIntegral", Money);
         params.put("goodsCode", goodsBean.getCode());
-        params.put("goodsPrice", goodsBean.getPrice()+"");
+        params.put("goodsPrice", goodsBean.getPrice() + "");
         params.put("percent", Point);
         LogUtil.d("第一个按钮被点击了" + Point + Money);
         mainPresenter.buyGoods(params);
@@ -321,32 +333,54 @@ public class MainActivity extends BaseActivity implements MainView {
 //    if(TextUtil.isValidText(UserManage.getInstance().getUserBean().getName())){
 //      userText.setText(UserManage.getInstance().getUserBean().getName());
 //    }else {
-    if(UserManage.getInstance().getUserBean()!=null){
+    if (UserManage.getInstance().getUserBean() != null) {
       userText.setText(UserManage.getInstance().getUserBean().getUsername());
 //    }
       moneyText.setText("可用积分" + UserManage.getInstance().getUserBean().getIntegral());
-    }else {
+    } else {
       userText.setText("");
       moneyText.setText("可用积分");
     }
 
 
   }
+
   @Override
   protected void onPause() {
     super.onPause();
     handler.removeCallbacks(runnable);
     //有可能在执行完onPause或onStop后,系统资源紧张将Activity杀死,所以有必要在此保存持久数据
   }
+
   @Override
   public void showData(List<GoodsBean> goodsBeanList) {
     mGoodsBeanList = goodsBeanList;
-    initTab();
+    setTab(tabAt);
+    setData(tabAt);
+//    initTab();
 //    2. 启动计时器
 //    handler.postDelayed(runnable, RefreshTimer);//每两秒执行一次runnable.
 //    3. 停止计时器
 //    handler.removeCallbacks(runnable);
   }
+
+
+  private void setData(int i) {
+    GoodsBean mGoodsBean = GoodManage.getInstance().getGoodsBeanList().get(i);
+    if (i == XFCU) {
+      newPiceText.setText(String.format("%.0f", mGoodsBean.getPrice()));
+      highText.setText(String.format("%.0f", mGoodsBean.getHightPrice()));
+      lowText.setText(String.format("%.0f", mGoodsBean.getLowPrice()));
+    } else {
+      newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
+      highText.setText(mGoodsBean.getHightPrice() + "");
+      lowText.setText(mGoodsBean.getLowPrice() + "");
+    }
+    LogUtil.d("设置图片");
+    ImageLoader.display(getFenShiUrl(i), mainFenshi);
+
+  }
+
 
   @Override
   public void dismissPopu() {
@@ -355,22 +389,22 @@ public class MainActivity extends BaseActivity implements MainView {
 
   @Override
   public void showRefresh() {
-    if(goodFragment1!=null){
-      goodFragment1.setData(XFAG);
-    }else {
-      LogUtil.d("goodFragment1xxxxx");
-    }
-    if (goodFragment2!= null){
-      goodFragment2.setData(XFCU);
-    }else {
-      LogUtil.d("goodFragment1xxxxx");
-    }
-    if(goodFragment3!=null){
-      goodFragment3.setData(XFOIL);
-    }else {
-      LogUtil.d("goodFragment1xxxxx");
-    }
-
+//    if (goodFragment1 != null) {
+//      goodFragment1.setData(XFAG);
+//    } else {
+//      LogUtil.d("goodFragment1xxxxx");
+//    }
+//    if (goodFragment2 != null) {
+//      goodFragment2.setData(XFCU);
+//    } else {
+//      LogUtil.d("goodFragment1xxxxx");
+//    }
+//    if (goodFragment3 != null) {
+//      goodFragment3.setData(XFOIL);
+//    } else {
+//      LogUtil.d("goodFragment1xxxxx");
+//    }
+    setData(tabAt);
   }
 
   @Override
@@ -379,4 +413,53 @@ public class MainActivity extends BaseActivity implements MainView {
     CommonUtil.finishActivity(this);
 
   }
+
+  @OnClick({R.id.goods_xfag, R.id.goods_xfcu, R.id.goods_xfoil})
+  public void onViewClicked(View view) {
+    switch (view.getId()) {
+      case R.id.goods_xfag:
+        tabAt = XFAG;
+        break;
+      case R.id.goods_xfcu:
+        tabAt = XFCU;
+        break;
+      case R.id.goods_xfoil:
+        tabAt = XFOIL;
+        break;
+    }
+    setTab(tabAt);
+    setData(tabAt);
+  }
+
+  private void setTab(int i) {
+    Resources res = getResources();
+    switch (i) {
+      case 0:
+        goodsXfag.setTextColor(res.getColor(R.color.cheng));
+        goodsXfcu.setTextColor(res.getColor(R.color.black));
+        goodsXfoil.setTextColor(res.getColor(R.color.black));
+        break;
+      case 1:
+        goodsXfag.setTextColor(res.getColor(R.color.black));
+        goodsXfcu.setTextColor(res.getColor(R.color.cheng));
+        goodsXfoil.setTextColor(res.getColor(R.color.black));
+        break;
+      case 2:
+        goodsXfag.setTextColor(res.getColor(R.color.black));
+        goodsXfcu.setTextColor(res.getColor(R.color.black));
+        goodsXfoil.setTextColor(res.getColor(R.color.cheng));
+        break;
+    }
+
+  }
+  private String getFenShiUrl(int i){
+    if(i == XFAG){
+      return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFAG1_600x400.png";
+    }else if(i == XFCU){
+      return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFCU1_600x400.png";
+    }else {
+      return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFOIL1_600x400.png";
+    }
+  }
+
 }
