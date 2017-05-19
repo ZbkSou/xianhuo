@@ -32,7 +32,7 @@
 
     <!--走势图-->
     <style name="good_text_style" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:layout_marginTop">10dp</item>
+
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/pice_text_size</item>

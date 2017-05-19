@@ -132,19 +132,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textColor="@color/black"
+                    android:layout_marginRight="10dp"
                     android:text="最新价:"/>
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="40dp"
+                    android:textSize="25dp"
                     android:id="@+id/new_pice_text"
                     android:textColor="@color/red"
                     android:text="33.6"/>
@@ -163,31 +163,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
+                    <TextView
+                      style="@style/good_text_style"
+                      android:text="最高"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="3.61"
                         android:textSize="@dimen/pice_num_size"
                         android:id="@+id/high_text"/>
-                    <TextView
-                        style="@style/good_text_style"
-                        android:text="最高"/>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
+                    <TextView
+                      style="@style/good_text_style"
+                      android:text="最低"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="3.61"
                         android:textSize="@dimen/pice_num_size"
                         android:id="@+id/low_text"/>
-                    <TextView
-                        style="@style/good_text_style"
-                        android:text="最低"/>
+
                 </LinearLayout>
             </LinearLayout>
             <ImageView

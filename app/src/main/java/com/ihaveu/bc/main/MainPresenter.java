@@ -89,7 +89,7 @@ public class MainPresenter {
       }
       @Override
       public void onError(String msg) {
-
+        ToastUtil.showToast(msg);
       }
     });
   }

@@ -93,12 +93,13 @@ public class MainActivity extends BaseActivity implements MainView {
   private int tabAt = 0;
   //定时
   Handler handler = new Handler();
-  private final int RefreshTimer = 300000;
+  private final int RefreshTimer = 30000;
   Runnable runnable = new Runnable() {
     @Override
     public void run() {
       LogUtil.d("run");
       mainPresenter.getRefreshGoodData();
+//      mainPresenter.getGoodData();
       handler.postDelayed(this, RefreshTimer);
     }
   };
@@ -117,6 +118,7 @@ public class MainActivity extends BaseActivity implements MainView {
     super.onResume();
     getUserInfo();
 //    开始现成
+    LogUtil.d("开始");
     handler.postDelayed(runnable, RefreshTimer);//每两秒执行一次runnable.
   }
 
@@ -166,8 +168,7 @@ public class MainActivity extends BaseActivity implements MainView {
         Intent intent;
         intent = new Intent(this, MineActivity.class);
         startActivity(intent);
-//        关闭定时器
-        handler.removeCallbacks(runnable);
+
         break;
     }
 
@@ -405,6 +406,7 @@ public class MainActivity extends BaseActivity implements MainView {
 //    } else {
 //      LogUtil.d("goodFragment1xxxxx");
 //    }
+    LogUtil.d("刷新");
     setData(tabAt);
   }
 
@@ -463,4 +465,11 @@ public class MainActivity extends BaseActivity implements MainView {
     }
   }
 
+  @Override
+  protected void onStop() {
+    super.onStop();
+    LogUtil.d("停止");
+    //        关闭定时器
+    handler.removeCallbacks(runnable);
+  }
 }
