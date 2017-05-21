@@ -91,8 +91,11 @@ public class MainActivity extends BaseActivity implements MainView {
   public static int XFOIL = 2;
   public static int XFCU = 1;
   private int tabAt = 0;
+  private boolean isShowPopu = false;
+  private TextView popuPiceText;
   //定时
   Handler handler = new Handler();
+//  30秒
   private final int RefreshTimer = 30000;
   Runnable runnable = new Runnable() {
     @Override
@@ -220,7 +223,7 @@ public class MainActivity extends BaseActivity implements MainView {
   /**
    * 显示popupWindow
    */
-  private void showPopwindow(final GoodsBean goodsBean, final boolean status, String[] point, int code) {
+  private void showPopwindow(final GoodsBean goodsBean, final boolean status, String[] point, final int code) {
     // 利用layoutInflater获得View
     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     final View view = inflater.inflate(R.layout.popwindow_buy, null);
@@ -263,12 +266,12 @@ public class MainActivity extends BaseActivity implements MainView {
     TextView statusText = (TextView) view.findViewById(R.id.status);
     TextView goodsNameText = (TextView) view.findViewById(R.id.goods_name);
     goodsNameText.setText(goodsBean.getName());
-    TextView newPiceText = (TextView) view.findViewById(R.id.new_pice);
+    popuPiceText = (TextView) view.findViewById(R.id.new_pice);
 
     if (code == XFCU) {
-      newPiceText.setText(String.format("%.0f", goodsBean.getPrice()));
+      popuPiceText.setText(String.format("%.0f", goodsBean.getPrice()));
     } else {
-      newPiceText.setText(goodsBean.getPrice() + "");
+      popuPiceText.setText(goodsBean.getPrice() + "");
     }
     if (status) {
       statusText.setText("看涨");
@@ -278,7 +281,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
 
     goodsNameText.setText(goodsBean.getName());
-    newPiceText.setText(goodsBean.getPrice() + "");
+    popuPiceText.setText(goodsBean.getPrice() + "");
     Button buyButton = (Button) view.findViewById(R.id.buy_but);
     RadioGroup radioGroupPoint = (RadioGroup) view.findViewById(R.id.buy_point);
 
@@ -307,7 +310,7 @@ public class MainActivity extends BaseActivity implements MainView {
         params.put("tranType", status ? "1" : "-1");
         params.put("tranIntegral", Money);
         params.put("goodsCode", goodsBean.getCode());
-        params.put("goodsPrice", goodsBean.getPrice() + "");
+        params.put("goodsPrice", GoodManage.getInstance().getGoodsBeanList().get(code).getPrice() + "");
         params.put("percent", Point);
         LogUtil.d("第一个按钮被点击了" + Point + Money);
         mainPresenter.buyGoods(params);
@@ -320,8 +323,10 @@ public class MainActivity extends BaseActivity implements MainView {
       @Override
       public void onDismiss() {
         System.out.println("popWindow消失");
+        isShowPopu =false;
       }
     });
+    isShowPopu =true;
 
   }
 
@@ -408,6 +413,18 @@ public class MainActivity extends BaseActivity implements MainView {
 //    }
     LogUtil.d("刷新");
     setData(tabAt);
+
+    if(isShowPopu){
+      if (tabAt == XFCU) {
+        popuPiceText.setText(String.format("%.0f",GoodManage.getInstance().getGoodsBeanList().get(tabAt).getPrice()));
+      } else {
+        popuPiceText.setText(GoodManage.getInstance().getGoodsBeanList().get(tabAt).getPrice()+"");
+      }
+    }
+
+      LogUtil.d("isShowPopu"+ isShowPopu);
+
+
   }
 
   @Override

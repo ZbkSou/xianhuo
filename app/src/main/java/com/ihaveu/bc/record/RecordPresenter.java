@@ -86,4 +86,30 @@ public class RecordPresenter {
     });
   }
 
+  public void getIntegralHaveTrade(){
+    mRecordView.showHandleLoading();
+    mRecordModel.getIntegralHaveTrade( new IModelResponse<SeriverResponse>() {
+      @Override
+      public void onSuccess(SeriverResponse model, ArrayList<SeriverResponse> list) {
+        if(!model.getState().equals("200")){
+          ToastUtil.showToast(model.getMessage().toString());
+          mRecordView.hideHandleLoading();
+        }else {
+          LogUtil.d(model.getResult().toString());
+          List<IntegralTarnBean> integralTarnBeanList = new Gson().fromJson(
+            JsonUtil.beanToJSONString(model.getResult()),new TypeToken<List<IntegralTarnBean>>(){}.getType());
+
+          LogUtil.d(UserManage.getInstance().getUserBean().getUsername());
+          mRecordView.hideHandleLoading();
+          mRecordView.showIntegralTran(integralTarnBeanList);
+        }
+      }
+
+      @Override
+      public void onError(String msg) {
+        ToastUtil.showToast(msg);
+        mRecordView.hideHandleLoading();
+      }
+    });
+  }
 }

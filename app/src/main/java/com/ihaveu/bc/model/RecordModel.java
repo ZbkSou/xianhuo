@@ -60,4 +60,21 @@ public class RecordModel extends Model {
       }
     });
   }
+  /**
+   * 持有订单数据
+   * @param modelResponse
+   */
+  public void getIntegralHaveTrade(final IModelResponse<SeriverResponse> modelResponse) {
+    get(integralTranUrl, mContext, new JsonCallBack(SeriverResponse.class) {
+      @Override
+      public void onSuccess(Object o, Call call, Response response) {
+        modelResponse.onSuccess((SeriverResponse) o,null);
+      }
+
+      @Override
+      public void onError(Call call, Response response, Exception e) {
+        Log.d("RecordModel",e.getMessage());
+      }
+    });
+  }
 }

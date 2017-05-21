@@ -11,16 +11,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.ihaveu.bc.login.LoginActivity;
-import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.R;
 import com.ihaveu.bc.base.BaseActivity;
+import com.ihaveu.bc.login.LoginActivity;
+import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.record.RecordActivity;
 import com.ihaveu.bc.register.RegisterActivity;
 import com.ihaveu.bc.setpassword.SetPasswordActivity;
 import com.ihaveu.bc.userInfo.UserInfoActivity;
-import com.ihaveu.bc.userInfo.UserPresenter;
-import com.ihaveu.bc.utils.StringUtil;
 import com.ihaveu.bc.utils.TextUtil;
 import com.ihaveu.bc.utils.ToastUtil;
 import com.ihaveu.bc.widget.DTextView;
@@ -33,6 +31,7 @@ import butterknife.OnClick;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
 import static com.ihaveu.bc.record.RecordActivity.INTEGRALCHANGE;
+import static com.ihaveu.bc.record.RecordActivity.INTEGRALHAVETRADE;
 import static com.ihaveu.bc.record.RecordActivity.INTEGRALTRAN;
 import static com.ihaveu.bc.record.RecordActivity.KEY_BUNDLE;
 
@@ -51,7 +50,7 @@ public class MineActivity extends BaseActivity implements MineView {
   DTextView mineUserName;
   @BindView(R.id.mine_money_text)
   DTextView mineMoneyText;
-//  @BindView(R.id.mine_add_money)
+  //  @BindView(R.id.mine_add_money)
 //  Button mineAddMoney;
   @BindView(R.id.mine_get_money)
   Button mineGetMoney;
@@ -67,6 +66,8 @@ public class MineActivity extends BaseActivity implements MineView {
   Button mineClose;
   @BindView(R.id.mine_user_layout)
   LinearLayout mineUserLayout;
+  @BindView(R.id.mine_have_bill_layout)
+  RelativeLayout mineHaveBillLayout;
 
   private MinePresenter presenter;
 
@@ -80,7 +81,7 @@ public class MineActivity extends BaseActivity implements MineView {
 
   private void init() {
 //    mineAddMoney.setVisibility(View.GONE);
-    presenter = new MinePresenter(this,this);
+    presenter = new MinePresenter(this, this);
     isLogin();
 
   }
@@ -90,11 +91,11 @@ public class MineActivity extends BaseActivity implements MineView {
     super.onResume();
     presenter.getUserInfo();
 //    isLogin();
- }
+  }
 
   @OnClick({R.id.login_but, R.id.register_but, R.id.mine_get_money,
-    R.id.mine_money_layout,R.id.mine_user_info_layout,R.id.mine_trade_layout,
-    R.id.mine_set_password_layout,R.id.mine_close})
+    R.id.mine_money_layout, R.id.mine_user_info_layout, R.id.mine_trade_layout,
+    R.id.mine_set_password_layout, R.id.mine_close,R.id.mine_have_bill_layout})
   public void onViewClicked(View view) {
     Intent intent;
     switch (view.getId()) {
@@ -112,84 +113,96 @@ public class MineActivity extends BaseActivity implements MineView {
         break;
 //      提现
       case R.id.mine_get_money:
-          LayoutInflater factory = LayoutInflater.from(MineActivity.this);//提示框
-          final View dialogView = factory.inflate(R.layout.dialog_get_money, null);//这里必须是final的
-          final EditText edit=(EditText)dialogView.findViewById(R.id.input_money);//获得输入框对象
-          edit.setHint("输入兑换积分");//输入框默认值
-          edit.setSingleLine(true);
-          edit.setInputType(TYPE_CLASS_NUMBER);
-          new AlertDialog.Builder(MineActivity.this)
-            .setTitle("提现")//提示框标题
-            .setView(dialogView)
-            .setPositiveButton("确定",//提示框的两个按钮
-              new android.content.DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                  if(UserManage.getInstance().getUserBean()!=null){
-                    if(TextUtil.isValidText(edit.getText().toString())&&
-                      TextUtil.isValidText(UserManage.getInstance().getUserBean().getWechat())){
-                      HashMap<String,String> params = new HashMap<>();
-                      params.put("presentIntegral",edit.getText().toString());
-                      params.put("cardNum",UserManage.getInstance().getUserBean().getCardNum());
-                      presenter.getMoney(params);
-                    }else {
-                      ToastUtil.showToast("请完善个人信息");
-                    }
-                  }else {
-                    ToastUtil.showToast("请先登录");
+        LayoutInflater factory = LayoutInflater.from(MineActivity.this);//提示框
+        final View dialogView = factory.inflate(R.layout.dialog_get_money, null);//这里必须是final的
+        final EditText edit = (EditText) dialogView.findViewById(R.id.input_money);//获得输入框对象
+        edit.setHint("输入兑换积分");//输入框默认值
+        edit.setSingleLine(true);
+        edit.setInputType(TYPE_CLASS_NUMBER);
+        new AlertDialog.Builder(MineActivity.this)
+          .setTitle("提现")//提示框标题
+          .setView(dialogView)
+          .setPositiveButton("确定",//提示框的两个按钮
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                if (UserManage.getInstance().getUserBean() != null) {
+                  if (TextUtil.isValidText(edit.getText().toString()) &&
+                    TextUtil.isValidText(UserManage.getInstance().getUserBean().getWechat())) {
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("presentIntegral", edit.getText().toString());
+                    params.put("cardNum", UserManage.getInstance().getUserBean().getCardNum());
+                    presenter.getMoney(params);
+                  } else {
+                    ToastUtil.showToast("请完善个人信息");
                   }
-
-
+                } else {
+                  ToastUtil.showToast("请先登录");
                 }
-              }).setNegativeButton("取消", null).create().show();
 
+
+              }
+            }).setNegativeButton("取消", null).create().show();
 
 
         break;
       case R.id.mine_user_info_layout:
-        if( UserManage.getInstance().getUserBean()!=null){
+        if (UserManage.getInstance().getUserBean() != null) {
           intent = new Intent(this, UserInfoActivity.class);
           startActivity(intent);
-        }else {
+        } else {
           ToastUtil.showToast("请先登录");
         }
 
         break;
       case R.id.mine_money_layout:
 
-        if( UserManage.getInstance().getUserBean()!=null){
+        if (UserManage.getInstance().getUserBean() != null) {
           intent = new Intent(this, RecordActivity.class);
           Bundle moneyBundle = new Bundle();
           moneyBundle.putInt("key", INTEGRALCHANGE);
-          intent.putExtra(KEY_BUNDLE,moneyBundle);
+          intent.putExtra(KEY_BUNDLE, moneyBundle);
           startActivity(intent);
-        }else {
+        } else {
           ToastUtil.showToast("请先登录");
         }
 
         break;
       case R.id.mine_trade_layout:
 
-        if( UserManage.getInstance().getUserBean()!=null){
+        if (UserManage.getInstance().getUserBean() != null) {
           intent = new Intent(this, RecordActivity.class);
           Bundle tradeBundle = new Bundle();
           tradeBundle.putInt("key", INTEGRALTRAN);
-          intent.putExtra(KEY_BUNDLE,tradeBundle);
+          intent.putExtra(KEY_BUNDLE, tradeBundle);
           startActivity(intent);
-        }else {
+        } else {
           ToastUtil.showToast("请先登录");
         }
         break;
       case R.id.mine_set_password_layout:
-        if( UserManage.getInstance().getUserBean()!=null){
+        if (UserManage.getInstance().getUserBean() != null) {
           intent = new Intent(this, SetPasswordActivity.class);
           startActivity(intent);
-        }else {
+        } else {
           ToastUtil.showToast("请先登录");
         }
         break;
       case R.id.mine_close:
         presenter.exit();
+        break;
+//      持有订单
+      case R.id.mine_have_bill_layout:
+
+        if (UserManage.getInstance().getUserBean() != null) {
+          intent = new Intent(this, RecordActivity.class);
+          Bundle tradeBundle = new Bundle();
+          tradeBundle.putInt("key", INTEGRALHAVETRADE);
+          intent.putExtra(KEY_BUNDLE, tradeBundle);
+          startActivity(intent);
+        } else {
+          ToastUtil.showToast("请先登录");
+        }
         break;
     }
   }
@@ -199,13 +212,14 @@ public class MineActivity extends BaseActivity implements MineView {
     isLogin();
 
   }
-  private boolean isLogin(){
+
+  private boolean isLogin() {
 
     if (UserManage.getInstance().getUserBean() != null) {
       loginRegister.setVisibility(View.GONE);
       mineUserLayout.setVisibility(View.VISIBLE);
       mineUserName.setText(UserManage.getInstance().getUserBean().getUsername());
-      mineMoneyText.setText("可用积分:"+UserManage.getInstance().getUserBean().getIntegral());
+      mineMoneyText.setText("可用积分:" + UserManage.getInstance().getUserBean().getIntegral());
       return true;
     } else {
       loginRegister.setVisibility(View.VISIBLE);

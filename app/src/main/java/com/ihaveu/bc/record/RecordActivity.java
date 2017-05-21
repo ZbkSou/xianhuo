@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 public class RecordActivity extends BaseActivity implements RecordView {
   public static int INTEGRALCHANGE = 0;
   public static int INTEGRALTRAN = 1;
+  public static int INTEGRALHAVETRADE = 2;
   public static final String KEY_BUNDLE = "KEY_BUNDLE";
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
@@ -44,8 +45,10 @@ public class RecordActivity extends BaseActivity implements RecordView {
     presenter = new RecordPresenter(this, this);
     if ((int) bundle.get("key") == INTEGRALCHANGE) {
       presenter.getIntegralChange();
-    } else {
+    } else if((int) bundle.get("key") ==INTEGRALTRAN){
       presenter.getIntegralTran();
+    }else {
+      presenter.getIntegralHaveTrade();
     }
   }
 
