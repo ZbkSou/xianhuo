@@ -23,6 +23,7 @@ public class RecordModel extends Model {
   private Context mContext;
   private String integralChangeUrl = AppConfig.getApiHost()+"integralChange/admin/getIntegralChangeList";
   private String integralTranUrl = AppConfig.getApiHost()+"integralTran/admin/getIntegralTranList";
+  private String UnfinishTranUrl = AppConfig.getApiHost()+"integralTran/admin/getUnfinishIntegralTranList";
   public RecordModel (Context context){
     mContext =  context;
   }
@@ -65,7 +66,7 @@ public class RecordModel extends Model {
    * @param modelResponse
    */
   public void getIntegralHaveTrade(final IModelResponse<SeriverResponse> modelResponse) {
-    get(integralTranUrl, mContext, new JsonCallBack(SeriverResponse.class) {
+    get(UnfinishTranUrl, mContext, new JsonCallBack(SeriverResponse.class) {
       @Override
       public void onSuccess(Object o, Call call, Response response) {
         modelResponse.onSuccess((SeriverResponse) o,null);
