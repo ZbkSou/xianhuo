@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements MainView {
   //定时
   Handler handler = new Handler();
 //  30秒
-  private final int RefreshTimer = 3000;
+  private final int RefreshTimer = 1000;
   Runnable runnable = new Runnable() {
     @Override
     public void run() {
@@ -104,9 +104,23 @@ public class MainActivity extends BaseActivity implements MainView {
       mainPresenter.getRefreshGoodData();
 //      mainPresenter.getGoodData();
       handler.postDelayed(this, RefreshTimer);
+
     }
   };
+  //图片定时
+  Handler pichandler = new Handler();
+  //  30秒
+  private final int picRefreshTimer = 60000;
+  Runnable picrunnable = new Runnable() {
+    @Override
+    public void run() {
+      LogUtil.d("run");
+      setImage();
+//      mainPresenter.getGoodData();
+      pichandler.postDelayed(this, picRefreshTimer);
 
+    }
+  };
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -122,7 +136,9 @@ public class MainActivity extends BaseActivity implements MainView {
     getUserInfo();
 //    开始现成
     LogUtil.d("开始");
+    setImage();
     handler.postDelayed(runnable, RefreshTimer);//每两秒执行一次runnable.
+    pichandler.postDelayed(picrunnable,picRefreshTimer);
   }
 
   private void init() {
@@ -334,7 +350,10 @@ public class MainActivity extends BaseActivity implements MainView {
     mainPresenter.getUserInfo();
 
   }
+  private void setImage() {
+    ImageLoader.display(getFenShiUrl(tabAt), mainFenshi);
 
+  }
   @Override
   public void showUser() {
 //    if(TextUtil.isValidText(UserManage.getInstance().getUserBean().getName())){
@@ -356,6 +375,7 @@ public class MainActivity extends BaseActivity implements MainView {
   protected void onPause() {
     super.onPause();
     handler.removeCallbacks(runnable);
+    pichandler.removeCallbacks(picrunnable);
     //有可能在执行完onPause或onStop后,系统资源紧张将Activity杀死,所以有必要在此保存持久数据
   }
 
@@ -385,7 +405,7 @@ public class MainActivity extends BaseActivity implements MainView {
       lowText.setText(mGoodsBean.getLowPrice() + "");
 //    }
     LogUtil.d("设置图片");
-    ImageLoader.display(getFenShiUrl(i), mainFenshi);
+//    ImageLoader.display(getFenShiUrl(i), mainFenshi);
 
   }
 
@@ -475,11 +495,11 @@ public class MainActivity extends BaseActivity implements MainView {
   }
   private String getFenShiUrl(int i){
     if(i == XFAG){
-      return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFAG1_600x400.png";
+      return "https://image.cngold.org/chart/slive/agm.gif";
     }else if(i == XFBU){
-      return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFCU1_600x400.png";
+      return "https://image.cngold.org/chart/futures/spsbum.gif";
     }else {
-      return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFOIL1_600x400.png";
+      return "http://image.cngold.org/chart/futures/spscum.gif";
     }
   }
 
@@ -489,5 +509,6 @@ public class MainActivity extends BaseActivity implements MainView {
     LogUtil.d("停止");
     //        关闭定时器
     handler.removeCallbacks(runnable);
+    pichandler.removeCallbacks(picrunnable);
   }
 }
