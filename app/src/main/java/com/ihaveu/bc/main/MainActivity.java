@@ -85,18 +85,18 @@ public class MainActivity extends BaseActivity implements MainView {
   private String Money = "10";
   PopupWindow window;
   String[] point_XFAG1;
-  String[] point_XFOIL1;
+  String[] point_XFBU1;
   String[] point_XFCU1;
   public static int XFAG = 0;
-  public static int XFOIL = 2;
-  public static int XFCU = 1;
+  public static int XFBU = 1;
+  public static int XFCU = 2;
   private int tabAt = 0;
   private boolean isShowPopu = false;
   private TextView popuPiceText;
   //定时
   Handler handler = new Handler();
 //  30秒
-  private final int RefreshTimer = 30000;
+  private final int RefreshTimer = 3000;
   Runnable runnable = new Runnable() {
     @Override
     public void run() {
@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity implements MainView {
   private void init() {
     Resources res = getResources();
     point_XFAG1 = res.getStringArray(R.array.point_XFAG1);
-    point_XFOIL1 = res.getStringArray(R.array.point_XFOIL1);
+    point_XFBU1 = res.getStringArray(R.array.point_XFBU1);
     point_XFCU1 = res.getStringArray(R.array.point_XFCU1);
     mainPresenter = new MainPresenter(this, this);
     mainPresenter.getGoodData();
@@ -144,9 +144,9 @@ public class MainActivity extends BaseActivity implements MainView {
           if (tabAt == 0) {
             showPopwindow(goodsBean, true, point_XFAG1, XFAG);
           } else if (tabAt == 1) {
-            showPopwindow(goodsBean, true, point_XFCU1, XFCU);
+            showPopwindow(goodsBean, true,point_XFBU1 , XFBU);
           } else {
-            showPopwindow(goodsBean, true, point_XFOIL1, XFOIL);
+            showPopwindow(goodsBean, true, point_XFCU1, XFCU);
           }
         } else {
           ToastUtil.showToast("请先登录");
@@ -159,9 +159,9 @@ public class MainActivity extends BaseActivity implements MainView {
           if (tabAt == 0) {
             showPopwindow(goodsBean, false, point_XFAG1, XFAG);
           } else if (tabAt == 1) {
-            showPopwindow(goodsBean, false, point_XFCU1, XFCU);
+            showPopwindow(goodsBean, false, point_XFBU1, XFBU);
           } else {
-            showPopwindow(goodsBean, false, point_XFOIL1, XFOIL);
+            showPopwindow(goodsBean, false, point_XFCU1, XFCU);
           }
         } else {
           ToastUtil.showToast("请先登录");
@@ -256,11 +256,11 @@ public class MainActivity extends BaseActivity implements MainView {
     buyPoint4.setText(point[1]);
     RadioButton buyPoint6 = (RadioButton) view.findViewById(R.id.buy_point_6);
     buyPoint6.setText(point[2]);
-    if (code == XFCU) {
-      buyPoint3.setText(String.format("%.0f", Integer.parseInt(point[0]) * 0.01));
-      buyPoint4.setText(String.format("%.0f", Integer.parseInt(point[1]) * 0.01));
-      buyPoint6.setText(String.format("%.0f", Integer.parseInt(point[2]) * 0.01));
-    }
+//    if (code == XFCU) {
+//      buyPoint3.setText(String.format("%.0f", Integer.parseInt(point[0]) * 0.01));
+//      buyPoint4.setText(String.format("%.0f", Integer.parseInt(point[1]) * 0.01));
+//      buyPoint6.setText(String.format("%.0f", Integer.parseInt(point[2]) * 0.01));
+//    }
     Point = point[0];
     // 这里检验popWindow里的button是否可以点击
     TextView statusText = (TextView) view.findViewById(R.id.status);
@@ -268,11 +268,11 @@ public class MainActivity extends BaseActivity implements MainView {
     goodsNameText.setText(goodsBean.getName());
     popuPiceText = (TextView) view.findViewById(R.id.new_pice);
 
-    if (code == XFCU) {
-      popuPiceText.setText(String.format("%.0f", goodsBean.getPrice()));
-    } else {
+//    if (code == XFCU) {
+//      popuPiceText.setText(String.format("%.0f", goodsBean.getPrice()));
+//    } else {
       popuPiceText.setText(goodsBean.getPrice() + "");
-    }
+//    }
     if (status) {
       statusText.setText("看涨");
     } else {
@@ -374,15 +374,16 @@ public class MainActivity extends BaseActivity implements MainView {
 
   private void setData(int i) {
     GoodsBean mGoodsBean = GoodManage.getInstance().getGoodsBeanList().get(i);
-    if (i == XFCU) {
-      newPiceText.setText(String.format("%.0f", mGoodsBean.getPrice()));
-      highText.setText(String.format("%.0f", mGoodsBean.getHightPrice()));
-      lowText.setText(String.format("%.0f", mGoodsBean.getLowPrice()));
-    } else {
-      newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
+//    if (i == XFCU) {
+//      newPiceText.setText(String.format("%.0f", mGoodsBean.getPrice()));
+//      highText.setText(String.format("%.0f", mGoodsBean.getHightPrice()));
+//      lowText.setText(String.format("%.0f", mGoodsBean.getLowPrice()));
+//    } else {
+//      newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
+      newPiceText.setText(mGoodsBean.getPrice()+"");
       highText.setText(mGoodsBean.getHightPrice() + "");
       lowText.setText(mGoodsBean.getLowPrice() + "");
-    }
+//    }
     LogUtil.d("设置图片");
     ImageLoader.display(getFenShiUrl(i), mainFenshi);
 
@@ -415,11 +416,11 @@ public class MainActivity extends BaseActivity implements MainView {
     setData(tabAt);
 
     if(isShowPopu){
-      if (tabAt == XFCU) {
-        popuPiceText.setText(String.format("%.0f",GoodManage.getInstance().getGoodsBeanList().get(tabAt).getPrice()));
-      } else {
+//      if (tabAt == XFCU) {
+//        popuPiceText.setText(String.format("%.0f",GoodManage.getInstance().getGoodsBeanList().get(tabAt).getPrice()));
+//      } else {
         popuPiceText.setText(GoodManage.getInstance().getGoodsBeanList().get(tabAt).getPrice()+"");
-      }
+//      }
     }
 
       LogUtil.d("isShowPopu"+ isShowPopu);
@@ -441,10 +442,10 @@ public class MainActivity extends BaseActivity implements MainView {
         tabAt = XFAG;
         break;
       case R.id.goods_xfcu:
-        tabAt = XFCU;
+        tabAt = XFBU;
         break;
       case R.id.goods_xfoil:
-        tabAt = XFOIL;
+        tabAt = XFCU;
         break;
     }
     setTab(tabAt);
@@ -475,7 +476,7 @@ public class MainActivity extends BaseActivity implements MainView {
   private String getFenShiUrl(int i){
     if(i == XFAG){
       return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFAG1_600x400.png";
-    }else if(i == XFCU){
+    }else if(i == XFBU){
       return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFCU1_600x400.png";
     }else {
       return "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFOIL1_600x400.png";
