@@ -4,19 +4,23 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ihaveu.bc.bean.ConfigBean;
 import com.ihaveu.bc.bean.GoodsBean;
 import com.ihaveu.bc.manager.GoodManage;
 import com.ihaveu.bc.manager.UserManage;
 import com.ihaveu.bc.bean.SeriverResponse;
 import com.ihaveu.bc.bean.UserBean;
+import com.ihaveu.bc.model.ConfigModel;
 import com.ihaveu.bc.model.GoodsModel;
 import com.ihaveu.bc.model.UserModel;
 import com.ihaveu.bc.network.IModelResponse;
 import com.ihaveu.bc.utils.JsonUtil;
 import com.ihaveu.bc.utils.LogUtil;
+import com.ihaveu.bc.utils.TextUtil;
 import com.ihaveu.bc.utils.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +33,13 @@ public class MainPresenter {
   private MainView mMainView;
   private UserModel userModel;
   private GoodsModel goodsModel;
+  private ConfigModel configModel;
   public MainPresenter(Context context,MainView mainView){
     mContext = context;
     mMainView = mainView;
     userModel = new UserModel(mContext);
     goodsModel = new GoodsModel(mContext);
+    configModel = new ConfigModel(mContext);
   }
   public void getUserInfo(){
     userModel.getUserInfo(new IModelResponse<SeriverResponse>() {
@@ -52,6 +58,28 @@ public class MainPresenter {
       public void onError(String msg) {
         UserManage.getInstance().setUserBean(null);
         mMainView.showUser();
+      }
+    });
+  }
+  public void getInfo(){
+    HashMap<String, String> params = new HashMap<>();
+    params.put("businessId","2");
+    configModel.getInfo(params,new IModelResponse<SeriverResponse>() {
+      @Override
+      public void onSuccess(SeriverResponse model, ArrayList<SeriverResponse> list) {
+        if(!model.getState().equals("200")){
+          ToastUtil.showToast(model.getResult().toString());
+        }else {
+          LogUtil.d(model.getResult().toString());
+          ConfigBean configBean = new Gson().fromJson(JsonUtil.beanToJSONString(model.getResult()), ConfigBean.class);
+          if(TextUtil.isValidText(configBean.getContent())){
+            mMainView.showAlertDialog(configBean);
+          }
+        }
+      }
+      @Override
+      public void onError(String msg) {
+
       }
     });
   }

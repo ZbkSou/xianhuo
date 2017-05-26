@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.ihaveu.bc.R;
 import com.ihaveu.bc.base.AppConfig;
 import com.ihaveu.bc.base.BaseActivity;
+import com.ihaveu.bc.bean.ConfigBean;
 import com.ihaveu.bc.bean.GoodsBean;
 import com.ihaveu.bc.fragment.GoodFragment;
 import com.ihaveu.bc.manager.GoodManage;
@@ -148,6 +150,7 @@ public class MainActivity extends BaseActivity implements MainView {
     point_XFCU1 = res.getStringArray(R.array.point_XFCU1);
     mainPresenter = new MainPresenter(this, this);
     mainPresenter.getGoodData();
+    mainPresenter.getInfo();
   }
 
   @OnClick({R.id.up_but, R.id.down_but, R.id.money_text, R.id.layout_main_mine})
@@ -413,6 +416,16 @@ public class MainActivity extends BaseActivity implements MainView {
   @Override
   public void dismissPopu() {
     window.dismiss();
+  }
+
+  @Override
+  public void showAlertDialog(ConfigBean configBean) {
+
+    new  AlertDialog.Builder(this)
+      .setTitle("公告" )
+      .setMessage(configBean.getContent() )
+      .setPositiveButton("确定" ,  null )
+      .show();
   }
 
   @Override
