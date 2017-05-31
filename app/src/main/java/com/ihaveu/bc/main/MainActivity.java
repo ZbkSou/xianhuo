@@ -313,6 +313,7 @@ public class MainActivity extends BaseActivity implements MainView {
     });
 
     RadioGroup radioGroupMoney = (RadioGroup) view.findViewById(R.id.bug_money);
+    Money = "10";
     radioGroupMoney.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -421,14 +422,18 @@ public class MainActivity extends BaseActivity implements MainView {
   @Override
   public void showAlertDialog(ConfigBean configBean) {
 
-    new  AlertDialog.Builder(this)
-      .setTitle("公告" )
-      .setMessage(configBean.getContent() )
-      .setPositiveButton("确定" ,  null )
-      .show();
+    if(!configBean.getContent().equals("0000")){
+      new  AlertDialog.Builder(this)
+        .setTitle("公告" )
+        .setMessage(configBean.getContent() )
+        .setPositiveButton("确定" ,  null )
+        .show();
+    }
+
   }
 
   @Override
+
   public void showRefresh() {
 //    if (goodFragment1 != null) {
 //      goodFragment1.setData(XFAG);
