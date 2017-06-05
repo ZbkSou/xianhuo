@@ -19,7 +19,7 @@ public class CommonUtil {
       mExitTime = System.currentTimeMillis();// 更新mExitTime
     } else {
       Log.d("second", "第二次按下");
-      ((Activity) context).finish();
+      System.exit(0);
     }
     return true;
   }

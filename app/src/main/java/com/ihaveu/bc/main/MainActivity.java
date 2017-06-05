@@ -1,6 +1,7 @@
 package com.ihaveu.bc.main;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
@@ -95,6 +96,8 @@ public class MainActivity extends BaseActivity implements MainView {
   private int tabAt = 0;
   private boolean isShowPopu = false;
   private TextView popuPiceText;
+  //更新版本
+  private final String version = "2";
   //定时
   Handler handler = new Handler();
 //  30秒
@@ -141,6 +144,8 @@ public class MainActivity extends BaseActivity implements MainView {
     setImage();
     handler.postDelayed(runnable, RefreshTimer);//每两秒执行一次runnable.
     pichandler.postDelayed(picrunnable,picRefreshTimer);
+    //    获取点位
+    mainPresenter.getPointInfo();
   }
 
   private void init() {
@@ -150,7 +155,11 @@ public class MainActivity extends BaseActivity implements MainView {
     point_XFCU1 = res.getStringArray(R.array.point_XFCU1);
     mainPresenter = new MainPresenter(this, this);
     mainPresenter.getGoodData();
+//    获取公告
     mainPresenter.getInfo();
+    //    获取更新
+    mainPresenter.getUpdataInfo();
+
   }
 
   @OnClick({R.id.up_but, R.id.down_but, R.id.money_text, R.id.layout_main_mine})
@@ -431,7 +440,23 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
   }
+  @Override
+  public void showUpdataDialog(ConfigBean configBean) {
 
+    if(!configBean.getContent().equals(version)){
+      new  AlertDialog.Builder(this)
+        .setTitle("更新提示" )
+        .setMessage("有版本更新,请升级最新版本!")
+        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            System.exit(0);
+          }
+        })
+        .show();
+    }
+
+  }
   @Override
 
   public void showRefresh() {
@@ -464,6 +489,16 @@ public class MainActivity extends BaseActivity implements MainView {
       LogUtil.d("isShowPopu"+ isShowPopu);
 
 
+  }
+
+  @Override
+  public void setPoint(ConfigBean configBean) {
+    String sourceStr = configBean.getContent();
+    String[] sourceStrArray = sourceStr.split(";");
+
+    point_XFAG1 = sourceStrArray[0].split("/");
+    point_XFBU1 = sourceStrArray[1].split("/");
+    point_XFCU1 = sourceStrArray[2].split("/");
   }
 
   @Override

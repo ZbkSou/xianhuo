@@ -83,6 +83,28 @@ public class MainPresenter {
       }
     });
   }
+  public void getUpdataInfo(){
+    HashMap<String, String> params = new HashMap<>();
+    params.put("businessId","6");
+    configModel.getInfo(params,new IModelResponse<SeriverResponse>() {
+      @Override
+      public void onSuccess(SeriverResponse model, ArrayList<SeriverResponse> list) {
+        if(!model.getState().equals("200")){
+          ToastUtil.showToast(model.getResult().toString());
+        }else {
+          LogUtil.d(model.getResult().toString());
+          ConfigBean configBean = new Gson().fromJson(JsonUtil.beanToJSONString(model.getResult()), ConfigBean.class);
+          if(TextUtil.isValidText(configBean.getContent())){
+            mMainView.showUpdataDialog(configBean);
+          }
+        }
+      }
+      @Override
+      public void onError(String msg) {
+
+      }
+    });
+  }
   public void getGoodData(){
     goodsModel.getGoods(new IModelResponse<SeriverResponse>() {
       @Override
@@ -141,4 +163,26 @@ public class MainPresenter {
     });
   }
 
+  public void getPointInfo() {
+    HashMap<String, String> params = new HashMap<>();
+    params.put("businessId","8");
+    configModel.getInfo(params,new IModelResponse<SeriverResponse>() {
+      @Override
+      public void onSuccess(SeriverResponse model, ArrayList<SeriverResponse> list) {
+        if(!model.getState().equals("200")){
+          ToastUtil.showToast(model.getResult().toString());
+        }else {
+          LogUtil.d(model.getResult().toString());
+          ConfigBean configBean = new Gson().fromJson(JsonUtil.beanToJSONString(model.getResult()), ConfigBean.class);
+          if(TextUtil.isValidText(configBean.getContent())){
+            mMainView.setPoint(configBean);
+          }
+        }
+      }
+      @Override
+      public void onError(String msg) {
+
+      }
+    });
+  }
 }

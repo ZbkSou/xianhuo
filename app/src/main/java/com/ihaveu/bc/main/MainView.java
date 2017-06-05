@@ -16,5 +16,8 @@ public interface MainView extends BaseView {
   public void showData(List<GoodsBean> goodsBeanList);
   public void dismissPopu();
   public void showAlertDialog( ConfigBean configBean);
+  public void showUpdataDialog( ConfigBean configBean);
   public void showRefresh();
+
+  public void setPoint(ConfigBean configBean);
 }
