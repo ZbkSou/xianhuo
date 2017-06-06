@@ -12,6 +12,7 @@
   <string name="hint_email">邮箱地址</string>
   <string name="hint_phone">输入手机号</string>
   <string name="hint_name">姓名（最多为10位字符）</string>
+  <string name="remark_name">推荐人手机号</string>
   <string name="hint_password">请输入6-20位密码</string>
   <string name="hint_repeat_password">请重复输入密码</string>
   <string name="hint_captcha">验证码</string>

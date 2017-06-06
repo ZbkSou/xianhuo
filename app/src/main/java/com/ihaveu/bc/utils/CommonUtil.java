@@ -23,4 +23,16 @@ public class CommonUtil {
     }
     return true;
   }
+  private static long mCD = 0;
+  public static boolean buyCD(Context context) {
+    if ((System.currentTimeMillis() - mCD) > 3000) {//
+      mCD = System.currentTimeMillis();// 更新mExitTime
+      return true;
+    } else {
+      ToastUtil.showToast("下单操作过快");
+      Log.d("second", "第二次按下");
+      return false ;
+    }
+
+  }
 }

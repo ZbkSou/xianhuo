@@ -62,6 +62,18 @@
           style="@style/Style_grayebebec_line"
           android:layout_marginLeft="13dp"
           android:layout_marginRight="13dp"/>
+        <com.ihaveu.bc.widget.DEditText
+          android:id="@+id/remark"
+          android:layout_width="match_parent"
+          android:layout_height="37dp"
+          app:d_background="@color/white"
+          app:d_hint="@string/remark_name"
+          app:maxLength="11">
+        </com.ihaveu.bc.widget.DEditText>
+        <View
+          style="@style/Style_grayebebec_line"
+          android:layout_marginLeft="13dp"
+          android:layout_marginRight="13dp"/>
         <!-- 密码 -->
         <com.ihaveu.bc.widget.DEditText
           android:id="@+id/password"

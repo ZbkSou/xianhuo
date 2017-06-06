@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
   private GoodsBean goodsBean;
   private MainPresenter mainPresenter;
-//  private GoodFragment goodFragment1;
+  //  private GoodFragment goodFragment1;
 //  private GoodFragment goodFragment2;
 //  private GoodFragment goodFragment3;
   private List<GoodsBean> mGoodsBeanList;
@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity implements MainView {
   private final String version = "2";
   //定时
   Handler handler = new Handler();
-//  30秒
+  //  30秒
   private final int RefreshTimer = 1000;
   Runnable runnable = new Runnable() {
     @Override
@@ -126,6 +126,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     }
   };
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -143,7 +144,7 @@ public class MainActivity extends BaseActivity implements MainView {
     LogUtil.d("开始");
     setImage();
     handler.postDelayed(runnable, RefreshTimer);//每两秒执行一次runnable.
-    pichandler.postDelayed(picrunnable,picRefreshTimer);
+    pichandler.postDelayed(picrunnable, picRefreshTimer);
     //    获取点位
     mainPresenter.getPointInfo();
   }
@@ -167,14 +168,15 @@ public class MainActivity extends BaseActivity implements MainView {
     switch (button.getId()) {
       case R.id.up_but:
         if (UserManage.getInstance().getUserBean() != null) {
-
-          goodsBean = GoodManage.getInstance().getGoodsBeanList().get(tabAt);
-          if (tabAt == 0) {
-            showPopwindow(goodsBean, true, point_XFAG1, XFAG);
-          } else if (tabAt == 1) {
-            showPopwindow(goodsBean, true,point_XFBU1 , XFBU);
-          } else {
-            showPopwindow(goodsBean, true, point_XFCU1, XFCU);
+          if (CommonUtil.buyCD(this)) {
+            goodsBean = GoodManage.getInstance().getGoodsBeanList().get(tabAt);
+            if (tabAt == 0) {
+              showPopwindow(goodsBean, true, point_XFAG1, XFAG);
+            } else if (tabAt == 1) {
+              showPopwindow(goodsBean, true, point_XFBU1, XFBU);
+            } else {
+              showPopwindow(goodsBean, true, point_XFCU1, XFCU);
+            }
           }
         } else {
           ToastUtil.showToast("请先登录");
@@ -182,14 +184,15 @@ public class MainActivity extends BaseActivity implements MainView {
         break;
       case R.id.down_but:
         if (UserManage.getInstance().getUserBean() != null) {
-
-          goodsBean = GoodManage.getInstance().getGoodsBeanList().get(tabAt);
-          if (tabAt == 0) {
-            showPopwindow(goodsBean, false, point_XFAG1, XFAG);
-          } else if (tabAt == 1) {
-            showPopwindow(goodsBean, false, point_XFBU1, XFBU);
-          } else {
-            showPopwindow(goodsBean, false, point_XFCU1, XFCU);
+          if (CommonUtil.buyCD(this)) {
+            goodsBean = GoodManage.getInstance().getGoodsBeanList().get(tabAt);
+            if (tabAt == 0) {
+              showPopwindow(goodsBean, false, point_XFAG1, XFAG);
+            } else if (tabAt == 1) {
+              showPopwindow(goodsBean, false, point_XFBU1, XFBU);
+            } else {
+              showPopwindow(goodsBean, false, point_XFCU1, XFCU);
+            }
           }
         } else {
           ToastUtil.showToast("请先登录");
@@ -299,7 +302,7 @@ public class MainActivity extends BaseActivity implements MainView {
 //    if (code == XFCU) {
 //      popuPiceText.setText(String.format("%.0f", goodsBean.getPrice()));
 //    } else {
-      popuPiceText.setText(goodsBean.getPrice() + "");
+    popuPiceText.setText(goodsBean.getPrice() + "");
 //    }
     if (status) {
       statusText.setText("看涨");
@@ -341,6 +344,7 @@ public class MainActivity extends BaseActivity implements MainView {
         params.put("goodsCode", goodsBean.getCode());
         params.put("goodsPrice", GoodManage.getInstance().getGoodsBeanList().get(code).getPrice() + "");
         params.put("percent", Point);
+        params.put("version", version);
         LogUtil.d("第一个按钮被点击了" + Point + Money);
         mainPresenter.buyGoods(params);
       }
@@ -352,10 +356,10 @@ public class MainActivity extends BaseActivity implements MainView {
       @Override
       public void onDismiss() {
         System.out.println("popWindow消失");
-        isShowPopu =false;
+        isShowPopu = false;
       }
     });
-    isShowPopu =true;
+    isShowPopu = true;
 
   }
 
@@ -363,10 +367,12 @@ public class MainActivity extends BaseActivity implements MainView {
     mainPresenter.getUserInfo();
 
   }
+
   private void setImage() {
     ImageLoader.display(getFenShiUrl(tabAt), mainFenshi);
 
   }
+
   @Override
   public void showUser() {
 //    if(TextUtil.isValidText(UserManage.getInstance().getUserBean().getName())){
@@ -413,9 +419,9 @@ public class MainActivity extends BaseActivity implements MainView {
 //      lowText.setText(String.format("%.0f", mGoodsBean.getLowPrice()));
 //    } else {
 //      newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
-      newPiceText.setText(mGoodsBean.getPrice()+"");
-      highText.setText(mGoodsBean.getHightPrice() + "");
-      lowText.setText(mGoodsBean.getLowPrice() + "");
+    newPiceText.setText(mGoodsBean.getPrice() + "");
+    highText.setText(mGoodsBean.getHightPrice() + "");
+    lowText.setText(mGoodsBean.getLowPrice() + "");
 //    }
     LogUtil.d("设置图片");
 //    ImageLoader.display(getFenShiUrl(i), mainFenshi);
@@ -431,21 +437,22 @@ public class MainActivity extends BaseActivity implements MainView {
   @Override
   public void showAlertDialog(ConfigBean configBean) {
 
-    if(!configBean.getContent().equals("0000")){
-      new  AlertDialog.Builder(this)
-        .setTitle("公告" )
-        .setMessage(configBean.getContent() )
-        .setPositiveButton("确定" ,  null )
+    if (!configBean.getContent().equals("0000")) {
+      new AlertDialog.Builder(this)
+        .setTitle("公告")
+        .setMessage(configBean.getContent())
+        .setPositiveButton("确定", null)
         .show();
     }
 
   }
+
   @Override
   public void showUpdataDialog(ConfigBean configBean) {
 
-    if(!configBean.getContent().equals(version)){
-      new  AlertDialog.Builder(this)
-        .setTitle("更新提示" )
+    if (!configBean.getContent().equals(version)) {
+      new AlertDialog.Builder(this)
+        .setTitle("更新提示")
         .setMessage("有版本更新,请升级最新版本!")
         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
           @Override
@@ -457,6 +464,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
   }
+
   @Override
 
   public void showRefresh() {
@@ -478,15 +486,15 @@ public class MainActivity extends BaseActivity implements MainView {
     LogUtil.d("刷新");
     setData(tabAt);
 
-    if(isShowPopu){
+    if (isShowPopu) {
 //      if (tabAt == XFCU) {
 //        popuPiceText.setText(String.format("%.0f",GoodManage.getInstance().getGoodsBeanList().get(tabAt).getPrice()));
 //      } else {
-        popuPiceText.setText(GoodManage.getInstance().getGoodsBeanList().get(tabAt).getPrice()+"");
+      popuPiceText.setText(GoodManage.getInstance().getGoodsBeanList().get(tabAt).getPrice() + "");
 //      }
     }
 
-      LogUtil.d("isShowPopu"+ isShowPopu);
+    LogUtil.d("isShowPopu" + isShowPopu);
 
 
   }
@@ -522,7 +530,12 @@ public class MainActivity extends BaseActivity implements MainView {
         break;
     }
     setTab(tabAt);
-    setData(tabAt);
+    if (GoodManage.getInstance().getGoodsBeanList() != null) {
+      setData(tabAt);
+    } else {
+      ToastUtil.showToast("请检查网路");
+    }
+
   }
 
   private void setTab(int i) {
@@ -546,12 +559,13 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
   }
-  private String getFenShiUrl(int i){
-    if(i == XFAG){
+
+  private String getFenShiUrl(int i) {
+    if (i == XFAG) {
       return "https://image.cngold.org/chart/slive/agm.gif";
-    }else if(i == XFBU){
+    } else if (i == XFBU) {
       return "https://image.cngold.org/chart/futures/spsbum.gif";
-    }else {
+    } else {
       return "http://image.cngold.org/chart/futures/spscum.gif";
     }
   }

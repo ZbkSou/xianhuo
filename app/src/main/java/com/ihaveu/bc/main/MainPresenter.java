@@ -154,6 +154,7 @@ public class MainPresenter {
         }else {
           LogUtil.d(model.getResult().toString());
           ToastUtil.showToast(model.getResult().toString());
+          mMainView.dismissPopu();
         }
       }
       @Override
