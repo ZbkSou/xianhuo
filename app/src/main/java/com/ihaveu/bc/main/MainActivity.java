@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity implements MainView {
   private boolean isShowPopu = false;
   private TextView popuPiceText;
   //更新版本
-  private final String version = "2";
+  private final String version = "3";
   //定时
   Handler handler = new Handler();
   //  30秒
@@ -147,6 +147,7 @@ public class MainActivity extends BaseActivity implements MainView {
     pichandler.postDelayed(picrunnable, picRefreshTimer);
     //    获取点位
     mainPresenter.getPointInfo();
+    mainPresenter.getGoodInfo();
   }
 
   private void init() {
@@ -346,6 +347,7 @@ public class MainActivity extends BaseActivity implements MainView {
         params.put("percent", Point);
         params.put("version", version);
         LogUtil.d("第一个按钮被点击了" + Point + Money);
+        window.dismiss();
         mainPresenter.buyGoods(params);
       }
     });
@@ -507,6 +509,15 @@ public class MainActivity extends BaseActivity implements MainView {
     point_XFAG1 = sourceStrArray[0].split("/");
     point_XFBU1 = sourceStrArray[1].split("/");
     point_XFCU1 = sourceStrArray[2].split("/");
+  }
+
+  @Override
+  public void setGood(ConfigBean configBean) {
+    String sourceStr = configBean.getContent();
+    String[] sourceStrArray = sourceStr.split("/");
+    goodsXfag.setText(sourceStrArray[0]);
+    goodsXfcu.setText(sourceStrArray[1]);
+    goodsXfoil.setText(sourceStrArray[2]);
   }
 
   @Override

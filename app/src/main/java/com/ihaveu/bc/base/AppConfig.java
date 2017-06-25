@@ -8,7 +8,7 @@ import com.ihaveu.bc.BuildConfig;
 
 public class AppConfig {
   public static String getApiHost() {
-    return getValue("http://14.192.11.48/Game/", "http://14.192.11.48/Game/");
+    return getValue("http://14.192.11.88/Game/", "http://14.192.11.88/Game/");
   }
 //  public static String getFenShiUrl() {
 //    return getValue("http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFAG1_600x400.png", "http://image.zjwtj.com/goldchart/img/quote/financier/tick/XFAG1_600x400.png");

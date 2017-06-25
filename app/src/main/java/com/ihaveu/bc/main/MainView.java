@@ -20,4 +20,5 @@ public interface MainView extends BaseView {
   public void showRefresh();
 
   public void setPoint(ConfigBean configBean);
+  public void setGood(ConfigBean configBean);
 }

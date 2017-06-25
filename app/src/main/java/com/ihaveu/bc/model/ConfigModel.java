@@ -19,7 +19,7 @@ import okhttp3.Response;
 
 public class ConfigModel extends Model{
   private Context mContext;
-  private String configUrl =  AppConfig.getApiHost()+"/config/getConfig";
+  private String configUrl =  AppConfig.getApiHost()+"config/getConfig";
   public ConfigModel(Context context){
     mContext = context;
   }
