@@ -573,11 +573,11 @@ public class MainActivity extends BaseActivity implements MainView {
 
   private String getFenShiUrl(int i) {
     if (i == XFAG) {
-      return "https://image.cngold.org/chart/slive/agm.gif";
-    } else if (i == XFBU) {
-      return "https://image.cngold.org/chart/futures/spsbum.gif";
-    } else {
       return "http://image.cngold.org/chart/futures/spscum.gif";
+    } else if (i == XFBU) {
+      return "https://image.cngold.org/chart/futures/spsrbm.gif";
+    } else {
+      return "http://image.cngold.org/chart/futures/spsrum.gif";
     }
   }
 
