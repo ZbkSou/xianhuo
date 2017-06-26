@@ -414,19 +414,22 @@ public class MainActivity extends BaseActivity implements MainView {
 
 
   private void setData(int i) {
-    GoodsBean mGoodsBean = GoodManage.getInstance().getGoodsBeanList().get(i);
+    if(GoodManage.getInstance()!=null &&GoodManage.getInstance().getGoodsBeanList().size()>0){
+      GoodsBean mGoodsBean = GoodManage.getInstance().getGoodsBeanList().get(i);
 //    if (i == XFCU) {
 //      newPiceText.setText(String.format("%.0f", mGoodsBean.getPrice()));
 //      highText.setText(String.format("%.0f", mGoodsBean.getHightPrice()));
 //      lowText.setText(String.format("%.0f", mGoodsBean.getLowPrice()));
 //    } else {
 //      newPiceText.setText(String.format("%.2f", mGoodsBean.getPrice()));
-    newPiceText.setText(mGoodsBean.getPrice() + "");
-    highText.setText(mGoodsBean.getHightPrice() + "");
-    lowText.setText(mGoodsBean.getLowPrice() + "");
+      newPiceText.setText(mGoodsBean.getPrice() + "");
+      highText.setText(mGoodsBean.getHightPrice() + "");
+      lowText.setText(mGoodsBean.getLowPrice() + "");
 //    }
-    LogUtil.d("设置图片");
+      LogUtil.d("设置图片");
 //    ImageLoader.display(getFenShiUrl(i), mainFenshi);
+    }
+
 
   }
 
