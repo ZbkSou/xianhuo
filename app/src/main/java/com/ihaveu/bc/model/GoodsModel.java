@@ -38,7 +38,7 @@ public class GoodsModel extends Model{
 
       @Override
       public void onError(Call call, Response response, Exception e) {
-        Log.d("Login",e.getMessage());
+//        Log.d("Login",e.getMessage());
       }
     });
   }
